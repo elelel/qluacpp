@@ -46,7 +46,7 @@ void OnQuote(lua::state& l, const char* class_code, const char* sec_code) {
     auto quote = q.getQuoteLevel2(class_code, sec_code);
     // Same with Extended API, with typechecked class code
     auto quote_tl = q.getQuoteLevel2<qlua::classcode::TQBR>(sec_code);
-    ss << "Quotes for " << sec_code << " (class " << class_code << ") << ":\n"
+    ss << "Quotes for " << sec_code << " (class " << class_code << "):\n"
        << "  Bid:\n";
     for (const auto& r : quote.bid) ss << "    " << r.quantity << " - " << r.price << "\n";
     ss << "  Offer:\n";
