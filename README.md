@@ -30,11 +30,29 @@ libmybot.cpp
 
 #include <chrono>
 #include <thread>
+#include <sstream>
 
 #include <qlua>
 
-void my_OnInit(lua::state& l, const char* script_path) {
+void OnInit(lua::state& l, const char* script_path) {
   // Do some init...
+}
+
+// Print market depth for each TQBR class ticker requested with ParamRequest
+void OnQuote(lua::state& l, const char* class_code, const char* sec_code) {
+  qlua::extended_api q(l);
+  if (class_code == qlua::classcode::TQBR::name()) {
+    // Get quote info with normal API
+    auto quote = q.getQuoteLevel2(class_code, sec_code);
+    // Same with Extended API, with typechecked class code
+    auto quote_tl = q.getQuoteLevel2<qlua::classcode::TQBR>(sec_code);
+    ss << "Quotes for " << sec_code << " (class " << class_code << ") << ":\n"
+       << "  Bid:\n";
+    for (const auto& r : quote.bid) ss << "    " << r.quantity << " - " << price "\n";
+    ss << "  Offer:\n";
+    for (const auto& r : quote.offer) ss << "    " << r.quantity << " - " << price "\n";
+    q.message(ss.str());
+  }
 }
 
 void my_main(lua::state& l) {
@@ -54,7 +72,9 @@ extern "C" {
     qlua::extended_api q(l);
     luaL_openlib(L, "libmybot", ls_lib, 0);
     q.set_callback<qlua::callback::main>(my_main);
-    q.set_callback<qlua::callback::OnInit)(my_OnInit);
+    q.set_callback<qlua::callback::OnInit)(OnInit);
+    q.set_callback<qlua::callback::OnQuote)(OnQuote);
+    q.ParamRequest<qlua::classcode::TQBR, qlua::current_trades::param::LAST>("SBER");
     return 0;
   }
 }
