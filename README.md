@@ -38,8 +38,13 @@ void OnInit(lua::state& l, const char* script_path) {
   // Do some init...
 }
 
-// Print market depth for each TQBR class ticker requested with ParamRequest
+void OnAllTrade(lua::state& l, const qlua::alltrade& data) {
+  qlua::extended_api q(l);
+  q.message(std::string("OnAllTrade: ") + data.sec_code + std::to_string(data.price));
+}
+
 void OnQuote(lua::state& l, const char* class_code, const char* sec_code) {
+  // Print depth for currently opened depth windows (aka "level 2 quotes"
   qlua::extended_api q(l);
   if (class_code == qlua::classcode::TQBR::name()) {
     // Get quote info with normal API
@@ -74,7 +79,7 @@ extern "C" {
     q.set_callback<qlua::callback::main>(my_main);
     q.set_callback<qlua::callback::OnInit)(OnInit);
     q.set_callback<qlua::callback::OnQuote)(OnQuote);
-    q.ParamRequest<qlua::classcode::TQBR, qlua::current_trades::param::LAST>("SBER");
+    q.set_callback<qlua::callback::OnAllTrade)(OnAllTrade);
     return 0;
   }
 }
