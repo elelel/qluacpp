@@ -48,9 +48,9 @@ void OnQuote(lua::state& l, const char* class_code, const char* sec_code) {
     auto quote_tl = q.getQuoteLevel2<qlua::classcode::TQBR>(sec_code);
     ss << "Quotes for " << sec_code << " (class " << class_code << ") << ":\n"
        << "  Bid:\n";
-    for (const auto& r : quote.bid) ss << "    " << r.quantity << " - " << price "\n";
+    for (const auto& r : quote.bid) ss << "    " << r.quantity << " - " << r.price << "\n";
     ss << "  Offer:\n";
-    for (const auto& r : quote.offer) ss << "    " << r.quantity << " - " << price "\n";
+    for (const auto& r : quote.offer) ss << "    " << r.quantity << " - " << r.price << "\n";
     q.message(ss.str());
   }
 }
