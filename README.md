@@ -33,11 +33,11 @@ libmybot.cpp
 
 #include <qlua>
 
-void callbacks::my_OnInit(lua::state& l, const char* script_path) {
+void my_OnInit(lua::state& l, const char* script_path) {
   // Do some init...
 }
 
-void callbacks::my_main(lua::state& l) {
+void my_main(lua::state& l) {
   using namespace std::chrono_literals;
   qlua::extended_api q(l);
   q.message("Starting main handler");
