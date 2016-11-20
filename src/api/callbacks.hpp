@@ -5,6 +5,7 @@
 
 #include "api.hpp"
 #include "structs/alltrade.hpp"
+#include "structs/account_balance.hpp"
 #include "structs/transaction.hpp"
 
 namespace qlua {
@@ -48,7 +49,28 @@ namespace qlua {
     };
 
     struct OnAccountBalance : public base<OnAccountBalance> {
+      typedef OnAccountBalance type;
+      typedef void (*handler_type) (lua::state& l,
+                                    const account_balance&);
+      
       static std::string name() { return "OnAccountBalance"; }
+      
+      static int lua_handler(lua_State* L) {
+        lua::state l(L);
+        auto data = l.get_value<qlua::account_balance>();
+        handler_(l, data);
+        return 0;
+      }
+      
+    private:
+      friend type& api::set_callback<type>(handler_type);
+
+      OnAccountBalance(lua::state& l, handler_type handler) :
+        base(l) {
+        handler_ = handler;
+      }
+      
+      static handler_type handler_;
     };
     
     struct OnAccountPosition : public base<OnAccountPosition> {     
