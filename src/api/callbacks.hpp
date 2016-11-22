@@ -123,16 +123,75 @@ namespace qlua {
       static handler_type handler_;
     };    
 
-    struct OnCleanUp : public base<OnCleanUp> {     
-      static std::string name() { return "OnCleanUp"; }    
-    };    
+    struct OnCleanUp : public base<OnCleanUp> {
+      typedef OnCleanUp type;
+      typedef void (*handler_type) (lua::state& l);
+      
+      static std::string name() { return "OnCleanUp"; }
 
-    struct OnClose : public base<OnClose> {     
-      static std::string name() { return "OnClose"; }    
-    };    
+      static int lua_handler(lua_State* L) {
+        lua::state l(L);
+        handler_(l);
+        return 0;
+      }
+      
+    private:
+      friend type& api::set_callback<type>(handler_type);
+
+      OnCleanUp(lua::state& l, handler_type handler) :
+        base(l) {
+        handler_ = handler;
+      }
+      
+      static handler_type handler_;
+    };
+
+    struct OnClose : public base<OnClose> {
+      typedef OnClose type;
+      typedef void (*handler_type) (lua::state& l);
+      
+      static std::string name() { return "OnCleanUp"; }
+
+      static int lua_handler(lua_State* L) {
+        lua::state l(L);
+        handler_(l);
+        return 0;
+      }
+      
+    private:
+      friend type& api::set_callback<type>(handler_type);
+
+      OnClose(lua::state& l, handler_type handler) :
+        base(l) {
+        handler_ = handler;
+      }
+      
+      static handler_type handler_;
+    };
 
     struct OnConnected : public base<OnConnected> {     
+      typedef OnConnected type;
+      typedef void (*handler_type) (lua::state&,
+                                    bool);
+      
       static std::string name() { return "OnConnected"; }    
+      
+      static int lua_handler(lua_State* L) {
+        lua::state l(L);
+        auto script_path = l.get_value<bool>(-1);
+        handler_(l, script_path);
+        return 0;
+      }
+      
+    private:
+      friend type& api::set_callback<type>(handler_type);
+      
+      OnConnected(lua::state& l, handler_type handler) :
+        base(l) {
+        handler_ = handler;
+      }
+      
+      static handler_type handler_;
     };    
 
     struct OnDepoLimit : public base<OnDepoLimit> {     
@@ -143,9 +202,28 @@ namespace qlua {
       static std::string name() { return "OnDepoLimitDelete"; }    
     };    
 
-    struct OnDisconnected : public base<OnDisconnected> {     
-      static std::string name() { return "OnDisconnected"; }    
-    };    
+    struct OnDisconnected : public base<OnDisconnected> {
+      typedef OnDisconnected type;
+      typedef void (*handler_type) (lua::state& l);
+      
+      static std::string name() { return "OnDisconnected"; }
+
+      static int lua_handler(lua_State* L) {
+        lua::state l(L);
+        handler_(l);
+        return 0;
+      }
+      
+    private:
+      friend type& api::set_callback<type>(handler_type);
+
+      OnDisconnected(lua::state& l, handler_type handler) :
+        base(l) {
+        handler_ = handler;
+      }
+      
+      static handler_type handler_;
+    };
 
     struct OnFirm : public base<OnFirm> {     
       static std::string name() { return "OnFirm"; }    
