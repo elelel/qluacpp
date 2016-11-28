@@ -13,11 +13,13 @@ include_directories(
 set(SRC "./src")
 
 set(SOURCES
+  ${SRC}/api/constants.cpp
   ${SRC}/api/callbacks.cpp
   ${SRC}/api/service.cpp
   ${SRC}/api/tables.cpp
   ${SRC}/api/instruments.cpp
   ${SRC}/api/workplace.cpp
+  ${SRC}/api/workplace_tables.cpp
   ${SRC}/api/quotes_level_2.cpp
   ${SRC}/api/current_trades.cpp
   ${SRC}/api/structs/alltrade.cpp

@@ -22,9 +22,24 @@
 #include "structs/order.hpp"
 
 namespace qlua {
+  struct qlua_constants {
+    qlua_constants(lua::state& l);
+    
+    int QTABLE_INT_TYPE() const;
+    int QTABLE_DOUBLE_TYPE() const;
+    int QTABLE_INT64_TYPE() const;
+    int QTABLE_CACHED_STRING_TYPE() const;
+    int QTABLE_TIME_TYPE() const;
+    int QTABLE_DATE_TYPE() const;
+    int QTABLE_STRING_TYPE() const;
+  private:
+    lua::state& l_;
+  };
+
   struct api {
     api(lua::state& l) :
-      lua_(l) {
+      lua_(l),
+      constants_(l) {
     }
     
     template <typename callback_t>
@@ -92,6 +107,14 @@ namespace qlua {
     portfolio_info_ex getPortfolioInfoEx(const char* firm_id, const char* client_code, unsigned int limit_kind);
     buy_sell_info getBuySellInfo(const char* firm_id, const char* client_code, const char* class_code, const char* sec_code, double price);
     buy_sell_info_ex getBuySellInfoEx(const char* firm_id, const char* client_code, const char* class_code, const char* sec_code, double price);
+
+    // Workplace tables
+    int AllocTable();
+    bool AddColumn(const int& t_id, const int& iCode, const char* name, const bool& is_default,
+                   const int& par_type, const double& width);
+    bool CreateWindow(const int t_id);
+    int InsertRow(const int& t_id, const int& key);
+    bool SetCell(const int& t_id, const int& key, const int& code, const char* text, const double& value);
     
     // Quotes Level 2
     bool Subscribe_Level_II_Quotes(const char* class_code, const char* sec_code);
@@ -100,9 +123,12 @@ namespace qlua {
 
     // Current trades table
     bool ParamRequest(const char* class_code, const char* sec_code, const char* db_name);
-    
+
+    const qlua_constants& constants() {
+      return constants_;
+    }
   protected:
     lua::state& lua_;
+    qlua_constants constants_;
   };
-
 }
