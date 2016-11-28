@@ -1,3 +1,4 @@
 [submodule "contrib/luacpp"]
 	path = contrib/luacpp
 	url = https://github.com/elelel/luacpp
+	branch = HEAD
