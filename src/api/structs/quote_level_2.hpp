@@ -51,11 +51,13 @@ namespace lua {
       l.getfield(-1, "bid_count");
       if (!l.isnil()) {
         l.get_value_into(expected_bid_count, -1);
-        l.getfield(-2, "bid");
-        if (l.isnil())
-          throw qlua::error::quote_level_2_nil_result("bid table");
-        l.get_rows_into(r.bid, -1, expected_bid_count);
-        l.pop(1);
+        if (expected_bid_count > 0) {
+          l.getfield(-2, "bid");
+          if (l.isnil())
+            throw qlua::error::quote_level_2_nil_result("bid table");
+          l.get_rows_into(r.bid, -1, expected_bid_count);
+          l.pop(1);
+        }
       }
       l.pop(1);
       if (r.bid.size() != expected_bid_count)
@@ -64,11 +66,13 @@ namespace lua {
       l.getfield(-1, "offer_count");
       if (!l.isnil()) {
         l.get_value_into(expected_offer_count, -1);
-        if (l.isnil())
-          throw qlua::error::quote_level_2_nil_result("offer table");
-        l.getfield(-2, "offer");
-        l.get_rows_into(r.offer, -1, expected_offer_count);
-        l.pop(1);
+        if (expected_offer_count > 0) {
+          if (l.isnil())
+            throw qlua::error::quote_level_2_nil_result("offer table");
+          l.getfield(-2, "offer");
+          l.get_rows_into(r.offer, -1, expected_offer_count);
+          l.pop(1);
+        }
       }
       l.pop(1); 
       if (r.offer.size() != expected_offer_count)
