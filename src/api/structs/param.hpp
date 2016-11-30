@@ -21,7 +21,7 @@ namespace qlua {
     unsigned int result;
 
     template <typename value_t>
-    value_t& param_value() {
+    value_t param_value() {
       switch (param_type) {
       case qlua::param::TYPE::DOUBLE :
         return double_value;
