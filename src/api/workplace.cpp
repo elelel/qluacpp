@@ -83,7 +83,7 @@ auto qlua::api::getQuoteLevel2(const char* class_code, const char* sec_code) -> 
 
 auto qlua::api::getParamEx(const char* class_code, const char* sec_code, const char* param_name) -> param {
   const char api_name[] = "getParamEx";
-  typedef std::tuple<quote_level_2> return_type;
+  typedef std::tuple<param> return_type;
   auto params = std::make_tuple(class_code, sec_code, param_name);
   auto result = lua_.pcall<return_type>(api_name, params);
   return std::get<0>(result);
