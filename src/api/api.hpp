@@ -24,6 +24,7 @@
 namespace qlua {
   struct qlua_constants {
     qlua_constants(lua::state& l);
+    qlua_conatants(const qlua_constants& other);
     
     int QTABLE_INT_TYPE() const;
     int QTABLE_DOUBLE_TYPE() const;
@@ -40,6 +41,11 @@ namespace qlua {
     api(lua::state& l) :
       lua_(l),
       constants_(l) {
+    }
+
+    api(const api& other) :
+      lua_(other.lua_),
+      constants_(other.constants_) {
     }
     
     template <typename callback_t>

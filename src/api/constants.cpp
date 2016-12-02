@@ -4,6 +4,10 @@ qlua::qlua_constants::qlua_constants(lua::state& l) :
   l_(l) {
 }
 
+qlua::qlua_constants::qlua_constants(const qlua::constants& other) :
+  l_(other.l_) {
+}
+
 int qlua::qlua_constants::QTABLE_INT_TYPE() const {
   return l_.get_field<int>("QTABLE_INT_TYPE", LUA_GLOBALSINDEX);
 }

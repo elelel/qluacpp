@@ -9,6 +9,10 @@ namespace qlua {
     extended_api(lua::state& l) :
       api(l) {
     }
+
+    extended_api(const extended_api& other) :
+      api(other) {
+    }
     
     // Service
     using api::getInfoParam;
