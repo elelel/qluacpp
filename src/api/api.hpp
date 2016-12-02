@@ -7,7 +7,6 @@
 
 #include "../exceptions.hpp"
 #include "constants.hpp"
-#include "structs/current_trades.hpp"
 #include "structs/class_info.hpp"
 #include "structs/money_limits.hpp"
 #include "structs/depo_limits.hpp"

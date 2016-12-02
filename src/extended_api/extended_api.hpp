@@ -3,6 +3,7 @@
 #include "../api/api.hpp"
 
 #include "structs/classcode.hpp"
+#include "structs/current_trades.hpp"
 
 namespace qlua {
   struct extended_api : public api {
