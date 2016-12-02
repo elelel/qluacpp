@@ -13,6 +13,7 @@ include_directories(
 set(SRC "./src")
 
 set(SOURCES
+  ${SRC}/api/api.cpp
   ${SRC}/api/constants.cpp
   ${SRC}/api/callbacks.cpp
   ${SRC}/api/service.cpp
@@ -24,6 +25,7 @@ set(SOURCES
   ${SRC}/api/current_trades.cpp
   ${SRC}/api/structs/alltrade.cpp
   ${SRC}/api/structs/quote_level_2.cpp
+  ${SRC}/extended_api/extended_api.cpp
   ${SRC}/extended_api/service.cpp
   ${SRC}/extended_api/instruments.cpp
   ${SRC}/extended_api/workplace.cpp

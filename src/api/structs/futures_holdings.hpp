@@ -28,7 +28,7 @@ namespace qlua {
 namespace lua {
   template <>
   struct stack_reader<qlua::futures_holdings> {
-    inline static qlua::futures_holdings read(lua::state& l, int idx = -1) {
+    inline static qlua::futures_holdings read(const lua::state& l, int idx = -1) {
       qlua::futures_holdings r;
       l.get_field_into("firmid", r.firmid);
       l.get_field_into("trdaccid", r.trdaccid);

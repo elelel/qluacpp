@@ -40,7 +40,7 @@ namespace qlua {
 namespace lua {
   template <>
   struct stack_reader<qlua::buy_sell_info> {
-    inline static qlua::buy_sell_info read(lua::state& l, int idx = -1) {
+    inline static qlua::buy_sell_info read(const lua::state& l, int idx = -1) {
       qlua::buy_sell_info r;
 
       l.get_field_into("is_margin_sec", r.is_margin_sec);
@@ -71,7 +71,7 @@ namespace lua {
 
   template <>
   struct stack_reader<qlua::buy_sell_info_ex> {
-    inline static qlua::buy_sell_info_ex read(lua::state& l, int idx = -1) {
+    inline static qlua::buy_sell_info_ex read(const lua::state& l, int idx = -1) {
       qlua::buy_sell_info_ex r;
 
       l.get_value_into(static_cast<qlua::buy_sell_info&>(r));

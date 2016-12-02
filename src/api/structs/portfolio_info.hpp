@@ -71,7 +71,7 @@ namespace qlua {
 namespace lua {
   template <>
   struct stack_reader<qlua::portfolio_info> {
-    inline static qlua::portfolio_info read(lua::state l, int idx = -1) {
+    inline static qlua::portfolio_info read(const lua::state& l, int idx = -1) {
       qlua::portfolio_info r;
       l.get_field_into("is_leverage", r.is_leverage);
       l.get_field_into("in_assets", r.in_assets);
@@ -119,7 +119,7 @@ namespace lua {
 
   template <>
   struct stack_reader<qlua::portfolio_info_ex> {
-    inline static qlua::portfolio_info_ex read(lua::state l, int idx = -1) {
+    inline static qlua::portfolio_info_ex read(const lua::state& l, int idx = -1) {
       qlua::portfolio_info_ex r;
 
       l.get_value_into(static_cast<qlua::portfolio_info&>(r));

@@ -1,11 +1,25 @@
-#include "api.hpp"
+#include "constants.hpp"
 
-qlua::qlua_constants::qlua_constants(lua::state& l) :
+qlua::qlua_constants::qlua_constants(const lua::state& l) :
   l_(l) {
 }
 
-qlua::qlua_constants::qlua_constants(const qlua::constants& other) :
+qlua::qlua_constants::qlua_constants(const qlua::qlua_constants& other) :
   l_(other.l_) {
+}
+
+qlua::qlua_constants::qlua_constants(qlua::qlua_constants&& other) :
+  l_(std::move(other.l_)) {
+}
+
+void qlua::qlua_constants::swap(qlua::qlua_constants& other) {
+  std::swap(l_, other.l_);
+}
+
+auto qlua::qlua_constants::operator=(const qlua::qlua_constants& other) -> qlua_constants& {
+  qlua_constants tmp(other);
+  swap(tmp);
+  return *this;
 }
 
 int qlua::qlua_constants::QTABLE_INT_TYPE() const {

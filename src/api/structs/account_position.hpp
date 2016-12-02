@@ -26,7 +26,7 @@ namespace qlua {
 namespace lua {
   template <>
   struct stack_reader<qlua::account_position> {
-    inline static qlua::account_position read(lua::state& l, int idx = -1) {
+    inline static qlua::account_position read(const lua::state& l, int idx = -1) {
       qlua::account_position r;
       
       l.get_field_into("firmid", r.firmid);

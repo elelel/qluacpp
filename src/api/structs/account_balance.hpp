@@ -23,7 +23,7 @@ namespace qlua {
 namespace lua {
   template <>
   struct stack_reader<qlua::account_balance> {
-    inline static qlua::account_balance read(lua::state& l, int idx = -1) {
+    inline static qlua::account_balance read(const lua::state& l, int idx = -1) {
       qlua::account_balance r;
       l.get_field_into("firmid", r.firmid);
       l.get_field_into("sec_code", r.sec_code);

@@ -6,13 +6,11 @@
 
 namespace qlua {
   struct extended_api : public api {
-    extended_api(lua::state& l) :
-      api(l) {
-    }
-
-    extended_api(const extended_api& other) :
-      api(other) {
-    }
+    extended_api(lua::state& l);
+    extended_api(const extended_api& other);
+    extended_api(extended_api&& other);
+    void swap(extended_api& other);
+    extended_api& operator=(const extended_api& other);
     
     // Service
     using api::getInfoParam;

@@ -20,7 +20,7 @@ namespace qlua {
 namespace lua {
   template <>
   struct stack_reader<qlua::instrument> {
-    inline static qlua::instrument read(lua::state& l, int idx = -1) {
+    inline static qlua::instrument read(const lua::state& l, int idx = -1) {
       qlua::instrument r;
       
       l.get_field_into("code", r.code);

@@ -36,7 +36,7 @@ namespace qlua {
 namespace lua {
   template <>
   struct stack_reader<qlua::depo_limits> {
-    inline static qlua::depo_limits read(lua::state& l, int idx = -1) {
+    inline static qlua::depo_limits read(const lua::state& l, int idx = -1) {
       qlua::depo_limits r;
       l.get_field_into("depo_limit_locked_buy_value", r.depo_limit_locked_buy_value);
       l.get_field_into("depo_current_balance", r.depo_current_balance);
@@ -52,7 +52,7 @@ namespace lua {
 
   template <>
   struct stack_reader<qlua::depo_limits_table_row> {
-    inline static qlua::depo_limits_table_row read(lua::state& l, int idx = -1){
+    inline static qlua::depo_limits_table_row read(const lua::state& l, int idx = -1){
       qlua::depo_limits_table_row r;
       l.get_field_into("sec_code", r.sec_code);
       l.get_field_into("trdaccid", r.trdaccid);

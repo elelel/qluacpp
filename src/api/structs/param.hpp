@@ -43,7 +43,7 @@ namespace qlua {
 namespace lua {
   template <>
   struct stack_reader<qlua::param> {
-    inline static qlua::param read(lua::state& l, int idx = -1) {
+    inline static qlua::param read(const lua::state& l, int idx = -1) {
       qlua::param r;
       r.param_type = static_cast<qlua::param::TYPE>(l.get_field<unsigned int>("param_type"));
       switch (r.param_type) {

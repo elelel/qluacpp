@@ -51,7 +51,7 @@ namespace qlua {
 namespace lua {
   template <>
   struct stack_reader<qlua::order> {
-    inline static qlua::order read(lua::state& l, int idx = -1) {
+    inline static qlua::order read(const lua::state& l, int idx = -1) {
       qlua::order r;
       
       l.get_field_into("order_num", r.order_num);

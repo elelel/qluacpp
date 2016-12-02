@@ -6,6 +6,7 @@
 #include <vector>
 
 #include "../exceptions.hpp"
+#include "constants.hpp"
 #include "structs/current_trades.hpp"
 #include "structs/class_info.hpp"
 #include "structs/money_limits.hpp"
@@ -22,31 +23,12 @@
 #include "structs/order.hpp"
 
 namespace qlua {
-  struct qlua_constants {
-    qlua_constants(lua::state& l);
-    qlua_conatants(const qlua_constants& other);
-    
-    int QTABLE_INT_TYPE() const;
-    int QTABLE_DOUBLE_TYPE() const;
-    int QTABLE_INT64_TYPE() const;
-    int QTABLE_CACHED_STRING_TYPE() const;
-    int QTABLE_TIME_TYPE() const;
-    int QTABLE_DATE_TYPE() const;
-    int QTABLE_STRING_TYPE() const;
-  private:
-    lua::state& l_;
-  };
-
   struct api {
-    api(lua::state& l) :
-      lua_(l),
-      constants_(l) {
-    }
-
-    api(const api& other) :
-      lua_(other.lua_),
-      constants_(other.constants_) {
-    }
+    api(lua::state& l);
+    api(const api& other);
+    api(api&& other);
+    void swap(api& other);
+    api& operator=(const api& other);
     
     template <typename callback_t>
     callback_t& set_callback(typename callback_t::handler_type handler) {
@@ -136,7 +118,7 @@ namespace qlua {
       return constants_;
     }
   protected:
-    lua::state& lua_;
+    lua::state lua_;
     qlua_constants constants_;
   };
 }

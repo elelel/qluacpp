@@ -13,7 +13,7 @@ namespace qlua {
 namespace lua {
   template <>
   struct stack_reader<qlua::class_info> {
-    inline static qlua::class_info read(lua::state& l, int idx = -1) {
+    inline static qlua::class_info read(const lua::state& l, int idx = -1) {
       qlua::class_info r;
       l.get_field_into("firmid", r.firmid);
       l.get_field_into("name", r.name);

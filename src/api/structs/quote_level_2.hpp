@@ -31,7 +31,7 @@ namespace qlua {
 namespace lua {
   template <>
   struct stack_reader<qlua::quote_level_2::record> {
-    inline static qlua::quote_level_2::record read(lua::state& l, int idx = -1) {
+    inline static qlua::quote_level_2::record read(const lua::state& l, int idx = -1) {
       qlua::quote_level_2::record r;
       l.get_field_into("price", r.price);
       l.get_field_into("quantity", r.quantity);
@@ -41,7 +41,7 @@ namespace lua {
 
   template <>
   struct stack_reader<qlua::quote_level_2> {
-    inline static qlua::quote_level_2 read(lua::state& l, int idx = -1) {
+    inline static qlua::quote_level_2 read(const lua::state& l, int idx = -1) {
       qlua::quote_level_2 r;
       int expected_bid_count{0};
       int expected_offer_count{0};

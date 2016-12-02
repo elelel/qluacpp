@@ -31,7 +31,7 @@ namespace qlua {
 namespace lua {
   template <>
   struct stack_pusher<qlua::transaction_import> {
-    inline static void push(lua::state& l, const qlua::transaction_import& tri) {
+    inline static void push(const lua::state& l, const qlua::transaction_import& tri) {
       l.createtable(0, tri.size());
       for (const auto& r : tri) {
         l.pushstring(r.second.c_str());
@@ -44,7 +44,7 @@ namespace lua {
 
   template <>
   struct stack_reader<qlua::transaction_reply> {
-    inline static qlua::transaction_reply read(lua::state& l, int idx = -1) {
+    inline static qlua::transaction_reply read(const lua::state& l, int idx = -1) {
       qlua::transaction_reply r;
       l.get_field_into("trans_id", r.trans_id);
       l.get_field_into("status", r.status);

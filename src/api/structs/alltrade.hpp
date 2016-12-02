@@ -43,7 +43,7 @@ namespace qlua {
 namespace lua {
   template <>
   struct stack_reader<qlua::alltrade> {
-    inline static qlua::alltrade read(lua::state& l, int idx = -1) {
+    inline static qlua::alltrade read(const lua::state& l, int idx = -1) {
       qlua::alltrade r;
     
       l.get_field_into("trade_num", r.trade_num);

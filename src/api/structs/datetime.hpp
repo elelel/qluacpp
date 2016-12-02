@@ -17,7 +17,7 @@ namespace qlua {
 namespace lua {
   template <>
   struct stack_reader<qlua::datetime> {
-    inline static qlua::datetime read(lua::state& l, int idx = -1) {
+    inline static qlua::datetime read(const lua::state& l, int idx = -1) {
       qlua::datetime r;
       l.get_field_into("mcs", r.mcs);
       l.get_field_into("ms", r.ms);
