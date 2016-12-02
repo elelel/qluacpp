@@ -112,6 +112,7 @@ namespace qlua {
     int AllocTable();
     bool AddColumn(const int& t_id, const int& iCode, const char* name, const bool& is_default, const int& par_type, const int& width);
     bool CreateWindow(const int t_id);
+    bool DestroyTable(const int t_id);
     int InsertRow(const int& t_id, const int& key);
     bool SetCell(const int& t_id, const int& key, const int& code, const char* text);
     bool SetCell(const int& t_id, const int& key, const int& code, const char* text, const double& value);

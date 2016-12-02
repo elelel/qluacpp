@@ -48,11 +48,18 @@ bool qlua::api::SetWindowCaption(const int& t_id, const char* str) {
   return std::get<0>(result);  
 }
 
-
 bool qlua::api::CreateWindow(const int t_id) {
   const char api_name[] = "CreateWindow";
   typedef std::tuple<int> return_type;
   auto params = std::make_tuple(t_id);
   auto result = lua_.pcall<return_type>(api_name, params);
   return std::get<0>(result) == 1;  
+}
+
+bool qlua::api::DestroyTable(const int t_id) {
+  const char api_name[] = "DestroyTable";
+  typedef std::tuple<bool> return_type;
+  auto params = std::make_tuple(t_id);
+  auto result = lua_.pcall<return_type>(api_name, params);
+  return std::get<0>(result);  
 }

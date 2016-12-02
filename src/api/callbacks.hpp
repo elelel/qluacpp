@@ -150,7 +150,7 @@ namespace qlua {
       typedef OnClose type;
       typedef void (*handler_type) (lua::state& l);
       
-      static std::string name() { return "OnCleanUp"; }
+      static std::string name() { return "OnClose"; }
 
       static int lua_handler(lua_State* L) {
         lua::state l(L);
@@ -318,7 +318,27 @@ namespace qlua {
     };    
 
     struct OnStop : public base<OnStop> {     
-      static std::string name() { return "OnStop"; }    
+      typedef OnStop type;
+      typedef int (*handler_type) (lua::state& l);
+      
+      static std::string name() { return "OnStop"; }
+
+      static int lua_handler(lua_State* L) {
+        lua::state l(L);
+        auto rslt = handler_(l);
+        l.pushnumber(rslt);
+        return 0;
+      }
+      
+    private:
+      friend type& api::set_callback<type>(handler_type);
+
+      OnStop(lua::state& l, handler_type handler) :
+        base(l) {
+        handler_ = handler;
+      }
+      
+      static handler_type handler_;
     };    
 
     struct OnStopOrder : public base<OnStopOrder> {     
