@@ -2,56 +2,60 @@
 
 #include <string>
 
-#include "datetime.hpp"
+#include "../struct/datetime.hpp"
 
 namespace qlua {
-  struct order {
-    unsigned int order_num;
-    unsigned int flags;
-    std::string brokerred;
-    std::string userid;
-    std::string firmid;
-    std::string account;
-    double price;
-    double qty;
-    double balance;
-    double vlaue;
-    double accruedint;
-    double yield;
-    unsigned int trans_id;
-    std::string client_code;
-    double price2;
-    std::string settlecode;
-    unsigned int uid;
-    std::string exchange_code;
-    double activation_time;
-    unsigned int linkedorder;
-    double expiry;
-    std::string sec_code;
-    std::string class_code;
-    ::qlua::datetime datetime;
-    std::string bank_acc_id;
-    unsigned int value_entry_type;
-    unsigned int repoterm;
-    double repovalue;
-    double repo2value;
-    double repo_value_balance;
-    double start_discount;
-    std::string reject_reason;
-    unsigned int ext_order_flags;
-    double min_qty;
-    unsigned int exec_type;
-    unsigned int acnt_type;
-    double capacity;
-    unsigned int passive_only_order;
-    double visible;
-  };
+  namespace table {
+    namespace row {
+      struct order {
+        unsigned int order_num;
+        unsigned int flags;
+        std::string brokerred;
+        std::string userid;
+        std::string firmid;
+        std::string account;
+        double price;
+        double qty;
+        double balance;
+        double vlaue;
+        double accruedint;
+        double yield;
+        unsigned int trans_id;
+        std::string client_code;
+        double price2;
+        std::string settlecode;
+        unsigned int uid;
+        std::string exchange_code;
+        double activation_time;
+        unsigned int linkedorder;
+        double expiry;
+        std::string sec_code;
+        std::string class_code;
+        ::qlua::datetime datetime;
+        std::string bank_acc_id;
+        unsigned int value_entry_type;
+        unsigned int repoterm;
+        double repovalue;
+        double repo2value;
+        double repo_value_balance;
+        double start_discount;
+        std::string reject_reason;
+        unsigned int ext_order_flags;
+        double min_qty;
+        unsigned int exec_type;
+        unsigned int acnt_type;
+        double capacity;
+        unsigned int passive_only_order;
+        double visible;
+      };
+    }
+  }
 }
 
 namespace lua {
   template <>
-  struct stack_reader<qlua::order> {
-    inline static qlua::order read(const lua::state& l, int idx = -1) {
+  struct stack_reader<qlua::table::row::order> {
+    inline static qlua::table::row::order read(const lua::state& l, int idx = -1) {
       qlua::order r;
       
       l.get_field_into("order_num", r.order_num);
