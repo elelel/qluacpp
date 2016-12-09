@@ -2,12 +2,12 @@
 
 #include <string>
 
-#include "../struct/datetime.hpp"
+#include "../structs/datetime.hpp"
 
 namespace qlua {
   namespace table {
     namespace row {
-      struct order {
+      struct orders {
         unsigned int order_num;
         unsigned int flags;
         std::string brokerred;
@@ -54,9 +54,9 @@ namespace qlua {
 
 namespace lua {
   template <>
-  struct stack_reader<qlua::table::row::order> {
-    inline static qlua::table::row::order read(const lua::state& l, int idx = -1) {
-      qlua::order r;
+  struct stack_reader<qlua::table::row::orders> {
+    inline static qlua::table::row::orders read(const lua::state& l, int idx = -1) {
+      qlua::table::row::orders r;
       
       l.get_field_into("order_num", r.order_num);
       l.get_field_into("flags", r.flags);

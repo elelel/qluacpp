@@ -1,34 +1,54 @@
 #pragma once
 
 #include "../api/api.hpp"
-#include "../api/table/order.hpp"
 
 namespace qlua {
   namespace table {
 
     template <typename row_t>
-    struct table_reader {
-      table_reader(const api& q) :
+    struct name;
+
+    template <>
+    struct name<row::orders> {
+      static const char*& get() {
+        static const char* n = "orders";
+        return n;
+      }
+    };
+
+    template <>
+    struct name<row::depo_limits> {
+      static const char*& get() {
+        static const char* n = "depo_limits";
+        return n;
+      }
+    };
+
+    template <>
+    struct name<row::money_limits> {
+      static const char*& get() {
+        static const char* n = "money_limits";
+        return n;
+      }
+    };
+    
+    template <typename row_t>
+    struct reader {
+      reader(const api& q) :
         q_(q) {
       }
         
-      std::vector<row_t> read() {
+      std::vector<row_t> read() const {
         std::vector<row_t> rslt;
-        int sz = q.getNumberOf(table_name);
+        int sz = q_.getNumberOf(name<row_t>::get());
         rslt.reserve(sz);
         for (int i = 0; i < sz; ++i) {
-          rslt.push_back(q.getItem<row_t>(table_name<row_t>(), i));
+          auto r = q_.getItem<row_t>(name<row_t>::get(), i);
+          rslt.push_back(r);
         }
         return rslt;
       }
 
-      template <row_t>
-      static const char* table_name();
-
-      static const char*& table_name<row::order> {
-        static const char* n = "orders";
-        return n;
-      }
     private:
       const qlua::api q_;
     };

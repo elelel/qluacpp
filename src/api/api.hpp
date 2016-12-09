@@ -19,7 +19,9 @@
 #include "structs/transaction.hpp"
 #include "structs/portfolio_info.hpp"
 #include "structs/buy_sell_info.hpp"
-#include "structs/order.hpp"
+#include "tables/orders.hpp"
+#include "tables/depo_limits.hpp"
+#include "tables/money_limits.hpp"
 
 namespace qlua {
   struct api {
@@ -48,15 +50,15 @@ namespace qlua {
 
     // Table access functions
     template <typename item_t>
-    item_t getItem(const char* table_name, const int index) {
+    item_t getItem(const char* table_name, const int index) const {
       const char api_name[] = "getItem";
       typedef std::tuple<item_t> return_type;
       auto params = std::make_tuple(table_name, index);
       auto result = lua_.pcall<return_type>(api_name, params);
       return std::get<0>(result);
     }
-    std::tuple<order, unsigned int> getOrderByNumber(const char* class_code, unsigned int order_id);
-    unsigned int getNumberOf(const char* table_name);
+    std::tuple<table::row::orders, unsigned int> getOrderByNumber(const char* class_code, unsigned int order_id) const;
+    unsigned int getNumberOf(const char* table_name) const;
     /*
     template <typename... Args>
     std::vector<unsigned int> SearchItems(const char* table_name, bool(Args...)) {

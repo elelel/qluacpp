@@ -327,7 +327,7 @@ namespace qlua {
         lua::state l(L);
         auto rslt = handler_(l);
         l.pushnumber(rslt);
-        return 0;
+        return 1;
       }
       
     private:

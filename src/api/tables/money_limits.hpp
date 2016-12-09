@@ -1,29 +1,32 @@
 #pragma once
 
 namespace qlua {
-  namespace tables {
-      struct money_limits_table_row {
-    std::string currcode;
-    std::string tag;
-    std::string firmid;
-    std::string client_code;
-    double openbal;
-    double openlimit;
-    double currentbal;
-    double currentlimit;
-    double locked;
-    double locked_value_coef;
-    double locked_margin_value;
-    double leverage;
-    int limit_kind;
-  };
+  namespace table {
+    namespace row {
+      struct money_limits {
+        std::string currcode;
+        std::string tag;
+        std::string firmid;
+        std::string client_code;
+        double openbal;
+        double openlimit;
+        double currentbal;
+        double currentlimit;
+        double locked;
+        double locked_value_coef;
+        double locked_margin_value;
+        double leverage;
+        int limit_kind;
+      };
+    }
+  }
 }
 
 namespace lua {
   template <>
-  struct stack_reader<qlua::money_limits_table_row> {
-    inline static qlua::money_limits_table_row read(const lua::state& l, int idx = -1) {
-      qlua::money_limits_table_row r;
+  struct stack_reader<qlua::table::row::money_limits> {
+    inline static qlua::table::row::money_limits read(const lua::state& l, int idx = -1) {
+      qlua::table::row::money_limits r;
       l.get_field_into("currcode", r.currcode);
       l.get_field_into("tag", r.tag);
       l.get_field_into("firmid", r.firmid);

@@ -26,8 +26,8 @@ namespace qlua {
 namespace lua {
   template <>
   struct stack_reader<qlua::table::row::depo_limits> {
-    inline static qlua::depo_limits_table_row read(const lua::state& l, int idx = -1){
-      qlua::depo_limits_table_row r;
+    inline static qlua::table::row::depo_limits read(const lua::state& l, int idx = -1) {
+      qlua::table::row::depo_limits r;
       l.get_field_into("sec_code", r.sec_code);
       l.get_field_into("trdaccid", r.trdaccid);
       l.get_field_into("firmid", r.firmid);

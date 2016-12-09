@@ -2,11 +2,9 @@
 
 #include "../api/api.hpp"
 
-#include "../api/struct/orders.hpp"
-
 #include "structs/classcode.hpp"
 #include "structs/current_trades.hpp"
-#inlcude "table_reader.hpp"
+#include "table_reader.hpp"
 
 namespace qlua {
   struct extended_api : public api {
@@ -54,8 +52,8 @@ namespace qlua {
     }
 
     template <typename row_t>
-    table_reader<row_t> table() {
-      static table_reader<row_t> r;
+    table::reader<row_t> table() {
+      static table::reader<row_t> r(*this);
       return r;
     }
   };
