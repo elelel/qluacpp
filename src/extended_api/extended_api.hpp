@@ -2,8 +2,11 @@
 
 #include "../api/api.hpp"
 
+#include "../api/struct/orders.hpp"
+
 #include "structs/classcode.hpp"
 #include "structs/current_trades.hpp"
+#inlcude "table_reader.hpp"
 
 namespace qlua {
   struct extended_api : public api {
@@ -48,6 +51,12 @@ namespace qlua {
       if (!rslt) {
         throw error::ParamRequest_failed();
       }
+    }
+
+    template <typename row_t>
+    table_reader<row_t> table() {
+      static table_reader<row_t> r;
+      return r;
     }
   };
 }
