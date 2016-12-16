@@ -49,3 +49,12 @@ int qlua::qlua_constants::QTABLE_DATE_TYPE() const {
 int qlua::qlua_constants::QTABLE_STRING_TYPE() const { 
   return l_.get_field<int>("QTABLE_STRING_TYPE", LUA_GLOBALSINDEX);
 }
+
+unsigned int qlua::qlua_constants::QTABLE_DEFAULT_COLOR() const {
+  return l_.get_field<int>("QTABLE_DEFAULT_COLOR", LUA_GLOBALSINDEX);
+}
+
+int qlua::qlua_constants::QTABLE_NO_INDEX() const {
+  return l_.get_field<int>("QTABLE_NO_INDEX", LUA_GLOBALSINDEX);
+}
+

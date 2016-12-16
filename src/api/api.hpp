@@ -106,6 +106,9 @@ namespace qlua {
     int InsertRow(const int& t_id, const int& key);
     bool SetCell(const int& t_id, const int& key, const int& code, const char* text);
     bool SetCell(const int& t_id, const int& key, const int& code, const char* text, const double& value);
+    bool SetColor(const int& t_id, const int& row, const int& col,
+                  const unsigned int& b_color, const unsigned int& f_color,
+                  const unsigned int& sel_b_color, const unsigned int& sel_f_color);
     bool SetWindowCaption(const int& t_id, const char* str);
     
     // Quotes Level 2

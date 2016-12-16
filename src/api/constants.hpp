@@ -17,6 +17,9 @@ namespace qlua {
     int QTABLE_TIME_TYPE() const;
     int QTABLE_DATE_TYPE() const;
     int QTABLE_STRING_TYPE() const;
+
+    unsigned int QTABLE_DEFAULT_COLOR() const;
+    int QTABLE_NO_INDEX() const;
   private:
     lua::state l_;
   };
