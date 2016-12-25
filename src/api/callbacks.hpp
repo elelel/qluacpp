@@ -319,13 +319,14 @@ namespace qlua {
 
     struct OnStop : public base<OnStop> {     
       typedef OnStop type;
-      typedef int (*handler_type) (lua::state& l);
+      typedef int (*handler_type) (lua::state& l, const int& signal);
       
       static std::string name() { return "OnStop"; }
 
       static int lua_handler(lua_State* L) {
         lua::state l(L);
-        auto rslt = handler_(l);
+        auto signal = l.get_value<int>(-1);
+        auto rslt = handler_(l, signal);
         l.pushnumber(rslt);
         return 1;
       }
