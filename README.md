@@ -79,9 +79,13 @@ void my_main(lua::state& l) {
 
 extern "C" {
   LUALIB_API int luaopen_libmybot(lua_State* L) {
+    // Create LUA state object (luacpp library) with plain LUA state
     lua::state l(L);
+    // Create QLUA API
     qlua::extended_api q(l);
+    // Register LUA library
     luaL_openlib(L, "libmybot", ls_lib, 0);
+    // Register QLUA standard callbacks
     q.set_callback<qlua::callback::main>(my_main);
     q.set_callback<qlua::callback::OnInit>(OnInit);
     q.set_callback<qlua::callback::OnQuote>(OnQuote);
