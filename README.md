@@ -7,7 +7,7 @@ C++ interface for Quik trading terminal via lua bindings
 - Modern C++ compiler (C++11 compliant, tested with Mingw64 GCC 6.2.0 and VS 2015 14.0)
 
 # Creating project
-Create CMakeLists.txt for the new project, linking the standard Lua C lib. Then add:
+Create CMakeLists.txt for your new project, linking the standard Lua C lib. Then add:
 ```
 set (QLUACPP /path/to/qluacpp)
 if (NOT TARGET qluacpp)
@@ -16,7 +16,8 @@ endif()
 ```
 Then run the usual build commands:
 ```
-mkdir build && cd build
+mkdir $YOUR_BUILD_DIR && cd $YOUR_BUILD_DIR
+cmake -G "MSYS Makefiles" $YOUR_PROJECT_PATH  # (-G "NMake Makefiles", or any other Makfiles target for the compiler you use)
 make  # (or nmake)
 ```
 
