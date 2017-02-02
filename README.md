@@ -1,7 +1,7 @@
 # qluacpp
 C++ interface for Quik trading terminal via lua bindings
 
-# Requires
+# Requirements
 - CMake
 - lua5.1 library (search is performed with CMake FindModule)
 - Modern C++ compiler (C++11 compliant, tested with Mingw64 GCC 6.2.0 and VS 2015 14.0)
@@ -34,22 +34,27 @@ libmybot.cpp
 
 #include <qlua>
 
+// Handler for OnInit Quik callback
 void OnInit(lua::state& l, const char* script_path) {
   // Do some init...
 }
 
+// Handler for OnAllTrade Quik callback
 void OnAllTrade(lua::state& l, const qlua::alltrade& data) {
+  // Create extended QluaCpp API object. 
   qlua::extended_api q(l);
+  // Call message Quik LUA function
   q.message(std::string("OnAllTrade: ") + data.sec_code + std::to_string(data.price));
 }
 
+// Handler for OnQuote Quik callback
 void OnQuote(lua::state& l, const char* class_code, const char* sec_code) {
   // Print depth for currently opened depth windows (aka "level 2 quotes"
   qlua::extended_api q(l);
   if (class_code == qlua::classcode::TQBR::name()) {
-    // Get quote info with normal API
+    // Get quote info with normal API, will work on standard API object
     auto quote = q.getQuoteLevel2(class_code, sec_code);
-    // Same with Extended API, with typechecked class code
+    // Same with Extended API, with typechecked class code, works on extended API object
     auto quote_tl = q.getQuoteLevel2<qlua::classcode::TQBR>(sec_code);
     ss << "Quotes for " << sec_code << " (class " << class_code << "):\n"
        << "  Bid:\n";
@@ -60,6 +65,7 @@ void OnQuote(lua::state& l, const char* class_code, const char* sec_code) {
   }
 }
 
+// Handler for main Quik callback
 void my_main(lua::state& l) {
   using namespace std::chrono_literals;
   qlua::extended_api q(l);
@@ -77,9 +83,9 @@ extern "C" {
     qlua::extended_api q(l);
     luaL_openlib(L, "libmybot", ls_lib, 0);
     q.set_callback<qlua::callback::main>(my_main);
-    q.set_callback<qlua::callback::OnInit)(OnInit);
-    q.set_callback<qlua::callback::OnQuote)(OnQuote);
-    q.set_callback<qlua::callback::OnAllTrade)(OnAllTrade);
+    q.set_callback<qlua::callback::OnInit>(OnInit);
+    q.set_callback<qlua::callback::OnQuote>(OnQuote);
+    q.set_callback<qlua::callback::OnAllTrade>(OnAllTrade);
     return 0;
   }
 }
@@ -90,4 +96,5 @@ mybot.lua
 require "libmybot"
 ```
 
-# License GPL v3.0
+# License
+GPL v3.0
