@@ -1,14 +1,19 @@
 cmake_minimum_required(VERSION 3.4.0)
 project(qluacpp)
 
-find_package(Lua51 REQUIRED)
-message ("Lua include directories: ${LUA_INCLUDE_DIR}")
-message ("Lua libraries: ${LUA_LIBRARIES}")
+if (NOT QLUACPP_LUA_LIBRARY)
+  message( FATAL_ERROR "Please set QLUACPP_LUA_LIBRARY variable to your Lua DLL file. For example:\n cmake -DQLUACPP_LUA_LIBRARY=c:\\quik\\lua51.dll ...")
+endif()
+message ("Lua library: ${QLUACPP_LUA_LIBRARY}")
 
-set(LUACPP "contrib/luacpp")
+if (NOT QLUACPP_LUA_INCLUDE_DIR)
+  message( FATAL_ERROR "Please set QLUACPP_LUA_INCLUDE_DIR variable to the path to your lua.h file. For example:\n cmake -DQLUACPP_LUA_INCLUDE_DIR=c:\\lua\\include ...")
+endif()
+message ("Lua include dir: ${QLUACPP_LUA_INCLUDE_DIR}")
+
 include_directories(
   ${LUACPP}/include
-  ${LUA_INCLUDE_DIR}
+  ${QLUACPP_LUA_INCLUDE_DIR}
   )
 set(SRC "./src")
 
@@ -42,4 +47,4 @@ if (UNIX)
 endif()
 
 add_library(qluacpp ${SOURCES})
-target_link_libraries(qluacpp ${LUA_LIBRARIES})
+target_link_libraries(qluacpp ${QLUACPP_LUA_LIBRARY})
