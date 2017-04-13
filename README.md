@@ -3,7 +3,7 @@ C++ interface for Quik trading terminal via lua bindings
 
 # Requirements
 - CMake
-- lua5.1 library (search is performed with CMake FindModule)
+- Lua 5.1 library
 - Modern C++ compiler (C++11 compliant, tested with Mingw64 GCC 6.2.0 and VS 2015 14.0)
 
 # Usage example
