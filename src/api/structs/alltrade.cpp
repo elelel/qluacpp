@@ -45,6 +45,33 @@ qlua::alltrade::alltrade(alltrade&& other) :
   exchange_code(std::move(other.exchange_code)) {
   }
 
+void qlua::alltrade::swap(alltrade& other) {
+  std::swap(trade_num, other.trade_num);
+  std::swap(flags, other.flags);
+  std::swap(price, other.price);
+  std::swap(qty, other.qty);
+  std::swap(value, other.value);
+  std::swap(accruedint, other.accruedint);
+  std::swap(yield, other.yield);
+  std::swap(settlecode, other.settlecode);
+  std::swap(reporate, other.reporate);
+  std::swap(repovalue, other.repovalue);
+  std::swap(repo2value, other.repo2value);
+  std::swap(repoterm, other.repoterm);
+  std::swap(sec_code, other.sec_code);
+  std::swap(class_code, other.class_code);
+  std::swap(datetime, other.datetime);
+  std::swap(period, other.period);
+  std::swap(open_interest, other.open_interest);
+  std::swap(exchange_code, other.exchange_code);
+}
+
+qlua::alltrade& qlua::alltrade::operator=(cosnt qlua::alltrade& other) {
+  alltrade tmp(other);
+  swap(tmp);
+  return *this;
+}
+
 bool qlua::alltrade::is_sell() const {
   return (flags & 0x1) != 0;
 }
