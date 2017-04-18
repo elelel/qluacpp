@@ -66,7 +66,7 @@ void qlua::alltrade::swap(alltrade& other) {
   std::swap(exchange_code, other.exchange_code);
 }
 
-qlua::alltrade& qlua::alltrade::operator=(cosnt qlua::alltrade& other) {
+qlua::alltrade& qlua::alltrade::operator=(const qlua::alltrade& other) {
   alltrade tmp(other);
   swap(tmp);
   return *this;
