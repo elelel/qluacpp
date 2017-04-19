@@ -347,7 +347,26 @@ namespace qlua {
     };    
 
     struct OnTrade : public base<OnTrade> {     
-      static std::string name() { return "OnTrade"; }    
+      static std::string name() { return "OnTrade"; }
+      typedef OnTrade type;
+      typedef void(*handler_type)(lua::state&,
+                                  const trade& t);
+
+      static int lua_handler(lua_State* L) {
+        lua::state l(L);
+        auto tr = l.get_value<trade>(-1);
+        handler_(l, tr);
+        return 0;
+      }
+    private:
+      friend type& api::set_callback<type>(handler_type);
+
+      OnTrade(lua::state& l, handler_type handler) :
+        base(l) {
+        handler_ = handler;
+      }
+
+      static handler_type handler_;
     };    
 
     struct OnTransReply : public base<OnTransReply> {     

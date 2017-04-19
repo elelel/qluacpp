@@ -11,4 +11,5 @@ qlua::callback::OnDisconnected::handler_type qlua::callback::OnDisconnected::han
 qlua::callback::OnInit::handler_type qlua::callback::OnInit::handler_;
 qlua::callback::OnQuote::handler_type qlua::callback::OnQuote::handler_;
 qlua::callback::OnStop::handler_type qlua::callback::OnStop::handler_;
+qlua::callback::OnTrade::handler_type qlua::callback::OnTrade::handler_;
 qlua::callback::OnTransReply::handler_type qlua::callback::OnTransReply::handler_;
