@@ -19,6 +19,7 @@
 #include "structs/transaction.hpp"
 #include "structs/portfolio_info.hpp"
 #include "structs/buy_sell_info.hpp"
+#include "structs/trade.hpp"
 #include "tables/orders.hpp"
 #include "tables/depo_limits.hpp"
 #include "tables/money_limits.hpp"
