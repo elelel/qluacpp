@@ -10,14 +10,14 @@ namespace qlua {
       struct orders {
         unsigned int order_num;
         unsigned int flags;
-        std::string brokerred;
+        std::string brokerref;
         std::string userid;
         std::string firmid;
         std::string account;
         double price;
         double qty;
         double balance;
-        double vlaue;
+        double value;
         double accruedint;
         double yield;
         unsigned int trans_id;
@@ -25,6 +25,7 @@ namespace qlua {
         double price2;
         std::string settlecode;
         unsigned int uid;
+        unsigned int canceled_uid;
         std::string exchange_code;
         double activation_time;
         unsigned int linkedorder;
@@ -32,6 +33,7 @@ namespace qlua {
         std::string sec_code;
         std::string class_code;
         ::qlua::datetime datetime;
+        ::qlua::datetime withdraw_datetime;
         std::string bank_acc_id;
         unsigned int value_entry_type;
         unsigned int repoterm;
@@ -43,6 +45,7 @@ namespace qlua {
         unsigned int ext_order_flags;
         double min_qty;
         unsigned int exec_type;
+        unsigned int side_qualifier;
         unsigned int acnt_type;
         double capacity;
         unsigned int passive_only_order;
@@ -57,17 +60,17 @@ namespace lua {
   struct stack_reader<qlua::table::row::orders> {
     inline static qlua::table::row::orders read(const lua::state& l, int idx = -1) {
       qlua::table::row::orders r;
-      
+
       l.get_field_into("order_num", r.order_num);
       l.get_field_into("flags", r.flags);
-      l.get_field_into("brokerred", r.brokerred);
+      l.get_field_into("brokerref", r.brokerref);
       l.get_field_into("userid", r.userid);
       l.get_field_into("firmid", r.firmid);
       l.get_field_into("account", r.account);
       l.get_field_into("price", r.price);
       l.get_field_into("qty", r.qty);
       l.get_field_into("balance", r.balance);
-      l.get_field_into("vlaue", r.vlaue);
+      l.get_field_into("value", r.value);
       l.get_field_into("accruedint", r.accruedint);
       l.get_field_into("yield", r.yield);
       l.get_field_into("trans_id", r.trans_id);
@@ -75,6 +78,7 @@ namespace lua {
       l.get_field_into("price2", r.price2);
       l.get_field_into("settlecode", r.settlecode);
       l.get_field_into("uid", r.uid);
+      l.get_field_into("canceled_uid", r.canceled_uid);
       l.get_field_into("exchange_code", r.exchange_code);
       l.get_field_into("activation_time", r.activation_time);
       l.get_field_into("linkedorder", r.linkedorder);
@@ -82,6 +86,7 @@ namespace lua {
       l.get_field_into("sec_code", r.sec_code);
       l.get_field_into("class_code", r.class_code);
       l.get_field_into("datetime", r.datetime);
+      l.get_field_into("withdraw_datetime", r.withdraw_datetime);
       l.get_field_into("bank_acc_id", r.bank_acc_id);
       l.get_field_into("value_entry_type", r.value_entry_type);
       l.get_field_into("repoterm", r.repoterm);
@@ -93,6 +98,7 @@ namespace lua {
       l.get_field_into("ext_order_flags", r.ext_order_flags);
       l.get_field_into("min_qty", r.min_qty);
       l.get_field_into("exec_type", r.exec_type);
+      l.get_field_into("side_qualifier", r.acnt_type);
       l.get_field_into("acnt_type", r.acnt_type);
       l.get_field_into("capacity", r.capacity);
       l.get_field_into("passive_only_order", r.passive_only_order);

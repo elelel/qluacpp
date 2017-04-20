@@ -9,6 +9,7 @@ qlua::callback::OnClose::handler_type qlua::callback::OnClose::handler_;
 qlua::callback::OnConnected::handler_type qlua::callback::OnConnected::handler_;
 qlua::callback::OnDisconnected::handler_type qlua::callback::OnDisconnected::handler_;
 qlua::callback::OnInit::handler_type qlua::callback::OnInit::handler_;
+qlua::callback::OnOrder::handler_type qlua::callback::OnOrder::handler_;
 qlua::callback::OnQuote::handler_type qlua::callback::OnQuote::handler_;
 qlua::callback::OnStop::handler_type qlua::callback::OnStop::handler_;
 qlua::callback::OnTrade::handler_type qlua::callback::OnTrade::handler_;

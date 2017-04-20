@@ -58,7 +58,7 @@ namespace qlua {
       auto result = lua_.pcall<return_type>(api_name, params);
       return std::get<0>(result);
     }
-    std::tuple<table::row::orders, unsigned int> getOrderByNumber(const char* class_code, unsigned int order_id) const;
+    table::row::orders getOrderByNumber(const char* class_code, unsigned int order_id) const;
     unsigned int getNumberOf(const char* table_name) const;
     /*
     template <typename... Args>

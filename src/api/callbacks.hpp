@@ -3,6 +3,8 @@
 #include <functional>
 #include <string>
 
+#include <iostream>
+
 #include "api.hpp"
 #include "structs/alltrade.hpp"
 #include "structs/account_balance.hpp"
@@ -282,11 +284,33 @@ namespace qlua {
       static std::string name() { return "OnNegTrade"; }    
     };    
 
-    struct OnOrder : public base<OnOrder> {     
-      static std::string name() { return "OnOrder"; }    
+    struct OnOrder : public base<OnOrder> {
+      typedef OnOrder type;
+      typedef void (*handler_type)(lua::state&,
+                                   const table::row::orders& order);
+      
+      static std::string name() { return "OnOrder"; }
+
+      static int lua_handler(lua_State* L) {
+        lua::state l(L);
+        table::row::orders order = l.get_value<table::row::orders>(-1);
+        handler_(l, order);
+        return 0;
+      }
+
+    private:
+      friend type& api::set_callback<type>(handler_type);
+
+      OnOrder(lua::state& l, handler_type handler) :
+        base(l) {
+        handler_ = handler;
+      }
+
+      static handler_type handler_;
+      
     };    
 
-    struct OnParam : public base<OnParam> {     
+    struct OnParam : public base<OnParam> {
       static std::string name() { return "OnParam"; }    
     };    
 
