@@ -8,7 +8,7 @@ C++ interface for Quik trading terminal via lua bindings
 
 # Usage example
 
-See [**tutorial**](https://github.com/elelel/qluacpp-tutorial) for a usage example, as well as step by step instruction for creating qluacpp projects.
+See [**tutorials**](https://github.com/elelel/qluacpp-tutorial) for code examples, as well as step by step instruction for creating qluacpp projects.
 
 # License
 GPL v3.0
