@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.4.0)
 project(qluacpp)
 
 if (NOT QLUACPP_LUA_LIBRARY)
-  message( FATAL_ERROR "Please set QLUACPP_LUA_LIBRARY variable to your Lua DLL file. For example:\n cmake -DQLUACPP_LUA_LIBRARY=c:\\quik\\lua51.dll ...")
+  message( FATAL_ERROR "Please set QLUACPP_LUA_LIBRARY variable to your Lua library file. For example:\n cmake -DQLUACPP_LUA_LIBRARY=c:\\lua\\lua51.lib ...")
 endif()
 message ("Lua library: ${QLUACPP_LUA_LIBRARY}")
 
@@ -18,22 +18,8 @@ include_directories(
 set(SRC "./src")
 
 set(SOURCES
-  ${SRC}/api/api.cpp
-  ${SRC}/api/constants.cpp
-  ${SRC}/api/callbacks.cpp
-  ${SRC}/api/service.cpp
-  ${SRC}/api/tables.cpp
-  ${SRC}/api/instruments.cpp
-  ${SRC}/api/workplace.cpp
-  ${SRC}/api/workplace_tables.cpp
-  ${SRC}/api/quotes_level_2.cpp
-  ${SRC}/api/current_trades.cpp
-  ${SRC}/api/structs/alltrade.cpp
-  ${SRC}/api/structs/quote_level_2.cpp
-  ${SRC}/extended_api/extended_api.cpp
-  ${SRC}/extended_api/service.cpp
-  ${SRC}/extended_api/instruments.cpp
-  ${SRC}/extended_api/workplace.cpp
+  ${SRC}/qlua/service.cpp
+  ${SRC}/qlua/qlua.cpp
   )
 
 if (CMAKE_CXX_COMPILER_ID MATCHES "Clang")
