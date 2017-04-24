@@ -7,20 +7,24 @@
 
 #include <luacpp/luacpp>
 
-#include "datatype.hpp"
+#include "datatypes.hpp"
 
+// firms "Фирмы"
 namespace qlua {
-
   namespace table {
-    // firms "Фирмы"
     LUACPP_STATIC_TABLE_BEGIN(firms)
     LUACPP_TABLE_FIELD(firmid, std::string)
     LUACPP_TABLE_FIELD(firm_name, std::string)
     LUACPP_TABLE_FIELD(status, int)
     LUACPP_TABLE_FIELD(exchange, std::string)
     LUACPP_STATIC_TABLE_END()
+  }
+}
+LUACPP_STATIC_TABLE_TYPE_POLICY(::qlua::table::firms)
 
-    // classes "Классы"
+// classes "Классы"
+namespace qlua {
+  namespace table {
     LUACPP_STATIC_TABLE_BEGIN(classes)
     LUACPP_TABLE_FIELD(firmid, std::string)
     LUACPP_TABLE_FIELD(name, std::string)
@@ -28,8 +32,13 @@ namespace qlua {
     LUACPP_TABLE_FIELD(npas, std::string)
     LUACPP_TABLE_FIELD(nsecs, std::string)
     LUACPP_STATIC_TABLE_END()
+  }
+}
+LUACPP_STATIC_TABLE_TYPE_POLICY(::qlua::table::classes)
 
-    // securities "Инструменты" (ценные бумаги)
+// securities "Инструменты" (ценные бумаги)
+namespace qlua {
+  namespace table {
     LUACPP_STATIC_TABLE_BEGIN(securities)
     LUACPP_TABLE_FIELD(code, std::string)
     LUACPP_TABLE_FIELD(name, std::string)
@@ -44,8 +53,13 @@ namespace qlua {
     LUACPP_TABLE_FIELD(isin, std::string)
     LUACPP_TABLE_FIELD(min_price_step, double)
     LUACPP_STATIC_TABLE_END()
+  }
+}
+LUACPP_STATIC_TABLE_TYPE_POLICY(::qlua::table::securities)
 
-    // trade_accounts "Торговые счета"
+// trade_accounts "Торговые счета"
+namespace qlua {
+  namespace table {
     LUACPP_STATIC_TABLE_BEGIN(trade_accounts)
     LUACPP_TABLE_FIELD(class_codes, std::string)
     LUACPP_TABLE_FIELD(firmid, std::string)
@@ -62,16 +76,26 @@ namespace qlua {
     LUACPP_TABLE_FIELD(depaccid, std::string)
     LUACPP_TABLE_FIELD(bank_acc_id, std::string)
     LUACPP_STATIC_TABLE_END()
+  }
+}
+LUACPP_STATIC_TABLE_TYPE_POLICY(::qlua::table::trade_accounts)
     
-    // client_codes "Коды клиентов"
-    // TODO: (Not really a table, an array of strings)
+// client_codes "Коды клиентов"
+// TODO: (Not really a table, an array of strings)
 
-    // all_trades "Обезличенные сделки"
-    LUACPP_STATIC_TABLE_BEGIN(client_codes)
+// all_trades "Обезличенные сделки"
+namespace qlua {
+  namespace table {
+    LUACPP_STATIC_TABLE_BEGIN(all_trades)
     
     LUACPP_STATIC_TABLE_END()
-    
-    // account_positions "Денежные позиции"
+  }
+}
+LUACPP_STATIC_TABLE_TYPE_POLICY(::qlua::table::all_trades)
+
+// account_positions "Денежные позиции"
+namespace qlua {
+  namespace table {
     LUACPP_STATIC_TABLE_BEGIN(account_positions)
     LUACPP_TABLE_FIELD(trade_num, int)
     LUACPP_TABLE_FIELD(flags, unsigned int)
@@ -92,8 +116,13 @@ namespace qlua {
     LUACPP_TABLE_FIELD(open_interest, double)
     LUACPP_TABLE_FIELD(exchange_code, std::string)
     LUACPP_STATIC_TABLE_END()
+  }
+}
+LUACPP_STATIC_TABLE_TYPE_POLICY(::qlua::table::account_positions)
     
-    // orders "Заявки"
+// orders "Заявки"
+namespace qlua {
+  namespace table {
     LUACPP_STATIC_TABLE_BEGIN(orders)
     LUACPP_TABLE_FIELD(order_num, unsigned int)
     LUACPP_TABLE_FIELD(flags, unsigned int)
@@ -135,8 +164,13 @@ namespace qlua {
     LUACPP_TABLE_FIELD(passive_only_order, unsigned int)
     LUACPP_TABLE_FIELD(visible, double)
     LUACPP_STATIC_TABLE_END()
+  }
+}
+LUACPP_STATIC_TABLE_TYPE_POLICY(::qlua::table::orders)
     
-    // futures_client_holding "Позиции по клиентским счетам (фьючерсы)"
+// futures_client_holding "Позиции по клиентским счетам (фьючерсы)"
+namespace qlua {
+  namespace table {
     LUACPP_STATIC_TABLE_BEGIN(future_client_holding)
     LUACPP_TABLE_FIELD(firmid, std::string)
     LUACPP_TABLE_FIELD(trdaccid, std::string)
@@ -159,8 +193,13 @@ namespace qlua {
     LUACPP_TABLE_FIELD(total_varmargin, double)
     LUACPP_TABLE_FIELD(session_status, unsigned int)
     LUACPP_STATIC_TABLE_END()
+  }
+}
+LUACPP_STATIC_TABLE_TYPE_POLICY(::qlua::table::future_client_holding)
     
-    // futures_client_limits "Лимиты по фьючерсам"
+// futures_client_limits "Лимиты по фьючерсам"
+namespace qlua {
+  namespace table {
     LUACPP_STATIC_TABLE_BEGIN(future_client_limits)
     LUACPP_TABLE_FIELD(firmid, std::string)
     LUACPP_TABLE_FIELD(trdaccid, std::string)
@@ -179,8 +218,13 @@ namespace qlua {
     LUACPP_TABLE_FIELD(currcode, std::string)
     LUACPP_TABLE_FIELD(real_varmargin, double)
     LUACPP_STATIC_TABLE_END()
+  }
+}
+LUACPP_STATIC_TABLE_TYPE_POLICY(::qlua::table::future_client_limits)
     
-    // money_limits "Лимиты по денежным средствам"
+// money_limits "Лимиты по денежным средствам"
+namespace qlua {
+  namespace table {
     LUACPP_STATIC_TABLE_BEGIN(money_limits)
     LUACPP_TABLE_FIELD(currcode, std::string)
     LUACPP_TABLE_FIELD(tag, std::string)
@@ -196,9 +240,14 @@ namespace qlua {
     LUACPP_TABLE_FIELD(leverage, double)
     LUACPP_TABLE_FIELD(limit_kind, int)
     LUACPP_STATIC_TABLE_END()
+  }
+}
+LUACPP_STATIC_TABLE_TYPE_POLICY(::qlua::table::money_limits)
 
     
-    // depo_limits "Лимиты по бумагам"
+// depo_limits "Лимиты по бумагам"
+namespace qlua {
+  namespace table {
     LUACPP_STATIC_TABLE_BEGIN(depo_limits)
     LUACPP_TABLE_FIELD(sec_code, std::string)
     LUACPP_TABLE_FIELD(trdaccid, std::string)
@@ -215,14 +264,16 @@ namespace qlua {
     LUACPP_TABLE_FIELD(awg_position_price, double)
     LUACPP_TABLE_FIELD(limit_kind, int)
     LUACPP_STATIC_TABLE_END()
-    // trades "Сделки"
-    // stop_orders "Стоп-заявки"
-    // neg_deals "Заявки на внебиржевые сделки"
-    // neg_trades "Сделки для исполнения"
-    // neg_deal_reports "Отчеты по сделкам для исполнения"
-    // firm_holding "Текущие позиции по бумагам"
-    // account_balance "Текущиее позиции по клиентским счетам"
-    // ccp_holdings "Обязательства и требования по активам"
-    // rm_holdings "Валюта: обящательства и требования по активам"
   }
 }
+LUACPP_STATIC_TABLE_TYPE_POLICY(::qlua::table::depo_limits)
+
+// trades "Сделки"
+// stop_orders "Стоп-заявки"
+// neg_deals "Заявки на внебиржевые сделки"
+// neg_trades "Сделки для исполнения"
+// neg_deal_reports "Отчеты по сделкам для исполнения"
+// firm_holding "Текущие позиции по бумагам"
+// account_balance "Текущиее позиции по клиентским счетам"
+// ccp_holdings "Обязательства и требования по активам"
+// rm_holdings "Валюта: обящательства и требования по активам"
