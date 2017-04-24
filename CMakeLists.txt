@@ -18,7 +18,6 @@ include_directories(
 set(SRC "./src")
 
 set(SOURCES
-  ${SRC}/qlua/service.cpp
   ${SRC}/qlua/qlua.cpp
   )
 
