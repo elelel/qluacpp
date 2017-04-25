@@ -59,12 +59,6 @@ namespace qlua {
       return *this;
     }
 
-    void test() const {
-      std::cout << "Testing internal " << l_.C_state() << "\n";
-      l_.getglobal("message");
-      std::cout << "Internal test done\n";
-    }
-
     // Service "Сервисные функции"
 #include "api/service.hpp"
     // Table access functions
