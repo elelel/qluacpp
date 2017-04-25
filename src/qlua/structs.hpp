@@ -231,7 +231,7 @@ LUACPP_STATIC_TABLE_TYPE_POLICY(::qlua::table::orders)
 // Object names in qlua.chm: fut_pos "Таблица с описанием позиции по срочному рынку"
 namespace qlua {
   namespace table {
-    LUACPP_STATIC_TABLE_BEGIN(future_client_holding)
+    LUACPP_STATIC_TABLE_BEGIN(futures_client_holding)
     LUACPP_TABLE_FIELD(firmid, std::string)
     LUACPP_TABLE_FIELD(trdaccid, std::string)
     LUACPP_TABLE_FIELD(sec_code, std::string)
@@ -255,13 +255,13 @@ namespace qlua {
     LUACPP_STATIC_TABLE_END()
   }
 }
-LUACPP_STATIC_TABLE_TYPE_POLICY(::qlua::table::future_client_holding)
+LUACPP_STATIC_TABLE_TYPE_POLICY(::qlua::table::futures_client_holding)
     
 // futures_client_limits "Лимиты по фьючерсам"
 // Object name in qlua.chm: fut_limit "Таблица с текущими значениями лимита по срочному рынку"
 namespace qlua {
   namespace table {
-    LUACPP_STATIC_TABLE_BEGIN(future_client_limits)
+    LUACPP_STATIC_TABLE_BEGIN(futures_client_limits)
     LUACPP_TABLE_FIELD(firmid, std::string) // Идентификатор фирмы  
     LUACPP_TABLE_FIELD(trdaccid, std::string) // Торговый счет  
     LUACPP_TABLE_FIELD(limit_type, unsigned int) /* Тип лимита. Возможные значения: 
@@ -291,7 +291,7 @@ namespace qlua {
     LUACPP_STATIC_TABLE_END()
   }
 }
-LUACPP_STATIC_TABLE_TYPE_POLICY(::qlua::table::future_client_limits)
+LUACPP_STATIC_TABLE_TYPE_POLICY(::qlua::table::futures_client_limits)
 
 // futures_limit_delete "Таблица с параметрами удаляемого лимита по срочному рынку" (callback)
 // Object names in qlua.chm: lim_del

@@ -1,5 +1,7 @@
 #pragma once
 
+#include "structs.hpp"
+
 namespace qlua {
   namespace callback {
     struct main {   //  реализация основного потока исполнения в скрипте 
@@ -7,15 +9,15 @@ namespace qlua {
     };
 
     struct OnAccountBalance {   //  изменение позиции по счету
-      typedef std::function<void(::lua::entity<::qlua::table::account_balance)>> signature;
+      typedef std::function<void(::lua::entity<::qlua::table::account_balance>)> signature;
     };
     
     struct OnAccountPosition {   //  изменение позиции по счету
-      typedef std::function<void(::lua::entity<::qlua::table::account_positions)>> signature;
+      typedef std::function<void(::lua::entity<::qlua::table::account_positions>)> signature;
     };
     
     struct OnAllTrade {   //  новая обезличенная сделка 
-      typedef std::function<void(::lua::entity<::qlua::table::all_trade)>> signature;
+      typedef std::function<void(::lua::entity<::qlua::table::all_trades>)> signature;
     };
     
     struct OnCleanUp {   //  смена торговой сессии
@@ -31,7 +33,7 @@ namespace qlua {
     };
     
     struct OnDepoLimit {   //  изменение бумажного лимита
-      typedef std::function<void(::lua::entity<::qlua::table::depo_limit>)> signature;
+      typedef std::function<void(::lua::entity<::qlua::table::depo_limits>)> signature;
     };
     
     struct OnDepoLimitDelete {   //  удаление бумажного лимита
@@ -47,19 +49,19 @@ namespace qlua {
     };
     
     struct OnFuturesClientHolding {   //  изменение позиции по срочному рынку
-      typedef std::function<void(::lua::entity<::qlua::table::future_client_holding)> signature;
+      typedef std::function<void(::lua::entity<::qlua::table::futures_client_holding>)> signature;
     };
     
     struct OnFuturesLimitChange {   //  изменение ограничений по срочному рынку 
-      typedef std::function<void(::lua::entity<::qlua::table::futures_client_limits)> signature;
+      typedef std::function<void(::lua::entity<::qlua::table::futures_client_limits>)> signature;
     };
     
     struct OnFuturesLimitDelete {   //  удаление лимита по срочному рынку 
-      typedef std::function<void(::lua::entity<::qlua::table::futures_limit_delete)> signature;
+      typedef std::function<void(::lua::entity<::qlua::table::futures_limit_delete>)> signature;
     };
     
     struct OnInit {   //  инициализация функции main 
-      typedef std::function<void(std::string)> signature;
+      typedef std::function<void(::lua::entity<std::string>)> signature;
     };
     
     struct OnMoneyLimit {   //  изменение денежного лимита 
@@ -71,15 +73,15 @@ namespace qlua {
     };
     
     struct OnNegDeal {   //  новая заявка на внебиржевую сделку или изменение параметров существующей заявки на внебиржевую сделку 
-      typedef std::function<void(::lua::entity<::qlua::table::neg_deal>)> signature;
+      typedef std::function<void(::lua::entity<::qlua::table::neg_deals>)> signature;
     };
     
     struct OnNegTrade {   //  новая сделка для исполнения или изменение существующей сделки для исполнения 
-      typedef std::function<void(::lua::entity<::qlua::table::neg_trade>)> signature;
+      typedef std::function<void(::lua::entity<::qlua::table::neg_trades>)> signature;
     };
     
     struct OnOrder {   //  новая заявка или изменение параметров существующей заявки 
-      typedef std::function<void(::lua::entity<::qlua::table::orders)> signature;
+      typedef std::function<void(::lua::entity<::qlua::table::orders>)> signature;
     };
     
     struct OnParam {   //  изменение текущих параметров 
@@ -95,11 +97,11 @@ namespace qlua {
     };
     
     struct OnStopOrder {   //  новая стоп-заявка или изменение параметров существующей стоп-заявки 
-      typedef std::function<void(::lua::entity<::qlua::tables::stop_orders>)> signature;
+      typedef std::function<void(::lua::entity<::qlua::table::stop_orders>)> signature;
     };
     
     struct OnTrade {   //  новая сделка или изменение параметров существующей сделки 
-      typedef std::function<void(::lua::entity<::qlua::tables::trades)> signature;
+      typedef std::function<void(::lua::entity<::qlua::table::trades>)> signature;
     };
     
     struct OnTransReply {   //  ответ на транзакцию 

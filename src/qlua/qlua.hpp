@@ -2,7 +2,8 @@
 
 #include <luacpp/luacpp>
 
-#include "structs/tables.hpp"
+#include "structs.hpp"
+#include "callbacks.hpp"
 
 #define QLUACPP_DETAIL_API_FUNCTION2(RETURN_TYPE, NAME) \
   RETURN_TYPE NAME() const {                            \
