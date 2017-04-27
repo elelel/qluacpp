@@ -34,7 +34,7 @@ namespace qlua {
     }
 
     template <typename constant_t>
-    constant_t constant(const char* name) {
+    constant_t constant(const char* name) const {
       l_.getglobal(name);
       if (!l_.isnil(-1)) {
         constant_t rslt = l_.at<constant_t>(-1).get();
