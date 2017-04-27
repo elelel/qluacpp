@@ -59,12 +59,11 @@ namespace qlua {
       swap(tmp);
       return *this;
     }
-
+    
     // Service "Сервисные функции"
 #include "api/service.hpp"
     // Table access functions
 #include "api/table.hpp"
-
     
   private:
     lua::state l_;
