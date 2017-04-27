@@ -7,11 +7,11 @@ namespace qlua {
 
     /* These are just names and type signature for future typechecks.
        For now, to install qlua callback just declare appropriate luacpp static function, e.g.:
-       LUACPP_STATIC_FUNCTION(main, my_main_handler_function); // In root namespace
+       LUACPP_STATIC_FUNCTION2(main, my_main_handler_function); // In root namespace
        ::lua::functions::main.register_to_lua(lua_state, my_main_handler_function); // Later in code
      */
     
-    struct main : public callback_base<derived_t> {   //  реализация основного потока исполнения в скрипте
+    struct main {   //  реализация основного потока исполнения в скрипте
       static const char* name() { static const char name[] = "main"; return name; }
       typedef void return_type;
       typedef std::tuple<> args_type;
