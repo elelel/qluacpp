@@ -9,11 +9,14 @@ C++ interface for Quik trading terminal via Lua bindings
 
 ## Usage example / Пример использования
 
-See [**tutorials**](https://github.com/elelel/qluacpp-tutorial) for code examples, as well as step by step instruction for creating qluacpp projects.
+See [tutorials](https://github.com/elelel/qluacpp-tutorial) for code examples, as well as step by step instruction for creating qluacpp projects.
 
-[**Примеры**](https://github.com/elelel/qluacpp-tutorial) содержат пошаговые инструкции и исходные коды небольших плагинов
+[Примеры](https://github.com/elelel/qluacpp-tutorial) содержат пошаговые инструкции и исходные коды небольших плагинов
 
 ## License / Лицензия
 GPL v3.0.
+
 Distribute your source code if you distribute the binaries.
+
 Если распространяете бинарники, прилагайте и исходный код.
+
