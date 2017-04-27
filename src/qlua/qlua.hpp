@@ -2,38 +2,9 @@
 
 #include <luacpp/luacpp>
 
+#include "api/macros.h"
 #include "structs.hpp"
 #include "callbacks.hpp"
-
-#define QLUACPP_DETAIL_API_FUNCTION2(RETURN_TYPE, NAME) \
-  RETURN_TYPE NAME() const {                            \
-    typedef RETURN_TYPE bare_return_type;               \
-    typedef std::tuple<bare_return_type> return_type;   \
-    return std::get<0>(l_.call<return_type>(#NAME));    \
-  }                                                     \
-
-#define QLUACPP_DETAIL_API_FUNCTION4(RETURN_TYPE, NAME,         \
-                                     ARG1_TYPE, ARG1)           \
-  RETURN_TYPE NAME(ARG1_TYPE ARG1) const {                      \
-    typedef RETURN_TYPE bare_return_type;                       \
-    typedef std::tuple<bare_return_type> return_type;           \
-    return std::get<0>(l_.call<return_type>(#NAME, ARG1));      \
-  }                                                             \
-
-#define QLUACPP_DETAIL_API_FUNCTION6(RETURN_TYPE, NAME,         \
-                                     ARG1_TYPE, ARG1,           \
-                                     ARG2_TYPE, ARG2)           \
-  RETURN_TYPE NAME(ARG1_TYPE ARG1, ARG2_TYPE ARG2) const {      \
-    typedef std::tuple<RETURN_TYPE> return_type;                \
-    return std::get<0>(l_.call<return_type>(#NAME, ARG1));      \
-  }                                                             \
-
-#define QLUACPP_DETAIL_API_FUNCTION_VOID3(NAME,                 \
-                                          ARG1_TYPE, ARG1)      \
-  void NAME(ARG1_TYPE ARG1) const {                             \
-    l_.call<std::tuple<>>(#NAME, ARG1);                         \
-  }                                                             \
-
 
 namespace qlua {
   struct api {
@@ -62,8 +33,26 @@ namespace qlua {
     
     // Service "Сервисные функции"
 #include "api/service.hpp"
-    // Table access functions
+    // Table data access Функции для обращения к строкам произвольных таблиц QUIK
+#include "api/table_data.hpp"
+    // Securities "Функции для обращения к спискам доступных параметров"
+#include "api/securities.hpp"
+    // Workplace "Функции взаимодействия скрипта Lua и Рабочего места QUIK"
+#include "api/workplace.hpp"
+    // Current trades "Функции получения значений Таблицы текущих торгов"
+#include "api/current_trades_receive.hpp"
+    // Charts "Функции для работы с графиками"
+#include "api/charts.hpp"
+    // Table manipulations "Функции для работы с таблицами Рабочего места QUIK"
 #include "api/table.hpp"
+    // "Функции для работы с метками"
+#include "api/labels.hpp"
+    // Level 2 quotes "Функции для заказа стакана котировок"
+#include "api/level2_quotes.hpp"
+    // Функции для заказа параметров Таблицы текущих торгов
+#include "api/current_trades_request.hpp"
+    // Функции для работы с битовыми масками в структурах данных
+#include "api/bitmask.hpp"
     
   private:
     lua::state l_;

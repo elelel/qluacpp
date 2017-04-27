@@ -1,27 +1,31 @@
 #pragma once
 
-// This file should be included only from qlua.hpp
-// Table access functions
-template <typename item_t>
-item_t getItem(const char* table_name, const int index) const {
-  const char api_name[] = "getItem";
-  typedef std::tuple<item_t> return_type;
-  return std::get<0>(l_.call<return_type>(api_name, table_name, index));
-}
-
-/* TODO: fix table row orders
-   std::tuple<table::row::orders, unsigned int> getOrderByNumber(const char* class_code, unsigned int order_id) const {
-   const char api_name[] = "getOrderByNumber";
-   typedef std::tuple<table::row::orders, unsigned int> return_type;
-   return l_.call<return_type>(api_name, class_code, order_id);
-   }
-*/
-
-QLUACPP_DETAIL_API_FUNCTION4(unsigned int, getNumberOf,
-                             const char*, table_name);
-
+// добавляет колонки в таблицу
+QLUACPP_DETAIL_API_FUNCTION14(unsigned int, AddColumn,
+                              const unsigned int, t_id,
+                              const unsigned int, iCode,
+                              const char*, name,
+                              const bool, is_default,
+                              const unsigned int, par_type,
+                              const unsigned int, width)
 /*
-  template <typename... Args>
-  std::vector<unsigned int> SearchItems(const char* table_name, bool(Args...)) {
-  throw std::runtime_error("Not implemented");
-  }*/
+AllocTable // создает структуру, описывающую таблицу 
+Clear // удаляет содержимое таблицы 
+CreateWindow // создает окно таблицы 
+DeleteRow // удаляет строку из таблицы 
+DestroyTable // закрывает окно таблицы 
+InsertRow // добавляет строку в таблицу 
+IsWindowClosed // возвращает «true», если закрыто окно с таблицей 
+GetCell // позволяет получить данные из ячейки таблицы 
+GetTableSize // получает количество строк и столбцов 
+GetWindowCaption // получает текущий заголовок окна 
+GetWindowRect // получает координаты верхнего левого и нижнего правого угла окна, содержащего таблицу 
+Highlight // подсвечивает выбранный диапазон ячеек с плавным «затуханием» для таблицы 
+RGB // преобразовывает компоненты RGB (red, green, blue) в одно число для дальнейшего использования в функции SetColor 
+SetCell // задает значение для ячейки в таблице 
+SetColor // устанавливает цвет ячейки, столбца или строки для таблицы 
+SetTableNotificationCallback // задает функцию обратного вызова для обработки событий в таблице 
+SetWindowCaption // задает заголовок окна 
+SetWindowPos // устанавливает положение окна с таблицей 
+SetSelectedRow // выделяет определенную строку таблицы 
+*/
