@@ -6,6 +6,8 @@
 #include "structs.hpp"
 #include "callbacks.hpp"
 
+// TODO: type policies in numeric_tuples.hpp
+
 namespace qlua {
   struct api {
     typedef api type;
@@ -30,6 +32,19 @@ namespace qlua {
       swap(tmp);
       return *this;
     }
+
+    template <typename constant_t>
+    constant_t constant(const char* name) {
+      l_.getglobal(name);
+      if (!l_.isnil(-1)) {
+        constant_t rslt = l_.at<constant_t>(-1).get();
+        l_.pop(1);
+        return rslt;
+      } else {
+        l_.pop(1);
+        throw std::runtime_error("QluaCpp error: QLua constant " + std::string(name) + " is nil in globals list");
+      }
+    }
     
     // Service "Сервисные функции"
 #include "api/service.hpp"
@@ -39,7 +54,7 @@ namespace qlua {
 #include "api/securities.hpp"
     // Workplace "Функции взаимодействия скрипта Lua и Рабочего места QUIK"
 #include "api/workplace.hpp"
-    // Current trades "Функции получения значений Таблицы текущих торгов"
+    // Current trades receive "Функции получения значений Таблицы текущих торгов"
 #include "api/current_trades_receive.hpp"
     // Charts "Функции для работы с графиками"
 #include "api/charts.hpp"
@@ -49,9 +64,9 @@ namespace qlua {
 #include "api/labels.hpp"
     // Level 2 quotes "Функции для заказа стакана котировок"
 #include "api/level2_quotes.hpp"
-    // Функции для заказа параметров Таблицы текущих торгов
+    // Current trades request Функции для заказа параметров Таблицы текущих торгов
 #include "api/current_trades_request.hpp"
-    // Функции для работы с битовыми масками в структурах данных
+    // Bitmask Функции для работы с битовыми масками в структурах данных
 #include "api/bitmask.hpp"
     
   private:
