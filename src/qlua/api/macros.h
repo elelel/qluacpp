@@ -40,6 +40,24 @@
                                             ));         \
   }                                                     \
 
+#define QLUACPP_DETAIL_API_FUNCTION10(RETURN_TYPE, NAME,        \
+                                      ARG1_TYPE, ARG1,          \
+                                      ARG2_TYPE, ARG2,          \
+                                      ARG3_TYPE, ARG3,          \
+                                      ARG4_TYPE, ARG4)          \
+  RETURN_TYPE NAME(ARG1_TYPE ARG1,                              \
+                   ARG2_TYPE ARG2,                              \
+                   ARG3_TYPE ARG3,                              \
+                   ARG4_TYPE ARG4) const {                      \
+    typedef std::tuple<RETURN_TYPE> return_type;                \
+    return std::get<0>(l_.call<return_type>(#NAME,              \
+                                            ARG1,               \
+                                            ARG2,               \
+                                            ARG3,               \
+                                            ARG4));             \
+  }                                                             \
+
+
 #define QLUACPP_DETAIL_API_FUNCTION12(RETURN_TYPE, NAME,        \
                                       ARG1_TYPE, ARG1,          \
                                       ARG2_TYPE, ARG2,          \

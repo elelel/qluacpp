@@ -100,6 +100,15 @@ QLUACPP_DETAIL_API_FUNCTION8(unsigned int,
                              const unsigned int, blue)
 
 // SetCell - задает значение для ячейки в таблице
+QLUACPP_DETAIL_API_FUNCTION10(bool,
+                              SetCell,
+                              const unsigned int, t_id,
+                              const unsigned int, key,
+                              const unsigned int, code,
+                              const char*, text // задает строковое представление значение параметра «value». 
+                              )
+
+// SetCell - задает значение для ячейки в таблице
 QLUACPP_DETAIL_API_FUNCTION12(bool,
                               SetCell,
                               const unsigned int, t_id,
