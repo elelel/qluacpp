@@ -3,7 +3,8 @@
 #include <luacpp/luacpp>
 
 #include "api/macros.h"
-#include "structs.hpp"
+#include "structs/standalone.hpp"
+#include "structs/function_results.hpp"
 #include "callbacks.hpp"
 
 // TODO: type policies in numeric_tuples.hpp

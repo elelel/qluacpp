@@ -1,6 +1,6 @@
 #pragma once
 
-#include "structs.hpp"
+#include "structs/standalone.hpp"
 
 namespace qlua {
   namespace callback {

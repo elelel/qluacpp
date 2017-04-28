@@ -65,7 +65,7 @@ unsigned int, t_id, NUMBER key, NUMBER code
 ) */
 
 // GetTableSize - получает количество строк и столбцов
-QLUACPP_DETAIL_API_FUNCTION_TUPLE2_4(int, int,
+QLUACPP_DETAIL_API_FUNCTION_TUPLE2_5(int, int,
                                    GetTableSize,
                                    const unsigned int, t_id
                                    )

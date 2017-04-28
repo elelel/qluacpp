@@ -135,12 +135,42 @@
   }                                                             \
 
 
-#define QLUACPP_DETAIL_API_FUNCTION_TUPLE2_4(T1, T2, NAME,      \
+#define QLUACPP_DETAIL_API_FUNCTION_TUPLE2_5(T1, T2, NAME,      \
                                              ARG1_TYPE, ARG1)   \
   std::tuple<T1, T2> NAME(ARG1_TYPE ARG1) const {               \
     typedef std::tuple<T1, T2> return_type;                     \
     return l_.call<return_type>(#NAME, ARG1);                   \
   }                                                             \
+
+#define QLUACPP_DETAIL_API_FUNCTION_TUPLE2_17(T1, T2, NAME,     \
+                                              ARG1_TYPE, ARG1,  \
+                                              ARG2_TYPE, ARG2,  \
+                                              ARG3_TYPE, ARG3,  \
+                                              ARG4_TYPE, ARG4,  \
+                                              ARG5_TYPE, ARG5,  \
+                                              ARG6_TYPE, ARG6,  \
+                                              ARG7_TYPE, ARG7   \
+                                              )                 \
+  std::tuple<T1, T2> NAME(ARG1_TYPE ARG1,                       \
+                          ARG2_TYPE ARG2,                       \
+                          ARG3_TYPE ARG3,                       \
+                          ARG4_TYPE ARG4,                       \
+                          ARG5_TYPE ARG5,                       \
+                          ARG6_TYPE ARG6,                       \
+                          ARG7_TYPE ARG7                        \
+                          ) const {                             \
+    typedef std::tuple<T1, T2> return_type;                     \
+    return l_.call<return_type>(#NAME,                          \
+                                ARG1,                           \
+                                ARG2,                           \
+                                ARG3,                           \
+                                ARG4,                           \
+                                ARG5,                           \
+                                ARG6,                           \
+                                ARG7                            \
+                                );                              \
+  }                                                             \
+
 
 #define QLUACPP_DETAIL_API_FUNCTION_TUPLE4_7(T1, T2, T3, T4, NAME,      \
                                              ARG1_TYPE, ARG1)           \
