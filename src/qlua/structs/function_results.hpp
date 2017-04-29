@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 // depo_limits_getDepo (table returned from getDepo API)
 namespace qlua {
@@ -44,17 +44,14 @@ namespace qlua {
 }
 LUACPP_STATIC_TABLE_TYPE_POLICY(::qlua::table::level2_quotes_record)
 
-/* TODO:
-  Custom type-checking: empty string in bid/offer tables; optional
-*/
 // level2_quotes (table returned from getQuoteLevel2)
 namespace qlua {
   namespace table {
     LUACPP_STATIC_TABLE_BEGIN(level2_quotes)
     LUACPP_TABLE_FIELD(bid_count, std::string) // Количество котировок покупки. При отсутствии спроса возвращается значение «0» 
     LUACPP_TABLE_FIELD(offer_count, std::string) // Количество котировок продажи. При отсутствии предложения возвращается значение «0» 
-    LUACPP_TABLE_FIELD(bid, level2_quotes_record) // Котировки спроса (покупки). При отсутствии спроса возвращается пустая строка 
-    LUACPP_TABLE_FIELD(offer, level2_quotes_record) // Котировки предложений (продажи). При отсутствии предложения возвращается пустая строка 
+    LUACPP_TABLE_FIELD(bid, ::std::vector<level2_quotes_record>) // Котировки спроса (покупки). При отсутствии спроса возвращается пустая строка 
+    LUACPP_TABLE_FIELD(offer, ::std::vector<level2_quotes_record>) // Котировки предложений (продажи). При отсутствии предложения возвращается пустая строка 
     LUACPP_STATIC_TABLE_END()
   }
 }
