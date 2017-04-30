@@ -280,3 +280,44 @@ namespace qlua {
   }
 }
 LUACPP_STATIC_TABLE_TYPE_POLICY(::qlua::table::buy_sell_info_getBuySellInfoEx)
+
+// candle_time (Returned by Функции O, H, L, C, V, T)
+namespace qlua {
+  namespace table {
+    LUACPP_STATIC_TABLE_BEGIN(candle_time)
+    LUACPP_TABLE_FIELD(year, unsigned int)
+    LUACPP_TABLE_FIELD(month, unsigned int)
+    LUACPP_TABLE_FIELD(day, unsigned int)
+    LUACPP_TABLE_FIELD(week_day, unsigned int)
+    LUACPP_TABLE_FIELD(hour, unsigned int)
+    LUACPP_TABLE_FIELD(min, unsigned int)
+    LUACPP_TABLE_FIELD(sec, unsigned int)
+    LUACPP_TABLE_FIELD(ms, unsigned int)
+    LUACPP_TABLE_FIELD(count, unsigned int) // количество тиковых интервалов в секунду. Может принимать значения от «1» до «10000» включительно.
+    LUACPP_STATIC_TABLE_END()
+  }
+}
+LUACPP_STATIC_TABLE_TYPE_POLICY(::qlua::table::candle_time)
+
+// TODO: Make dynamic return value
+// current_trades_getParamEx (returned by getParamEx, getParamEx2)
+namespace qlua {
+  namespace table {
+    LUACPP_STATIC_TABLE_BEGIN(current_trades_getParamEx)
+    LUACPP_TABLE_FIELD(param_type, unsigned int) /* Тип данных параметра, используемый в Таблице текущих торгов. Возможные значения: 
+                                              «1» - DOUBLE;
+                                              «2» - LONG; 
+                                              «3» - CHAR; 
+                                              «4» - перечислимый тип; 
+                                              «5» - время; 
+                                              «6» - дата */
+ 
+    LUACPP_TABLE_FIELD(param_value, double) // Значение параметра. Для param_type = 3 значение параметра равно «0», в остальных случаях – числовое представление. Для перечислимых типов значение равно порядковому значению перечисления  
+    LUACPP_TABLE_FIELD(param_image, std::string) // Строковое значение параметра, аналогичное его представлению в таблице. В строковом представлении учитываются разделители разрядов, разделители целой и дробной части. Для перечислимых типов выводятся соответствующие им строковые значения  
+    LUACPP_TABLE_FIELD(result, unsigned int) /* Результат выполнения операции. Возможные значения: 
+                                          «0» - ошибка; 
+                                          «1» - параметр найден */
+    LUACPP_STATIC_TABLE_END()
+  }
+}
+LUACPP_STATIC_TABLE_TYPE_POLICY(::qlua::table::current_trades_getParamEx)
