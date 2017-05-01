@@ -57,12 +57,13 @@ QLUACPP_DETAIL_API_FUNCTION4(bool, // Функция возвращает «nil�
                              const unsigned int, t_id
                              )
 
-/* TODO
-// GetCell - позволяет получить данные из ячейки таблицы
-QLUACPP_DETAIL_API_FUNCTION(TABLE,
-GetCell,
-unsigned int, t_id, NUMBER key, NUMBER code
-) */
+template <typename T>
+T GetCell(const unsigned int t_id,
+          const unsigned int key,
+          const unsigned int code) const {
+  typedef std::tuple<T> return_type;                
+  return std::get<0>(l_.call<return_type>(GetCell, t_id, key, code));
+}                                                             
 
 // GetTableSize - получает количество строк и столбцов
 QLUACPP_DETAIL_API_FUNCTION_TUPLE2_5(int, int,
@@ -78,7 +79,7 @@ QLUACPP_DETAIL_API_FUNCTION4(const char*,
 // GetWindowRect - получает координаты верхнего левого и нижнего правого угла окна, содержащего таблицу
 QLUACPP_DETAIL_API_FUNCTION_TUPLE4_7(int, int, int, int, // Функция возвращает координаты верхнего левого и нижнего правого угла окна, содержащего таблицу «t_id». 
                                    GetWindowRect,
-                                   unsigned int, t_id
+                                   const unsigned int, t_id
                                    )
 
 // Highlight - подсвечивает выбранный диапазон ячеек с плавным «затуханием» для таблицы
