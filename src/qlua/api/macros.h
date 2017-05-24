@@ -180,3 +180,49 @@
   }                                                                     \
 
 
+#define QLUACPP_DETAIL_API_FUNCTION_RES1_APPLY1( NAME)                  \
+  void NAME(std::function<int(const lua::state& s)> lambda) const {     \
+    l_.call_and_apply(lambda, 1, #NAME);                                \
+  }                                                                     \
+
+#define QLUACPP_DETAIL_API_FUNCTION_RES1_APPLY5( NAME,                  \
+                                                ARG1_TYPE, ARG1,        \
+                                                ARG2_TYPE, ARG2)        \
+  void NAME(ARG1_TYPE ARG1, ARG2_TYPE ARG2,                             \
+            std::function<int(const lua::state& s)> lambda) const {     \
+    l_.call_and_apply(lambda, 1, #NAME, ARG1, ARG2);                    \
+  }                                                                     \
+
+#define QLUACPP_DETAIL_API_FUNCTION_RES1_APPLY7( NAME,                  \
+                                                 ARG1_TYPE, ARG1,       \
+                                                 ARG2_TYPE, ARG2,       \
+                                                 ARG3_TYPE, ARG3)       \
+  void NAME(ARG1_TYPE ARG1, ARG2_TYPE ARG2, ARG3_TYPE ARG3,             \
+            std::function<int(const lua::state& s)> lambda) const {     \
+    l_.call_and_apply(lambda, 1, #NAME, ARG1, ARG2, ARG3);              \
+  }                                                                     \
+
+#define QLUACPP_DETAIL_API_FUNCTION_RES1_APPLY9( NAME,                  \
+                                                 ARG1_TYPE, ARG1,       \
+                                                 ARG2_TYPE, ARG2,       \
+                                                 ARG3_TYPE, ARG3,       \
+                                                 ARG4_TYPE, ARG4)       \
+  void NAME(ARG1_TYPE ARG1, ARG2_TYPE ARG2, ARG3_TYPE ARG3,             \
+            ARG4_TYPE ARG4,                                             \
+            std::function<int(const lua::state& s)> lambda) const {     \
+    l_.call_and_apply(lambda, 1, #NAME, ARG1, ARG2, ARG3, ARG4);        \
+  }                                                                     \
+
+#define QLUACPP_DETAIL_API_FUNCTION_RES1_APPLY11( NAME,                 \
+                                                  ARG1_TYPE, ARG1,      \
+                                                  ARG2_TYPE, ARG2,      \
+                                                  ARG3_TYPE, ARG3,      \
+                                                  ARG4_TYPE, ARG4,      \
+                                                  ARG5_TYPE, ARG5)      \
+  void NAME(ARG1_TYPE ARG1, ARG2_TYPE ARG2, ARG3_TYPE ARG3,             \
+            ARG4_TYPE ARG4, ARG5_TYPE ARG5,                             \
+            std::function<int(const lua::state& s)> lambda) const {     \
+    l_.call_and_apply(lambda, 1, #NAME, ARG1, ARG2, ARG3, ARG4, ARG5);  \
+  }                                                                     \
+
+
