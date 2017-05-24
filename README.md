@@ -16,7 +16,7 @@ void my_main(lua::state& l) {
   qlua::api q(l);
   std::string name;
   q.getSecurityInfo("TQBR", "SBER",
-                    [&name] (const auto& sec_info) {
+                    [&name] (const auto& sec_info) {     // C++14 style lambda
                       name = sec_info().name();
                       return 1;  // How many stack items should be cleaned up (poped)
                     });
