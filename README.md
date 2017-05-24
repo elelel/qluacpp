@@ -14,7 +14,15 @@ static struct luaL_reg ls_lib[] = {
 
 void my_main(lua::state& l) {
   qlua::api q(l);
-  q.message("qluacpp: Hello, world!");
+  std::string name;
+  q.getSecurityInfo("TQBR", "SBER",
+                    [&name] (const lua::state& s) {
+                      auto sec_info = s.at<::qlua::table::securities>(-1);
+                      name = sec_info().name();
+                      return 1;  // How many stack items should be cleaned up (poped)
+                    });
+  std::string text = "qluacpp: Hello, world! Ticker's SBER name is " + name;                  
+  q.message(msg.c_str());  
 }
 
 LUACPP_STATIC_FUNCTION2(main, my_main)
