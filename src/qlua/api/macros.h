@@ -190,6 +190,19 @@
     l_.call_and_apply(f, 1, #NAME);                                     \
   }                                                                     \
 
+#define QLUACPP_DETAIL_API_FUNCTION_RES1_APPLY4( RETURN_TYPE, NAME,     \
+                                                 ARG1_TYPE, ARG1)       \
+  void NAME(ARG1_TYPE ARG1,                                             \
+            std::function<void(const ::lua::entity<::lua::type_policy<RETURN_TYPE>>&)> lambda) const { \
+    auto f = [&lambda] (const ::lua::state& s) {                        \
+      auto v = s.at<RETURN_TYPE>(-1);                                   \
+      lambda(v);                                                        \
+      return 1;                                                         \
+    };                                                                  \
+    l_.call_and_apply(f, 1, #NAME, ARG1);                               \
+  }                                                                     \
+
+
 #define QLUACPP_DETAIL_API_FUNCTION_RES1_APPLY6( RETURN_TYPE, NAME,     \
                                                  ARG1_TYPE, ARG1,       \
                                                  ARG2_TYPE, ARG2)       \

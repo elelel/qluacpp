@@ -73,6 +73,7 @@ LUACPP_STATIC_TABLE_TYPE_POLICY(::qlua::table::classes)
 namespace qlua {
   namespace table {
     LUACPP_STATIC_TABLE_BEGIN(securities)
+    LUACPP_TABLE_FIELD(dummy, unsigned int)
     LUACPP_TABLE_FIELD(code, std::string)
     LUACPP_TABLE_FIELD(name, std::string)
     LUACPP_TABLE_FIELD(short_name, std::string)
