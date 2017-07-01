@@ -5,6 +5,7 @@
 #include "api/macros.h"
 #include "structs/standalone.hpp"
 #include "structs/function_results.hpp"
+#include "structs/datasource.hpp"
 #include "callbacks.hpp"
 
 // TODO: type policies in numeric_tuples.hpp

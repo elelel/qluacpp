@@ -1,7 +1,5 @@
 #pragma once
 
-#pragma once
-
 /*
   QLUA tables structures
   Список по "Таблицы, используемые в функциях «getItem», «getNumberOf» и «SearchItems»"; по таблицам, возвращаемым коллбеками
