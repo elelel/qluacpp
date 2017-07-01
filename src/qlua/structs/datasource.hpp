@@ -41,7 +41,9 @@ namespace qlua {
           return 2;
         } else {
           auto err = s.at<const char*>(-1);
-          throw std::runtime_error(std::string("Create data source error: ") + err());
+          std::string msg = std::string("Create data source error: ") + err();
+          s.pop(2);
+          throw std::runtime_error(msg.c_str());
         }
       };
 
@@ -109,7 +111,7 @@ namespace qlua {
 
     template <typename callback_t>
     bool SetUpdateCallback() {
-      
+      // TODO
     }
 
     void* SetUpdateCallback_{nullptr};
