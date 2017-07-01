@@ -9,22 +9,33 @@ QLUACPP_DETAIL_API_FUNCTION4(unsigned int,
                              getNumCandles,
                              const char*, tag)
 
-/*
 // getCandlesByIndex - Функция предназначена для получения информации о свечках по идентификатору
- TABLE t, NUMBER n, STRING l getCandlesByIndex (STRING tag, NUMBER line, NUMBER first_candle, NUMBER count)   
+void getCandlesByIndex(const char* tag, // строковый идентификатор графика или индикатора
+                       unsigned int line, //  номер линии графика или индикатора. Первая линия имеет номер 0
+                       unsigned int first_candle, // индекс первой свечки. Первая (самая левая) свечка имеет индекс 0
+                       unsigned int count, // количество запрашиваемых свечек
+                       std::function<void
+                       (const ::lua::entity<::lua::type_policy<std::vector<::qlua::table::candle>>>&, // таблица, содержащая запрашиваемые свечки
+                        const ::lua::entity<::lua::type_policy<unsigned int>>&, // количество свечек в таблице t 
+                        const ::lua::entity<::lua::type_policy<const char*>>& // легенда (подпись) графика
+                       )> lambda
+                       ) const {
+  auto f = [&lambda] (const ::lua::state& s) {
+    auto l = s.at<const char*>(-1);
+    auto n = s.at<unsigned int>(-2);
+    auto t = s.at<::std::vector<::qlua::table::candle>>(-3);
+    lambda(t, n, l);
+    return 3;
+  };                                                                  
+  l_.call_and_apply(f, 3, "getCandlesByIndex", tag, line, first_candle, count);
+}                                                                     
+
+
 // CreateDataSource - Функция предназначена для создания таблицы Lua и позволяет работать со свечками, полученными с сервера QUIK, а также реагировать на их изменение.
- TABLE data_source, STRING error_desc CreateDataSource (STRING class_code, STRING sec_code, NUMBER interval, [, STRING param])   
-// SetUpdateCallback -
-   BOOLEAN res SetUpdateCallback (FUNCTION callback_function // В качестве параметра принимает функцию обратного вызова. 
-                                ) 
-*/
+::qlua::data_source CreateDataSource(const char* class_code,
+                                     const char* sec_code,
+                                     unsigned int interval,
+                                     const char* param = nullptr) {
+  return ::qlua::data_source(l_, class_code, sec_code, interval, param);
+}
 
-
-  /*
-// Size - Функция возвращает текущее количество свечек в источнике данных.
-   NUMBER Size(ds) 
-// Close - Функция закрывает источник данных, и терминал прекращает получать данные с сервера
-   BOOLEAN Close(ds) 
-// SetEmptyCallback  - Функция позволяет получать данные с сервера. 
-BOOLEAN SetEmptyCallback(ds)
-*/

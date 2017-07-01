@@ -866,4 +866,21 @@ namespace qlua {
 }
 LUACPP_STATIC_TABLE_TYPE_POLICY(::qlua::table::trans_reply)
 
+namespace qlua {
+  namespace table {
+    LUACPP_STATIC_TABLE_BEGIN(candle)
+    LUACPP_TABLE_FIELD(open, double) // Цена открытия  
+    LUACPP_TABLE_FIELD(close, double) // Цена закрытия  
+    LUACPP_TABLE_FIELD(high, double) // Максимальная цена сделки  
+    LUACPP_TABLE_FIELD(low, double) // Минимальная цена сделки  
+    LUACPP_TABLE_FIELD(volume, double) // Объем последней сделки  
+    LUACPP_TABLE_FIELD(datetime, ::qlua::table::datetime) // Формат даты и времени  
+    LUACPP_TABLE_FIELD(doesExist, unsigned int) /* Признак расчета индикатора при наличии свечки. Возможные значения:
+                                                   «0» – индикатор не рассчитан,
+                                                   «1» – индикатор рассчитан */
+    LUACPP_STATIC_TABLE_END()
+  }
+}
+LUACPP_STATIC_TABLE_TYPE_POLICY(::qlua::table::candle)
 
+ 
