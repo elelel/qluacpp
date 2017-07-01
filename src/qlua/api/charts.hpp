@@ -15,16 +15,22 @@ void getCandlesByIndex(const char* tag, // строковый идентифик
                        unsigned int first_candle, // индекс первой свечки. Первая (самая левая) свечка имеет индекс 0
                        unsigned int count, // количество запрашиваемых свечек
                        std::function<void
-                       (const ::lua::entity<::lua::type_policy<std::vector<::qlua::table::candle>>>&, // таблица, содержащая запрашиваемые свечки
-                        const ::lua::entity<::lua::type_policy<unsigned int>>&, // количество свечек в таблице t 
+                       (const ::lua::entity<::lua::type_policy<::qlua::table::candle>>&, // структура (lua-таблица) со свечкой
+                        const unsigned int index, // индекс свечки
+                        const ::lua::entity<::lua::type_policy<unsigned int>>&, // количество свечек в таблице t
                         const ::lua::entity<::lua::type_policy<const char*>>& // легенда (подпись) графика
                        )> lambda
                        ) const {
   auto f = [&lambda] (const ::lua::state& s) {
-    auto l = s.at<const char*>(-1);
-    auto n = s.at<unsigned int>(-2);
-    auto t = s.at<::std::vector<::qlua::table::candle>>(-3);
-    lambda(t, n, l);
+    unsigned int len = s.objlen(-3);
+    for (unsigned int i = 0; i < len; ++i) {
+      s.rawgeti(-3, i + 1);
+      const auto& t = s.at<::qlua::table::candle>(-1);
+      const auto& l = s.at<const char*>(-2);
+      const auto& n = s.at<unsigned int>(-3);
+      lambda(t, i, n, l);
+      s.pop(); // pop candle
+    }
     return 3;
   };                                                                  
   l_.call_and_apply(f, 3, "getCandlesByIndex", tag, line, first_candle, count);

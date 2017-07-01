@@ -882,5 +882,3 @@ namespace qlua {
   }
 }
 LUACPP_STATIC_TABLE_TYPE_POLICY(::qlua::table::candle)
-
- 
