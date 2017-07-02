@@ -353,22 +353,3 @@ namespace qlua {
   }
 }
 LUACPP_STATIC_TABLE_TYPE_POLICY(::qlua::table::chart_time)
-
-// data_source (returned by CreateDataSource)
-namespace qlua {
-  namespace table {
-    LUACPP_STATIC_TABLE_BEGIN(data_source)
-    LUACPP_TABLE_FIELD(O, void*)
-    LUACPP_TABLE_FIELD(H, void*)
-    LUACPP_TABLE_FIELD(L, void*)
-    LUACPP_TABLE_FIELD(C, void*)
-    LUACPP_TABLE_FIELD(V, void*)
-    LUACPP_TABLE_FIELD(T, void*)
-    LUACPP_TABLE_FIELD(Size, void*)
-    LUACPP_TABLE_FIELD(Close, void*)
-    LUACPP_TABLE_FIELD(SetUpdateCallback, void*)
-    LUACPP_TABLE_FIELD(SetEmptyCallback, void*)
-    LUACPP_STATIC_TABLE_END()
-  }
-}
-LUACPP_STATIC_TABLE_TYPE_POLICY(::qlua::table::data_source)

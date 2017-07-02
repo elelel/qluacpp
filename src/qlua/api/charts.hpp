@@ -41,7 +41,7 @@ void getCandlesByIndex(const char* tag, // строковый идентифик
 ::qlua::data_source CreateDataSource(const char* class_code,
                                      const char* sec_code,
                                      unsigned int interval,
-                                     const char* param = nullptr) {
+                                     const char* param = nullptr) const {
   return ::qlua::data_source(l_, class_code, sec_code, interval, param);
 }
 

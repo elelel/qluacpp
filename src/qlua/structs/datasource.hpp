@@ -4,6 +4,8 @@
 
 #include "function_results.hpp"
 
+#include <iostream>
+
 namespace qlua {
   struct data_source {
     struct time {
@@ -24,108 +26,196 @@ namespace qlua {
                 const unsigned int interval, // интервал запрашиваемого графика, INTERVAL_*
                 const char* param = nullptr // Необязательный параметр (что запрашивать)
                 ) : l_(l) {
-      typedef std::tuple<table::data_source, const char*> return_type;
       auto set_pointers = [this] (const lua::state& s) -> int {
-        if (!s.isnil(-2)) {
-          auto ds = s.at<table::data_source>(-2)();
-          O_ = ds.O();
-          H_ = ds.H();
-          L_ = ds.L();
-          C_ = ds.C();
-          V_ = ds.V();
-          T_ = ds.T();
-          Size_ = ds.Size();
-          Close_ = ds.Close();
-          SetUpdateCallback_ = ds.SetUpdateCallback();
-          SetEmptyCallback_ = ds.SetEmptyCallback();
+        if (s.istable(-2)) {
+          // Copy object table
+          s.getglobal(desc_table_name().c_str());
+          if (s.isnil(-1)) {  // Create table if doesn't exist
+            s.pop(1);
+            s.newtable();
+            s.setglobal(desc_table_name().c_str());
+            s.getglobal(desc_table_name().c_str());
+          }
+          if (s.istable(-1)) {
+            // Source table at -3, dest table at -1
+            s.pushnil(); // Push nil as key
+            while (s.next(-4) != 0) {
+              // Duplicate the key
+              s.pushvalue(-2);
+              // Swap the key duplicate with value
+              s.insert(-2);
+              // Dest table is now at -4, set key/value
+              s.settable(-4);
+            }
+            s.pop(); // getglobal (dest table)
+            std::cout << "Done copying table" << std::endl;
+          } else {
+            s.pop(1 // getglobal (dest table)
+                  + 2 // values of function result on stack after pcall);
+                  );
+            throw std::runtime_error("Failed to create lua table in globals for datasource descriptor");
+          }
           return 2;
         } else {
           auto err = s.at<const char*>(-1);
-          std::string msg = std::string("Create data source error: ") + err();
+          std::string msg("Failed to create datasource, qlua returned: ");
+          msg += err();
           s.pop(2);
           throw std::runtime_error(msg.c_str());
         }
       };
 
       if (param != nullptr) {
+        std::cout << "Creating datasource" << std::endl;
         l_.call_and_apply(set_pointers, 2, "CreateDataSource", class_code, sec_code, interval, param);
       } else {
         l_.call_and_apply(set_pointers, 2, "CreateDataSource", class_code, sec_code, interval);
       }
     }
 
-    // Open
-    double O(const unsigned int idx) const {
-      l_.push<unsigned int>((size_t)(O_));
-      l_.pcall(1, 1, 0);
-      auto rslt = l_.at<double>(-1)();
-      l_.pop(1);
-      return rslt;
+    double O(const unsigned int idx) {
+      return double_method_call("O", idx);
+    }
+
+    double C(const unsigned int idx) {
+      return double_method_call("C", idx);
     }
     
-    // High
-    double H(const unsigned int idx) const {
-      l_.push<unsigned int>((size_t)(H_));
-      l_.pcall(1, 1, 0);
-      auto rslt = l_.at<double>(-1)();
-      l_.pop(1);
-      return rslt;
+    double H(const unsigned int idx) {
+      return double_method_call("H", idx);
     }
     
-    // Low
-    double L(const unsigned int idx) const {
-      l_.push<unsigned int>((size_t)(L_));
-      l_.pcall(1, 1, 0);
-      auto rslt = l_.at<double>(-1)();
-      l_.pop(1);
-      return rslt;
+    double L(const unsigned int idx) {
+      return double_method_call("L", idx);
     }
     
-    // Close
-    double C(const unsigned int idx) const {
-      l_.push<unsigned int>((size_t)(C_));
-      l_.pcall(1, 1, 0);
-      auto rslt = l_.at<double>(-1)();
-      l_.pop(1);
-      return rslt;
-    }
-    
-    // Volume
-    double V(const unsigned int idx) const {
-      l_.push<unsigned int>((size_t)(V_));
-      l_.pcall(1, 1, 0);
-      auto rslt = l_.at<double>(-1)();
-      l_.pop(1);
-      return rslt;
+    double V(const unsigned int idx) {
+      return double_method_call("V", idx);
     }
     
     // Time
     time T(const unsigned int idx) const {
-      l_.push<unsigned int>((size_t)(T_));
-      l_.pcall(1, 1, 0);
-      auto t = l_.at<table::chart_time>(-1)();
-      time rslt =  {t.year(), t.month(), t.day(), t.week_day(), t.hour(), t.min(), t.sec(), t.ms(), t.count()};
-      l_.pop(1);
-      return rslt;
+      l_.getglobal(desc_table_name().c_str());
+      if (l_.istable(-1)) {
+        l_.pushstring("T");
+        l_.gettable(-1); // Push function from table to stack
+        l_.pcall(1, 1, 0);
+        auto t = l_.at<table::chart_time>(-1)();
+        time rslt =  {t.year(), t.month(), t.day(), t.week_day(), t.hour(), t.min(), t.sec(), t.ms(), t.count()};
+        l_.pop(2); // table and value
+        return rslt;
+      } else {
+        l_.pop(1); // getglobal
+        throw std::runtime_error("Call to datasource method failed: " + desc_table_name() + " is not a table in lua globals");
+      }
     }
 
-    template <typename callback_t>
-    bool SetUpdateCallback() {
-      // TODO
+    bool SetUpdateCallback(const char* lua_function_name) {
+      std::cout << "Setting update callback" << std::endl;
+      l_.getglobal(desc_table_name().c_str());
+      auto i = 1;
+      if (l_.istable(-1)) {
+        std::cout << "istable passed" << std::endl;
+        l_.pushstring("SetUpdateCallback");
+        l_.rawget(-2); // Push function from table to stack
+        ++i;
+        if (!l_.isnil(-1)) {
+          std::cout << "getting lua function name" << std::endl;
+          l_.getglobal(lua_function_name);
+          ++i;
+          if (l_.isfunction(-1)) {
+            l_.pcall(1, 1, 0);
+            ++i;
+            auto rslt = l_.at<bool>(-1)();
+            l_.pop(i);
+            std::cout << "Returning " << rslt << std::endl;
+            return rslt;
+          } else {
+            l_.pop(i);
+            std::cout << "Error 1" << std::endl;
+            throw std::runtime_error("Call to datasource method failed: " + std::string(lua_function_name) + " is not a function in lua globals");
+          }
+        } else {
+          std::cout << "Error 3" << std::endl;
+          l_.pop(i);
+          throw std::runtime_error("Call to datasource method failed: SetUpdateCallback method is nil in desc table");
+        }
+      } else {
+        std::cout << "Error 2" << std::endl;
+        l_.pop(i); 
+        throw std::runtime_error("Call to datasource method failed: " + desc_table_name() + " is not a table in lua globals");
+      }
     }
 
-    void* SetUpdateCallback_{nullptr};
-    void* O_{nullptr};
-    void* H_{nullptr};
-    void* L_{nullptr};
-    void* C_{nullptr};
-    void* V_{nullptr};
-    void* T_{nullptr};
-    void* Size_{nullptr};
-    void* Close_{nullptr};
-    void* SetEmptyCallback_{nullptr};
+    bool SetEmptyCallback() {
+      l_.getglobal(desc_table_name().c_str());
+      if (l_.istable(-1)) {
+        l_.pushstring("SetEmptyCallback");
+        l_.rawget(-1); // Push function from table to stack
+        l_.pcall(0, 1, 0);
+        auto rslt = l_.at<bool>(-1)();
+        l_.pop(2); // table and value
+        return rslt;
+      } else {
+        l_.pop(1); // getglobal
+        throw std::runtime_error("Call to datasource method failed: " + desc_table_name() + " is not a table in lua globals");
+      }
+    }
+
+    unsigned int Size() {
+      l_.getglobal(desc_table_name().c_str());
+      if (l_.istable(-1)) {
+        l_.pushstring("Size");
+        l_.rawget(-1); // Push function from table to stack
+        l_.pcall(0, 1, 0);
+        auto rslt = l_.at<unsigned int>(-1)();
+        l_.pop(2); // table and value
+        return rslt;
+      } else {
+        l_.pop(1); // getglobal
+        throw std::runtime_error("Call to datasource method failed: " + desc_table_name() + " is not a table in lua globals");
+      }
+    }
+    
+    bool Close() {
+      l_.getglobal(desc_table_name().c_str());
+      if (l_.istable(-1)) {
+        l_.pushstring("Close");
+        l_.rawget(-1); // Push function from table to stack
+        l_.pcall(0, 1, 0);
+        auto rslt = l_.at<bool>(-1)();
+        l_.pop(2); // table and value
+        return rslt;
+      } else {
+        l_.pop(1); // getglobal
+        throw std::runtime_error("Call to datasource method failed: " + desc_table_name() + " is not a table in lua globals");
+      }
+    }
+
+    std::string desc_table_name() const {
+      return "qluacpp_datasource_object_" + std::to_string((uint32_t)this);
+    }
+
   private:
     lua::state l_;
+
+    inline double double_method_call(const char* name, const unsigned int idx) const {
+      l_.getglobal(desc_table_name().c_str());
+      auto i = 1;
+      if (l_.istable(-1)) {
+        l_.pushstring(name);
+        l_.rawget(-1); // Push function from table to stack
+        l_.push<unsigned int>(idx);
+        l_.pcall(1, 1, 0);
+        ++i;
+        auto rslt = l_.at<double>(-1)();
+        l_.pop(i);
+        return rslt;
+      } else {
+        l_.pop(i);
+        throw std::runtime_error("Call to datasource method failed: " + desc_table_name() + " is not a table in lua globals");
+      }
+    }
   };
   
 }
