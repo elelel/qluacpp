@@ -4,8 +4,6 @@
 
 #include "function_results.hpp"
 
-#include <iostream>
-
 namespace qlua {
   struct data_source {
     struct time {
@@ -48,7 +46,6 @@ namespace qlua {
               s.settable(-4);
             }
             s.pop(); // getglobal (dest table)
-            std::cout << "Done copying table" << std::endl;
           } else {
             s.pop(1 // getglobal (dest table)
                   + 2 // values of function result on stack after pcall);
@@ -66,7 +63,6 @@ namespace qlua {
       };
 
       if (param != nullptr) {
-        std::cout << "Creating datasource" << std::endl;
         l_.call_and_apply(set_pointers, 2, "CreateDataSource", class_code, sec_code, interval, param);
       } else {
         l_.call_and_apply(set_pointers, 2, "CreateDataSource", class_code, sec_code, interval);
@@ -111,16 +107,13 @@ namespace qlua {
     }
 
     bool SetUpdateCallback(const char* lua_function_name) {
-      std::cout << "Setting update callback" << std::endl;
       l_.getglobal(desc_table_name().c_str());
       auto i = 1;
       if (l_.istable(-1)) {
-        std::cout << "istable passed" << std::endl;
         l_.pushstring("SetUpdateCallback");
         l_.rawget(-2); // Push function from table to stack
         ++i;
         if (!l_.isnil(-1)) {
-          std::cout << "getting lua function name" << std::endl;
           l_.getglobal(lua_function_name);
           ++i;
           if (l_.isfunction(-1)) {
@@ -128,20 +121,16 @@ namespace qlua {
             ++i;
             auto rslt = l_.at<bool>(-1)();
             l_.pop(i);
-            std::cout << "Returning " << rslt << std::endl;
             return rslt;
           } else {
             l_.pop(i);
-            std::cout << "Error 1" << std::endl;
             throw std::runtime_error("Call to datasource method failed: " + std::string(lua_function_name) + " is not a function in lua globals");
           }
         } else {
-          std::cout << "Error 3" << std::endl;
           l_.pop(i);
           throw std::runtime_error("Call to datasource method failed: SetUpdateCallback method is nil in desc table");
         }
       } else {
-        std::cout << "Error 2" << std::endl;
         l_.pop(i); 
         throw std::runtime_error("Call to datasource method failed: " + desc_table_name() + " is not a table in lua globals");
       }
