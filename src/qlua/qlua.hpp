@@ -6,6 +6,7 @@
 #include "structs/standalone.hpp"
 #include "structs/function_results.hpp"
 #include "structs/datasource.hpp"
+#include "structs/level2_quotes.hpp"
 #include "callbacks.hpp"
 
 // TODO: type policies in numeric_tuples.hpp

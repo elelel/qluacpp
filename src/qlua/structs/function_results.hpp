@@ -33,6 +33,7 @@ namespace qlua {
 }
 LUACPP_STATIC_TABLE_TYPE_POLICY(::qlua::table::money_limits_getMoney)
 
+/*
 // level2_quotes_record
 namespace qlua {
   namespace table {
@@ -56,7 +57,7 @@ namespace qlua {
   }
 }
 LUACPP_STATIC_TABLE_TYPE_POLICY(::qlua::table::level2_quotes)
-
+*/
 // portfolio_info_getPortfolioInfo (table returned from getPortfolioInfo)
 namespace qlua {
   namespace table {

@@ -55,12 +55,24 @@ QLUACPP_DETAIL_API_FUNCTION_RES1_APPLY10(::qlua::table::futures_client_holding,
                             const char*, sec_code,
                             int, type
                             )
+
 // getQuoteLevel2 - функция для получения стакана по указанному классу и бумаге
-QLUACPP_DETAIL_API_FUNCTION_RES1_APPLY6(::qlua::table::level2_quotes,
+/*QLUACPP_DETAIL_API_FUNCTION_RES1_APPLY6(::qlua::table::level2_quotes,
                             getQuoteLevel2,
                             const char*, class_code,
                             const char*, sec_code
-                            )
+                            )*/
+void getQuoteLevel2(const char* class_code,
+                    const char* sec_code,
+                    std::function<void(const ::qlua::table::level2_quotes &)> lambda) const {
+  auto f = [&lambda] (const ::lua::state& s) {
+    auto v = ::qlua::table::level2_quotes(s, -1);
+    lambda(v);
+    return 1;
+  };
+  l_.call_and_apply(f, 1, "getQuoteLevel2", class_code, sec_code);
+}
+
 // getSecurityInfo - функция для получения информации по инструменту
 QLUACPP_DETAIL_API_FUNCTION_RES1_APPLY6(::qlua::table::securities,
                             getSecurityInfo,
