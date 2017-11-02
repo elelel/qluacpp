@@ -57,33 +57,32 @@ LUACPP_STATIC_TABLE_TYPE_POLICY(::qlua::table::firms)
 namespace qlua {
   namespace table {
     LUACPP_STATIC_TABLE_BEGIN(classes)
-    LUACPP_TABLE_FIELD(firmid, std::string)
-    LUACPP_TABLE_FIELD(name, std::string)
-    LUACPP_TABLE_FIELD(code, std::string)
-    LUACPP_TABLE_FIELD(npas, std::string)
-    LUACPP_TABLE_FIELD(nsecs, std::string)
+    LUACPP_TABLE_FIELD(firmid, std::string) // Идентификатор фирмы 
+    LUACPP_TABLE_FIELD(name, std::string) // Название класса 
+    LUACPP_TABLE_FIELD(class_code, std::string) // Код класса 
+    LUACPP_TABLE_FIELD(npars, unsigned int) // Количество параметров в классе 
+    LUACPP_TABLE_FIELD(nsecs, unsigned int) // Количество бумаг в классе
     LUACPP_STATIC_TABLE_END()
   }
 }
-LUACPP_STATIC_TABLE_TYPE_POLICY(::qlua::table::classes)
+LUCAPP_STATIC_TABLE_TYPE_POLICY(::qlua::table::classes)
 
 // securities "Инструменты" (ценные бумаги)
 namespace qlua {
   namespace table {
     LUACPP_STATIC_TABLE_BEGIN(securities)
-    LUACPP_TABLE_FIELD(dummy, unsigned int)
-    LUACPP_TABLE_FIELD(code, std::string)
-    LUACPP_TABLE_FIELD(name, std::string)
-    LUACPP_TABLE_FIELD(short_name, std::string)
-    LUACPP_TABLE_FIELD(class_code, std::string)
-    LUACPP_TABLE_FIELD(class_name, std::string)
-    LUACPP_TABLE_FIELD(face_value, double)
-    LUACPP_TABLE_FIELD(face_unit, std::string)
-    LUACPP_TABLE_FIELD(scale, unsigned int)
-    LUACPP_TABLE_FIELD(mat_date, unsigned int)
-    LUACPP_TABLE_FIELD(lot_size, unsigned int)
-    LUACPP_TABLE_FIELD(isin, std::string)
-    LUACPP_TABLE_FIELD(min_price_step, double)
+    LUACPP_TABLE_FIELD(code, std::string) // Код инструмента  
+    LUACPP_TABLE_FIELD(name, std::string) // Наименование инструмента  
+    LUACPP_TABLE_FIELD(short_name, std::string) // Короткое наименование инструмента  
+    LUACPP_TABLE_FIELD(class_code, std::string) // Код класса инструментов  
+    LUACPP_TABLE_FIELD(class_name, std::string) // Наименование класса инструментов  
+    LUACPP_TABLE_FIELD(face_value, double) // Номинал  
+    LUACPP_TABLE_FIELD(face_unit, std::string) // Валюта номинала  
+    LUACPP_TABLE_FIELD(scale, unsigned int) // Точность (количество значащих цифр после запятой)  
+    LUACPP_TABLE_FIELD(mat_date, unsigned int) // Дата погашения  
+    LUACPP_TABLE_FIELD(lot_size, double) // Размер лота  
+    LUACPP_TABLE_FIELD(isin_code, std::string) // ISIN  
+    LUACPP_TABLE_FIELD(min_price_step, double) // Минимальный шаг цены  
     LUACPP_STATIC_TABLE_END()
   }
 }
@@ -93,20 +92,27 @@ LUACPP_STATIC_TABLE_TYPE_POLICY(::qlua::table::securities)
 namespace qlua {
   namespace table {
     LUACPP_STATIC_TABLE_BEGIN(trade_accounts)
-    LUACPP_TABLE_FIELD(class_codes, std::string)
-    LUACPP_TABLE_FIELD(firmid, std::string)
-    LUACPP_TABLE_FIELD(trdaccid, std::string)
-    LUACPP_TABLE_FIELD(description, std::string)
-    LUACPP_TABLE_FIELD(fullcoveredsell, unsigned int)
-    LUACPP_TABLE_FIELD(main_trdaccid, unsigned int)
-    LUACPP_TABLE_FIELD(bankid_t0, std::string)
-    LUACPP_TABLE_FIELD(bankid_tplus, std::string)
-    LUACPP_TABLE_FIELD(trdacc_type, unsigned int)
-    LUACPP_TABLE_FIELD(depunitid, std::string)
-    LUACPP_TABLE_FIELD(status, unsigned int)
-    LUACPP_TABLE_FIELD(firmuse, unsigned int)
-    LUACPP_TABLE_FIELD(depaccid, std::string)
-    LUACPP_TABLE_FIELD(bank_acc_id, std::string)
+    LUACPP_TABLE_FIELD(class_codes, std::string) // Список кодов классов, разделенных символом «|» 
+    LUACPP_TABLE_FIELD(firmid, std::string) // Идентификатор фирмы 
+    LUACPP_TABLE_FIELD(trdaccid, std::string) // Код торгового счета 
+    LUACPP_TABLE_FIELD(description, std::string) // Описание 
+    LUACPP_TABLE_FIELD(fullcoveredsell, unsigned int) /* Запрет необеспеченных продаж. Возможные значения: 
+                                                         «0» – Нет; 
+                                                         «1» – Да */
+    LUACPP_TABLE_FIELD(main_trdaccid, unsigned int) // Номер основного торгового счета 
+    LUACPP_TABLE_FIELD(bankid_t0, std::string) // Расчетная организация по «Т0» 
+    LUACPP_TABLE_FIELD(bankid_tplus, std::string) // Расчетная организация по «Т+» 
+    LUACPP_TABLE_FIELD(trdacc_type, unsigned int) // Тип торгового счета 
+    LUACPP_TABLE_FIELD(depunitid, std::string) // Раздел счета Депо 
+    LUACPP_TABLE_FIELD(status, unsigned int) /* Статус торгового счета. Возможные значения: 
+                                                «0» – операции разрешены; 
+                                                «1» – операции запрещены
+                                             */
+    LUACPP_TABLE_FIELD(firmuse, unsigned int) /* Тип раздела. Возможные значения: 
+                                                 «0» – раздел обеспечения; 
+                                                 иначе – для торговых разделов */
+    LUACPP_TABLE_FIELD(depaccid, std::string) // Номер счета депо в депозитарии 
+    LUACPP_TABLE_FIELD(bank_acc_id, std::string) // Код дополнительной позиции по денежным средствам
     LUACPP_STATIC_TABLE_END()
   }
 }
@@ -136,10 +142,9 @@ namespace qlua {
     LUACPP_TABLE_FIELD(class_code, std::string) // Код класса  
     LUACPP_TABLE_FIELD(datetime, ::qlua::table::datetime) // Дата и время  
     LUACPP_TABLE_FIELD(period, unsigned int) /* Период торговой сессии. Возможные значения: 
-
-«0» – Открытие; 
-«1» – Нормальный; 
-«2» – Закрытие */
+                                                «0» – Открытие; 
+                                                «1» – Нормальный; 
+                                                «2» – Закрытие */
     LUACPP_TABLE_FIELD(open_interest, double) // Открытый интерес 
     LUACPP_TABLE_FIELD(exchange_code, std::string) // Код биржи в торговой системе 
     LUACPP_STATIC_TABLE_END()
@@ -152,24 +157,24 @@ LUACPP_STATIC_TABLE_TYPE_POLICY(::qlua::table::all_trades)
 namespace qlua {
   namespace table {
     LUACPP_STATIC_TABLE_BEGIN(account_positions)
-    LUACPP_TABLE_FIELD(trade_num, int)
-    LUACPP_TABLE_FIELD(flags, unsigned int)
-    LUACPP_TABLE_FIELD(price, double)
-    LUACPP_TABLE_FIELD(qty, unsigned int)
-    LUACPP_TABLE_FIELD(value, double)
-    LUACPP_TABLE_FIELD(accruedint, double)
-    LUACPP_TABLE_FIELD(yield, double)
-    LUACPP_TABLE_FIELD(settlecode, std::string)
-    LUACPP_TABLE_FIELD(reporate, double)
-    LUACPP_TABLE_FIELD(repovalue, double)
-    LUACPP_TABLE_FIELD(repo2value, double)
-    LUACPP_TABLE_FIELD(repoterm, unsigned int)
-    LUACPP_TABLE_FIELD(sec_code, std::string)
-    LUACPP_TABLE_FIELD(class_code, std::string)
-    LUACPP_TABLE_FIELD(datetime, ::qlua::table::datetime)
-    LUACPP_TABLE_FIELD(period, unsigned int)
-    LUACPP_TABLE_FIELD(open_interest, double)
-    LUACPP_TABLE_FIELD(exchange_code, std::string)
+    LUACPP_TABLE_FIELD(firmid, std::string) // Идентификатор фирмы  
+    LUACPP_TABLE_FIELD(currcode, std::string) // Код валюты  
+    LUACPP_TABLE_FIELD(tag, std::string) // Тег расчетов  
+    LUACPP_TABLE_FIELD(description, std::string) // Описание  
+    LUACPP_TABLE_FIELD(openbal, double) // Входящий остаток  
+    LUACPP_TABLE_FIELD(currentpos, double) // Текущий остаток  
+    LUACPP_TABLE_FIELD(plannedpos, double) // Плановый остаток  
+    LUACPP_TABLE_FIELD(limit1, double) // Внешнее ограничение по деньгам  
+    LUACPP_TABLE_FIELD(limit2, double) // Внутреннее (собственное) ограничение по деньгам  
+    LUACPP_TABLE_FIELD(orderbuy, double) // В заявках на продажу  
+    LUACPP_TABLE_FIELD(ordersell, double) // В заявках на покупку  
+    LUACPP_TABLE_FIELD(netto, double) // Нетто-позиция  
+    LUACPP_TABLE_FIELD(plannedbal, double) // Плановая позиция  
+    LUACPP_TABLE_FIELD(debit, double) // Дебет  
+    LUACPP_TABLE_FIELD(credit, double) // Кредит  
+    LUACPP_TABLE_FIELD(bank_acc_id, std::string) // Идентификатор счета  
+    LUACPP_TABLE_FIELD(margincall, double) // Маржинальное требование на начало торгов  
+    LUACPP_TABLE_FIELD(settlebal, double) // Плановая позиция после проведения расчетов  
     LUACPP_STATIC_TABLE_END()
   }
 }
@@ -235,26 +240,38 @@ LUACPP_STATIC_TABLE_TYPE_POLICY(::qlua::table::orders)
 namespace qlua {
   namespace table {
     LUACPP_STATIC_TABLE_BEGIN(futures_client_holding)
-    LUACPP_TABLE_FIELD(firmid, std::string)
-    LUACPP_TABLE_FIELD(trdaccid, std::string)
-    LUACPP_TABLE_FIELD(sec_code, std::string)
-    LUACPP_TABLE_FIELD(type, unsigned int)
-    LUACPP_TABLE_FIELD(startbuy, double)
-    LUACPP_TABLE_FIELD(startsell, double)
-    LUACPP_TABLE_FIELD(startnet, double)
-    LUACPP_TABLE_FIELD(todaybuy, double)
-    LUACPP_TABLE_FIELD(todaysell, double)
-    LUACPP_TABLE_FIELD(totalnet, double)
-    LUACPP_TABLE_FIELD(openbuys, double)
-    LUACPP_TABLE_FIELD(opensells, double)
-    LUACPP_TABLE_FIELD(cbplused, double)
-    LUACPP_TABLE_FIELD(cbplplanned, double)
-    LUACPP_TABLE_FIELD(varmargin, double)
-    LUACPP_TABLE_FIELD(avrposnprice, double)
-    LUACPP_TABLE_FIELD(positionvalue, double)
-    LUACPP_TABLE_FIELD(real_varmargin, double)
-    LUACPP_TABLE_FIELD(total_varmargin, double)
-    LUACPP_TABLE_FIELD(session_status, unsigned int)
+    LUACPP_TABLE_FIELD(firmid, std::string) // Идентификатор фирмы  
+    LUACPP_TABLE_FIELD(trdaccid, std::string) // Торговый счет  
+    LUACPP_TABLE_FIELD(sec_code, std::string) // Код фьючерсного контракта  
+    LUACPP_TABLE_FIELD(type, double) /* Тип лимита. Возможные значения: 
+                                        «0» – не определён; 
+                                        «1» – основной счет; 
+                                        «2» – клиентские и дополнительные счета; 
+                                        «4» – все счета торг. членов */
+    LUACPP_TABLE_FIELD(startbuy, double) // Входящие длинные позиции  
+    LUACPP_TABLE_FIELD(startsell, double) // Входящие короткие позиции  
+    LUACPP_TABLE_FIELD(startnet, double) // Входящие чистые позиции  
+    LUACPP_TABLE_FIELD(todaybuy, double) // Текущие длинные позиции  
+    LUACPP_TABLE_FIELD(todaysell, double) // Текущие короткие позиции  
+    LUACPP_TABLE_FIELD(totalnet, double) // Текущие чистые позиции  
+    LUACPP_TABLE_FIELD(openbuys, double) // Активные на покупку  
+    LUACPP_TABLE_FIELD(opensells, double) // Активные на продажу  
+    LUACPP_TABLE_FIELD(cbplused, double) // Оценка текущих чистых позиций  
+    LUACPP_TABLE_FIELD(cbplplanned, double) // Плановые чистые позиции  
+    LUACPP_TABLE_FIELD(varmargin, double) // Вариационная маржа  
+    LUACPP_TABLE_FIELD(avrposnprice, double) // Эффективная цена позиций  
+    LUACPP_TABLE_FIELD(positionvalue, double) // Стоимость позиций  
+    LUACPP_TABLE_FIELD(real_varmargin, double) // Реально начисленная в ходе клиринга вариационная маржа. Отображается с точностью до 2 двух знаков. При этом, в поле «varmargin» транслируется вариационная маржа, рассчитанная с учетом установленных границ изменения цены  
+    LUACPP_TABLE_FIELD(total_varmargin, double) // Суммарная вариационная маржа по итогам основного клиринга начисленная по всем позициям. Отображается с точностью до 2 двух знаков  
+    LUACPP_TABLE_FIELD(session_status, unsigned int) /* Актуальный статус торговой сессии. Возможные значения: 
+                                                  «0» – не определено; 
+                                                  «1» – основная сессия; 
+                                                  «2» – начался промклиринг; 
+                                                  «3» – завершился промклиринг; 
+                                                  «4» – начался основной клиринг; 
+                                                  «5» – основной клиринг: новая сессия назначена; 
+                                                  «6» – завершился основной клиринг; 
+                                                  «7» – завершилась вечерняя сессия */
     LUACPP_STATIC_TABLE_END()
   }
 }
