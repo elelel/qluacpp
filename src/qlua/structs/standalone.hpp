@@ -65,7 +65,7 @@ namespace qlua {
     LUACPP_STATIC_TABLE_END()
   }
 }
-LUCAPP_STATIC_TABLE_TYPE_POLICY(::qlua::table::classes)
+LUACPP_STATIC_TABLE_TYPE_POLICY(::qlua::table::classes)
 
 // securities "Инструменты" (ценные бумаги)
 namespace qlua {
