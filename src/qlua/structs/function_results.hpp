@@ -327,7 +327,7 @@ LUACPP_STATIC_TABLE_TYPE_POLICY(::qlua::table::current_trades_getParamEx)
 namespace qlua {
   namespace table {
     LUACPP_STATIC_TABLE_BEGIN(class_info_getClassInfo)
-    LUACPP_TABLE_FIELD(firmid, unsigned int) // Код фирмы 
+    LUACPP_TABLE_FIELD(firmid, const char*) // Код фирмы 
     LUACPP_TABLE_FIELD(name, const char*) // Наименование класса 
     LUACPP_TABLE_FIELD(code, const char*) // Код класса 
     LUACPP_TABLE_FIELD(npars, unsigned int) // Количество параметров в классе 
