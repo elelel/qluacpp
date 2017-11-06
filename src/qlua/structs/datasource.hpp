@@ -72,28 +72,28 @@ namespace qlua {
       }
     }
 
-    double O(const unsigned int idx) {
-      return double_method_call("O", idx);
+    double O(const unsigned int candle_idx) {
+      return candle_method_call<double>("O", candle_idx);
     }
 
-    double C(const unsigned int idx) {
-      return double_method_call("C", idx);
+    double C(const unsigned int candle_idx) {
+      return candle_method_call<double>("C", candle_idx);
     }
     
-    double H(const unsigned int idx) {
-      return double_method_call("H", idx);
+    double H(const unsigned int candle_idx) {
+      return candle_method_call<double>("H", candle_idx);
     }
     
-    double L(const unsigned int idx) {
-      return double_method_call("L", idx);
+    double L(const unsigned int candle_idx) {
+      return candle_method_call<double>("L", candle_idx);
     }
     
-    double V(const unsigned int idx) {
-      return double_method_call("V", idx);
+    double V(const unsigned int candle_idx) {
+      return candle_method_call<double>("V", candle_idx);
     }
     
     // Time
-    time T(const unsigned int idx) const {
+    time T(const unsigned int candle_idx) const {
       if (ref_key_ == LUA_NOREF)
         throw std::runtime_error("Can't call datasource method: no reference to the object");
 
@@ -108,7 +108,7 @@ namespace qlua {
         ++i;
         if (l_.isfunction(-1)) {
           l_.pushvalue(-2); // Push 'this'
-          l_.pushnumber(idx);
+          l_.pushnumber(candle_idx);
           l_.pcall(2, 1, 0);
           ++i;
           auto t = l_.at<table::chart_time>(-1)();
@@ -163,97 +163,15 @@ namespace qlua {
     }
 
     bool SetEmptyCallback() {
-      if (ref_key_ == LUA_NOREF)
-        throw std::runtime_error("Can't call datasource method: no reference to the object");
-
-      l_.getglobal(desc_table_name().c_str());
-      auto i = 1;
-      if (l_.istable(-1)) {
-        l_.pushnumber(ref_key_);
-        l_.rawget(-2);
-        ++i;
-        l_.pushstring("SetEmptyCallback");
-        l_.rawget(-2); // Push function from table to stack
-        ++i;
-        if (l_.isfunction(-1)) {
-          l_.pushvalue(-2); // Push 'this'
-          l_.pcall(0, 1, 0);
-          auto rslt = l_.at<unsigned int>(-1)();
-          l_.pop(i - 1); // Function name already removed
-          return rslt;
-        } else {
-          l_.pop(i);
-          throw std::runtime_error("Call to datasource method failed: SetEmptyCallback method is not a function in object table");
-        }
-      } else {
-        l_.pop(i); 
-        throw std::runtime_error("Call to datasource method failed: " + desc_table_name() + " is not a table in lua globals");
-      }
+      return ds_method_call<bool>("SetEmptyCallback");
     }
 
     unsigned int Size() {
-      if (ref_key_ == LUA_NOREF)
-        throw std::runtime_error("Can't call datasource method: no reference to the object");
-
-      l_.getglobal(desc_table_name().c_str());
-      auto i = 1;
-      if (l_.istable(-1)) {
-        l_.pushnumber(ref_key_);
-        l_.rawget(-2);
-        ++i;
-        l_.pushstring("Size");
-        l_.rawget(-2); // Push function from table to stack
-        ++i;
-        if (l_.isfunction(-1)) {
-          l_.pushvalue(-2); // Push 'this'
-          l_.pcall(1, 1, 0);
-          ++i;
-          auto rslt = l_.at<unsigned int>(-1)();
-          l_.pop(i - 1); // Function name already removed
-          return rslt;
-        } else {
-          l_.pop(i);
-          throw std::runtime_error("Call to datasource method failed: Size method is not a function in object table");
-        }
-      } else {
-        l_.pop(i); 
-        throw std::runtime_error("Call to datasource method failed: " + desc_table_name() + " is not a table in lua globals");
-      }
+      return ds_method_call<unsigned int>("Size");
     }
     
     bool Close() {
-      if (ref_key_ == LUA_NOREF)
-        throw std::runtime_error("Can't call datasource method: no reference to the object");
-
-      l_.getglobal(desc_table_name().c_str());
-      auto i = 1;
-      if (l_.istable(-1)) {
-        l_.pushnumber(ref_key_);
-        l_.rawget(-2);
-        ++i;
-        l_.pushstring("Close");
-        l_.rawget(-2); // Push function from table to stack
-        ++i;
-        if (l_.isfunction(-1)) {
-          l_.pushvalue(-2); // Push 'this'
-          l_.pcall(0, 1, 0);
-          auto rslt = l_.at<unsigned int>(-1)();
-          l_.pop(i - 1); // Function name already removed
-
-          l_.getglobal(desc_table_name().c_str());
-          luaL_unref(l_.C_state(), -1, ref_key_);
-          ref_key_ = LUA_NOREF;
-          l_.pop(1); // desc table
-
-          return rslt;
-        } else {
-          l_.pop(i);
-          throw std::runtime_error("Call to datasource method failed: Close method is not a function in object table");
-        }
-      } else {
-        l_.pop(i); 
-        throw std::runtime_error("Call to datasource method failed: " + desc_table_name() + " is not a table in lua globals");
-      }
+      return ds_method_call<bool>("Close");
     }
 
     static std::string& desc_table_name() {
@@ -265,26 +183,28 @@ namespace qlua {
     lua::state l_;
     int ref_key_{LUA_NOREF};
 
-    inline double double_method_call(const char* name, const unsigned int idx) const {
+    template <typename T>
+    inline T candle_method_call(const char* name, const unsigned int candle_idx) const {
       if (ref_key_ == LUA_NOREF)
         throw std::runtime_error("Can't call datasource method: no reference to the object");
-
       l_.getglobal(desc_table_name().c_str());
-      auto i = 1;
+      auto i = 1; // Stack counter for items not cleaned by pcall; [desc_table]
       if (l_.istable(-1)) {
         l_.pushnumber(ref_key_);
         l_.rawget(-2);
-        ++i;
+        ++i; // [desc_table, ref]
         l_.pushstring(name);
         l_.rawget(-2); // Push function from table to stack
-        ++i;
+        ++i; // [desc_table, ref, func]
         if (l_.isfunction(-1)) {
           l_.pushvalue(-2); // Push 'this'
-          l_.pushnumber(idx);
-          l_.pcall(2, 1, 0);
-          ++i;
-          auto rslt = l_.at<double>(-1)();
-          l_.pop(i - 1);  // Function popped by pcall
+          l_.pushnumber(candle_idx);
+          const int nargs = 2;
+          const int nres = 1;
+          l_.pcall(nargs, nres, 0);
+          i = i - 1 + nres; // 1 for function name popped by pcall
+          auto rslt = l_.at<T>(-1)();
+          l_.pop(i);
           return rslt;
         } else {
           l_.pop(i);
@@ -295,6 +215,39 @@ namespace qlua {
         throw std::runtime_error("Call to datasource method failed: " + desc_table_name() + " is not a table in lua globals");
       }
     }
+
+    template <typename T>
+    inline T ds_method_call(const char* name) const {
+      if (ref_key_ == LUA_NOREF)
+        throw std::runtime_error("Can't call datasource method: no reference to the object");
+      l_.getglobal(desc_table_name().c_str());
+      auto i = 1; // Stack counter for items not cleaned by pcall; [desc_table]
+      if (l_.istable(-1)) {
+        l_.pushnumber(ref_key_);
+        l_.rawget(-2);
+        ++i; // [desc_table, ref]
+        l_.pushstring(name);
+        l_.rawget(-2); // Push function from table to stack
+        ++i; // [desc_table, ref, func]
+        if (l_.isfunction(-1)) {
+          l_.pushvalue(-2); // Push 'this'
+          const int nargs = 1;
+          const int nres = 1;
+          l_.pcall(nargs, nres, 0);
+          i = i - 1 + nres; // 1 for function name popped by pcall
+          auto rslt = l_.at<T>(-1)();
+          l_.pop(i);
+          return rslt;
+        } else {
+          l_.pop(i);
+          throw std::runtime_error("Call to datasource method failed: " + std::string(name) + " method is not a function in object table");
+        }
+      } else {
+        l_.pop(i); 
+        throw std::runtime_error("Call to datasource method failed: " + desc_table_name() + " is not a table in lua globals");
+      }
+    }
+
   };
   
 }
