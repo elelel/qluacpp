@@ -84,13 +84,31 @@ QLUACPP_DETAIL_API_FUNCTION_RES1_APPLY2(::qlua::table::date,
                             getTradeDate
                             )
 
-/* TODO
 // sendTransaction - функция для работы с заявками
-  QLUACPP_DETAIL_API_FUNCTION_RES1_APPLY( // const char* result
-                              sendTransaction,
-                              TABLE transaction
-                              )
-*/
+void sendTransaction(const std::map<std::string, std::string>& transaction // Поля таблицы в соответствии с описанием .tri файла по quik.chm
+                     ) {
+  l_.pushstring("sendTransaction");
+  l_.newtable();
+  for (const auto& p : transaction) {
+    l_.pushstring(p.first.c_str());
+    l_.pushstring(p.second.c_str());
+    l_.settable(-3);
+  }
+  l_.pcall(1, 1, 0);
+  if (l_.isstring(-1)) {
+    const auto& msg = l_.at<const char*>(-1)();
+    if (msg[0] == 0) {
+      l_.pop(1);
+    } else {
+      const std::string msg_str = msg;
+      l_.pop(1);
+      throw std::runtime_error("sendTransaction error: " + msg_str);
+    }
+  } else {
+    l_.pop(1);
+    throw std::runtime_error("sendTransaction returned unexpected type");
+  }
+}
 
 // CalcBuySell - функция для расчета максимально возможного количества лотов в заявке
 QLUACPP_DETAIL_API_FUNCTION_TUPLE2_17(unsigned int, double, // qty,  comission,

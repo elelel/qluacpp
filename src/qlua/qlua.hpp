@@ -1,5 +1,7 @@
 #pragma once
 
+#include <map>
+
 #include <luacpp/luacpp>
 
 #include "api/macros.h"
