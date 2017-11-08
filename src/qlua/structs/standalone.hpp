@@ -12,15 +12,15 @@
 
 namespace qlua {
   namespace table {
-    LUACPP_STATIC_TABLE_BEGIN(date)
-    LUACPP_TABLE_FIELD(date_, std::string)
+    LUACPP_STATIC_TABLE_BEGIN(date_)
+    LUACPP_TABLE_FIELD(date, std::string)
     LUACPP_TABLE_FIELD(year, unsigned int)
     LUACPP_TABLE_FIELD(month, unsigned int)
     LUACPP_TABLE_FIELD(day, unsigned int)
     LUACPP_STATIC_TABLE_END()
   }
 }
-LUACPP_STATIC_TABLE_TYPE_POLICY(::qlua::table::date)
+LUACPP_STATIC_TABLE_TYPE_POLICY(::qlua::table::date_)
 
 namespace qlua {
   namespace table {

@@ -80,7 +80,7 @@ QLUACPP_DETAIL_API_FUNCTION_RES1_APPLY6(::qlua::table::securities,
                             const char*, sec_code
                             )
 // getTradeDate - функция для получения даты торговой сессии
-QLUACPP_DETAIL_API_FUNCTION_RES1_APPLY2(::qlua::table::date,
+QLUACPP_DETAIL_API_FUNCTION_RES1_APPLY2(::qlua::table::date_,
                             getTradeDate
                             )
 
