@@ -128,7 +128,7 @@ namespace qlua {
     struct OnOrder {   //  новая заявка или изменение параметров существующей заявки 
       static const char* name() { static const char name[] = "OnOrder"; return name; }
       typedef void return_type;
-      typedef std::tuple<::lua::entity<::lua::type_policy<table::orders>>> args_type;
+      typedef std::tuple<::lua::entity<::lua::type_policy<table::order>>> args_type;
     };
     
     struct OnParam {   //  изменение текущих параметров 

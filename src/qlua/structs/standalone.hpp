@@ -184,7 +184,7 @@ LUACPP_STATIC_TABLE_TYPE_POLICY(::qlua::table::account_positions)
 // Object names in qlua.chm: order "Таблица с параметрами заявки"
 namespace qlua {
   namespace table {
-    LUACPP_STATIC_TABLE_BEGIN(orders)
+    LUACPP_STATIC_TABLE_BEGIN(order)
     LUACPP_TABLE_FIELD(order_num, unsigned int) // Номер заявки в торговой системе  
     LUACPP_TABLE_FIELD(flags, unsigned int) // Набор битовых флагов 
     LUACPP_TABLE_FIELD(brokerref, std::string) // Комментарий, обычно: <код клиента>/<номер поручения>  
@@ -233,7 +233,7 @@ namespace qlua {
     LUACPP_STATIC_TABLE_END()
   }
 }
-LUACPP_STATIC_TABLE_TYPE_POLICY(::qlua::table::orders)
+LUACPP_STATIC_TABLE_TYPE_POLICY(::qlua::table::order)
     
 // futures_client_holding "Позиции по клиентским счетам (фьючерсы)"
 // Object names in qlua.chm: fut_pos "Таблица с описанием позиции по срочному рынку"
