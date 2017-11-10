@@ -9,6 +9,17 @@ unsigned int, Index
 )
 */
 
+template <typename Table>
+void getItem(unsigned int Index,
+             std::function<void(const ::lua::entity<::lua::type_policy<Table>>&)> lambda) const {
+  auto f = [&lambda] (const ::lua::state& s) {
+    auto v = s.at<Table>(-1);
+    lambda(v);
+    return 1;
+  };
+  l_.call_and_apply(f, 1, "getItem", ::qlua::table::detail::name_for_type<Table>::value(), Index);                                     
+}
+
 /* TODO: tuple
 // getOrderByNumber - Функция возвращает таблицу Lua, содержащую описание параметров Таблицы заявок и индекс заявки в хранилище терминала. 
 QLUACPP_DETAIL_API_FUNCTION_TUPLE2_7(::qlua::table::orders, unsigned int,
@@ -20,9 +31,15 @@ unsigned int, order_id
 
 // getNumberOf - Функция возвращает количество записей в таблице «TableName». 
 QLUACPP_DETAIL_API_FUNCTION4(unsigned int,
-                            getNumberOf,
-                            const char*, TableName
-                            )
+                             getNumberOf,
+                             const char*, TableName
+                             );
+
+template <typename Table>
+unsigned int getNumberOf() const {
+  return getNumberOf(::qlua::table::detail::name_for_type<Table>::value());
+}
+  
 
 /* TODO:
 // SearchItems - Функция позволяет реализовать быструю выборку элементов из хранилища терминала и возвращает таблицу с индексами элементов, удовлетворяющих условию поиска. 

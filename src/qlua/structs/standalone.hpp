@@ -120,6 +120,11 @@ LUACPP_STATIC_TABLE_TYPE_POLICY(::qlua::table::trade_accounts)
     
 // client_codes "Коды клиентов"
 // TODO: (Not really a table, an array of strings)
+namespace qlua {
+  namespace table {
+    using client_codes = std::string;
+  }
+}
 
 // all_trades "Обезличенные сделки"
 // Object names in qlua.chm: alltrade
@@ -184,7 +189,7 @@ LUACPP_STATIC_TABLE_TYPE_POLICY(::qlua::table::account_positions)
 // Object names in qlua.chm: order "Таблица с параметрами заявки"
 namespace qlua {
   namespace table {
-    LUACPP_STATIC_TABLE_BEGIN(order)
+    LUACPP_STATIC_TABLE_BEGIN(orders)
     LUACPP_TABLE_FIELD(order_num, unsigned int) // Номер заявки в торговой системе  
     LUACPP_TABLE_FIELD(flags, unsigned int) // Набор битовых флагов 
     LUACPP_TABLE_FIELD(brokerref, std::string) // Комментарий, обычно: <код клиента>/<номер поручения>  
@@ -233,7 +238,7 @@ namespace qlua {
     LUACPP_STATIC_TABLE_END()
   }
 }
-LUACPP_STATIC_TABLE_TYPE_POLICY(::qlua::table::order)
+LUACPP_STATIC_TABLE_TYPE_POLICY(::qlua::table::orders)
     
 // futures_client_holding "Позиции по клиентским счетам (фьючерсы)"
 // Object names in qlua.chm: fut_pos "Таблица с описанием позиции по срочному рынку"
@@ -899,3 +904,41 @@ namespace qlua {
   }
 }
 LUACPP_STATIC_TABLE_TYPE_POLICY(::qlua::table::candle)
+
+#define QLUACPP_DETAIL_TABLE_NAME(NAME)                 \
+  template <>                                           \
+  struct name_for_type<::qlua::table::NAME> {           \
+    static const char* value() { return ""#NAME; }      \
+  };                                                    \
+  
+namespace qlua {
+  namespace table {
+    namespace detail {
+      template <typename Table>
+      struct name_for_type;
+
+      QLUACPP_DETAIL_TABLE_NAME(firms);
+      QLUACPP_DETAIL_TABLE_NAME(classes);
+      QLUACPP_DETAIL_TABLE_NAME(securities);
+      QLUACPP_DETAIL_TABLE_NAME(trade_accounts);
+      QLUACPP_DETAIL_TABLE_NAME(client_codes);
+      QLUACPP_DETAIL_TABLE_NAME(all_trades);
+      QLUACPP_DETAIL_TABLE_NAME(account_positions);
+      QLUACPP_DETAIL_TABLE_NAME(orders);
+      QLUACPP_DETAIL_TABLE_NAME(futures_client_holding);
+      QLUACPP_DETAIL_TABLE_NAME(futures_client_limits);
+      QLUACPP_DETAIL_TABLE_NAME(depo_limits);
+      QLUACPP_DETAIL_TABLE_NAME(trades);
+      QLUACPP_DETAIL_TABLE_NAME(stop_orders);
+      QLUACPP_DETAIL_TABLE_NAME(neg_deals);
+      QLUACPP_DETAIL_TABLE_NAME(neg_trades);
+      QLUACPP_DETAIL_TABLE_NAME(neg_deal_reports);
+      QLUACPP_DETAIL_TABLE_NAME(firm_holding);
+      QLUACPP_DETAIL_TABLE_NAME(account_balance);
+      QLUACPP_DETAIL_TABLE_NAME(ccp_holdings);
+      QLUACPP_DETAIL_TABLE_NAME(rm_holdings);
+    }
+  }
+}
+
+#undef QLUACPP_DETAIL_TABLE_NAME
