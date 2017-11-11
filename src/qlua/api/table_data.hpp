@@ -1,14 +1,7 @@
 #pragma once
 
-/* TODO:
-// getItem - Функция возвращает таблицу Lua, содержащую информацию о данных из строки с номером «Index» из таблицы с именем «TableName». 
-QLUACPP_DETAIL_API_FUNCTION(TABLE,
-getItem,
-const char*, TableName,
-unsigned int, Index
-)
-*/
 
+// getItem - Функция возвращает таблицу Lua, содержащую информацию о данных из строки с номером «Index» из таблицы с именем «TableName». 
 template <typename Table>
 void getItem(unsigned int Index,
              std::function<void(const ::lua::entity<::lua::type_policy<Table>>&)> lambda) const {

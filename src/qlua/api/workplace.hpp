@@ -87,7 +87,7 @@ QLUACPP_DETAIL_API_FUNCTION_RES1_APPLY2(::qlua::table::date_,
 // sendTransaction - функция для работы с заявками
 void sendTransaction(const std::map<std::string, std::string>& transaction // Поля таблицы в соответствии с описанием .tri файла по quik.chm
                      ) {
-  l_.pushstring("sendTransaction");
+  l_.getglobal("sendTransaction");
   l_.newtable();
   for (const auto& p : transaction) {
     l_.pushstring(p.first.c_str());

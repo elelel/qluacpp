@@ -67,9 +67,9 @@ T GetCell(const unsigned int t_id,
 
 // GetTableSize - получает количество строк и столбцов
 QLUACPP_DETAIL_API_FUNCTION_TUPLE2_5(int, int,
-                                   GetTableSize,
-                                   const unsigned int, t_id
-                                   )
+                                     GetTableSize,
+                                     const unsigned int, t_id
+                                     )
 
 // GetWindowCaption - получает текущий заголовок окна
 QLUACPP_DETAIL_API_FUNCTION4(const char*,
