@@ -1,4 +1,4 @@
 #pragma once
 
-#include "../../src/qlua/api.hpp"
+#include "api"
 #include "../../src/qlua/extended.hpp"
