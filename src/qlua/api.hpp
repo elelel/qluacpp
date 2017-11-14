@@ -38,11 +38,11 @@ namespace qlua {
       return *this;
     }
 
-    template <typename constant_t>
-    constant_t constant(const char* name) const {
+    template <typename Constant>
+    Constant constant(const char* name) const {
       l_.getglobal(name);
       if (!l_.isnil(-1)) {
-        constant_t rslt = l_.at<constant_t>(-1).get();
+        auto rslt = l_.at<Constant>(-1).get();
         l_.pop(1);
         return rslt;
       } else {
@@ -74,7 +74,7 @@ namespace qlua {
     // Bitmask Функции для работы с битовыми масками в структурах данных
 #include "api/bitmask.hpp"
     
-  private:
+  protected:
     lua::state l_;
   };
 }
