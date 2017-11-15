@@ -927,6 +927,7 @@ namespace qlua {
       QLUACPP_DETAIL_TABLE_NAME(orders);
       QLUACPP_DETAIL_TABLE_NAME(futures_client_holding);
       QLUACPP_DETAIL_TABLE_NAME(futures_client_limits);
+      QLUACPP_DETAIL_TABLE_NAME(money_limits);
       QLUACPP_DETAIL_TABLE_NAME(depo_limits);
       QLUACPP_DETAIL_TABLE_NAME(trades);
       QLUACPP_DETAIL_TABLE_NAME(stop_orders);
