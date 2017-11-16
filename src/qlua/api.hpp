@@ -50,6 +50,10 @@ namespace qlua {
         throw std::runtime_error("QluaCpp error: QLua constant " + std::string(name) + " is nil in globals list");
       }
     }
+
+    const lua::state& lua_state() const {
+      return l_;
+    }
     
     // Service "Сервисные функции"
 #include "api/service.hpp"
