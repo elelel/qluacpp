@@ -99,7 +99,7 @@ namespace qlua {
     LUACPP_TABLE_FIELD(fullcoveredsell, unsigned int) /* Запрет необеспеченных продаж. Возможные значения: 
                                                          «0» – Нет; 
                                                          «1» – Да */
-    LUACPP_TABLE_FIELD(main_trdaccid, unsigned int) // Номер основного торгового счета 
+    LUACPP_TABLE_FIELD(main_trdaccid, std::string) // Номер основного торгового счета 
     LUACPP_TABLE_FIELD(bankid_t0, std::string) // Расчетная организация по «Т0» 
     LUACPP_TABLE_FIELD(bankid_tplus, std::string) // Расчетная организация по «Т+» 
     LUACPP_TABLE_FIELD(trdacc_type, unsigned int) // Тип торгового счета 
@@ -119,7 +119,7 @@ namespace qlua {
 LUACPP_STATIC_TABLE_TYPE_POLICY(::qlua::table::trade_accounts)
     
 // client_codes "Коды клиентов"
-// TODO: (Not really a table, an array of strings)
+// (Not really a table, an array of strings)
 namespace qlua {
   namespace table {
     using client_codes = std::string;
@@ -472,10 +472,10 @@ namespace qlua {
     LUACPP_TABLE_FIELD(period, unsigned int) /* Период торговой сессии. Возможные значения: 
                                                 «0» – Открытие; 
                                                 «1» – Нормальный; 
-                                                «2» – Закрытие 
+                                                «2» – Закрытие */
 
-                                                LUACPP_TABLE_FIELD(trans_id, NUMBER) // Идентификатор транзакции 
-                                                LUACPP_TABLE_FIELD(kind, NUMBER) /* Тип сделки. Возможные значения:
+    LUACPP_TABLE_FIELD(trans_id, unsigned int) // Идентификатор транзакции 
+    LUACPP_TABLE_FIELD(kind, unsigned int) /* Тип сделки. Возможные значения:
                                                 «1» – Обычная; 
                                                 «2» – Адресная; 
                                                 «3» – Первичное размещение; 
@@ -810,11 +810,10 @@ namespace qlua {
     LUACPP_TABLE_FIELD(credit, double) // Кредит  
     LUACPP_TABLE_FIELD(sec_code, std::string) // Код бумаги заявки  
     LUACPP_TABLE_FIELD(class_code, std::string) // Код класса заявки  
-    LUACPP_TABLE_FIELD(planned_covered, double) /* Плановая позиция Т+  
-
-firm_use  NUMBER  Тип раздела. Возможные значения: 
-«0» – торговый раздел; 
-«1» – раздел обеспечения */
+    LUACPP_TABLE_FIELD(planned_covered, double) // Плановая позиция Т+  
+    LUACPP_TABLE_FIELD(firm_use, double) /*  Тип раздела. Возможные значения: 
+                                             «0» – торговый раздел; 
+                                             «1» – раздел обеспечения */
     LUACPP_STATIC_TABLE_END()
   }
 }
