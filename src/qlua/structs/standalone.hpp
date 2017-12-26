@@ -880,8 +880,9 @@ namespace qlua {
     LUACPP_TABLE_FIELD(brokerref, std::string) // Поручение *
     LUACPP_TABLE_FIELD(class_code, std::string) // Код класса *
     LUACPP_TABLE_FIELD(sec_code, std::string) // Код бумаги *
-    LUACPP_TABLE_FIELD(exchange_code, std::string) // Биржевой номер заявки *
-    // * - параметр может иметь значение nil
+    LUACPP_TABLE_FIELD(exchange_code, std::optional<std::string>) /* Биржевой номер заявки *
+                                                                   * - параметр может иметь значение nil
+                                                                   */
     LUACPP_STATIC_TABLE_END()
   }
 }
