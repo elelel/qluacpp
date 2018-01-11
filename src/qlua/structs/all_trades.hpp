@@ -4,139 +4,19 @@
 // Object names in qlua.chm: alltrade
 namespace qlua {
   namespace table {
-    struct all_trades {
-      struct datetime_struct {
-        int mcs;
-        int ms;
-        int sec;
-        int min;
-        int hour;
-        int day;
-        int week_day;
-        int month;
-        int year;
-      };
-
-      all_trades(const lua::state& l, const int idx) :
-        l_(l), idx_(idx) {
-        if (!l_.istable(idx_)) {
-          throw std::runtime_error("alltrade: can't create, not a table");
-        }
-      }
-
-      inline const unsigned int trade_num() const { // Номер сделки в торговой системе
-        return get_field<unsigned int>("trade_num"); 
-      }
-      
-      const unsigned int flags() const { // Набор битовых флагов
-        return get_field<unsigned int>("flags");
-      }
-      
-      const double price() const { // Цена
-        return get_field<double>("price");
-      }
-      
-      const unsigned int qty() const { // Количество бумаг в последней сделке в лотах
-        return get_field<unsigned int>("qty");
-      }
-      
-      const double value() const { // Объем в денежных средствах
-        return get_field<double>("value");
-      }
-      
-      const double accruedint() const { // Накопленный купонный доход
-        return get_field<double>("accruedint");
-      }
-      
-      const double yield() const { // Доходность
-        return get_field<double>("yield");
-      }
-      
-      const std::string settlecode() const { // Код расчетов
-        return get_field<std::string>("settlecode");
-      }
-      
-      const double reporate() const { // Ставка РЕПО (%)
-        return get_field<double>("reporate");
-      }
-      
-      const double repovalue() const { // Сумма РЕПО
-        return get_field<double>("repovalue");
-      }
-      
-      const double repo2value() const { // Объем выкупа РЕПО
-        return get_field<double>("repo2value");
-      }
-      
-      const double repoterm() const { // Срок РЕПО в днях
-        return get_field<double>("repoterm");
-      }
-      
-      const std::string sec_code() const { // Код бумаги заявки
-        return get_field<std::string>("sec_code");
-      }
-      
-      const std::string class_code() const { // Код класса
-        return get_field<std::string>("class_code");
-      }
-      
-      const datetime_struct datetime() const { // Дата и время
-        datetime_struct dt;
-        l_.push<const char*>("datetime");
-        l_.rawget(idx_ - 1);
-        if (l_.istable(-1)) {
-          auto qdt = ::lua::entity<::lua::type_policy<::qlua::table::datetime>>(l_, -1)();
-          dt.mcs = qdt.mcs();
-          dt.ms = qdt.ms();
-          dt.sec = qdt.sec();
-          dt.min = qdt.min();
-          dt.hour = qdt.hour();
-          dt.day = qdt.day();
-          dt.week_day = qdt.week_day();
-          dt.month = qdt.month();
-          dt.year = qdt.year();
-        } else {
-          throw std::runtime_error("all_trades: get datetime table failed, not a table");
-        }
-        l_.pop(1);
-        return dt;
-      }
-      
-      const unsigned int period() const { /* Период торговой сессии. Возможные значения: 
-                                             «0» – Открытие; 
-                                             «1» – Нормальный; 
-                                             «2» – Закрытие */
-        return get_field<unsigned int>("period");
-      }
-      
-      const double open_interest() const { // Открытый интерес
-        return get_field<double>("open_interest");
-      }
-      
-      const std::string exchange_code() const { // Код биржи в торговой системе
-        return get_field<std::string>("exchange_code");
-      }
-
-    private:
-      const lua::state& l_;
-      const size_t idx_;
-
-      template <typename T>
-      inline const T get_field(const char* name) const {
-        l_.push<const char*>(name);
-        l_.rawget(idx_ - 1);
-        auto rslt = ::lua::entity<::lua::type_policy<const T>>(l_, -1).get();
-        l_.pop(1);
-        return rslt;
-      }
-      
+    LUACPP_STATIC_TABLE_BEGIN(all_trades)
+    struct date_time {
+      int mcs;
+      int ms;
+      int sec;
+      int min;
+      int hour;
+      int day;
+      int week_day;
+      int month;
+      int year;
     };
-  }
-}
 
-namespace qlua {
-  namespace table {
-    LUACPP_STATIC_TABLE_BEGIN(all_trades_no_datetime)
     LUACPP_TABLE_FIELD(trade_num, unsigned int) // Номер сделки в торговой системе 
     LUACPP_TABLE_FIELD(flags, unsigned int) // Набор битовых флагов  
     LUACPP_TABLE_FIELD(price, double) // Цена  
@@ -150,8 +30,64 @@ namespace qlua {
     LUACPP_TABLE_FIELD(repo2value, double) // Объем выкупа РЕПО  
     LUACPP_TABLE_FIELD(repoterm, double) // Срок РЕПО в днях  
     LUACPP_TABLE_FIELD(sec_code, std::string) // Код бумаги заявки  
-    LUACPP_TABLE_FIELD(class_code, std::string) // Код класса  
-    //    LUACPP_TABLE_FIELD(datetime, ::qlua::table::datetime) // Дата и время; НЕДОСТУПНО, ИСПОЛЬЗОВАТЬ ::qlua::table::all_trades  
+    LUACPP_TABLE_FIELD(class_code, std::string) // Код класса
+
+    struct datetime_type_policy {
+      using write_type = const date_time&;
+      using read_type = date_time;
+
+      static inline bool type_matches(::lua::state s, int idx) {
+        return s.istable(idx); // Check only for all_trades table 
+      }
+
+      static inline read_type get_unsafe(::lua::state s, int idx) {
+        read_type rslt{0};
+        int table_idx = idx;
+        s.push<const char*>("datetime");
+        if (idx <= 0)
+          s.gettable(idx - 1);
+        else
+          s.gettable(idx);
+        if (s.istable(-1)) {
+          rslt.mcs = get_field<int>(s, "mcs");
+          rslt.ms = get_field<int>(s, "ms");
+          rslt.sec = get_field<int>(s, "sec");
+          rslt.min = get_field<int>(s, "min");
+          rslt.hour = get_field<int>(s, "hour");
+          rslt.day = get_field<int>(s, "day");
+          rslt.week_day = get_field<int>(s, "week_day");
+          rslt.month = get_field<int>(s, "month");
+          rslt.year = get_field<int>(s, "year"); 
+        } else {
+          s.pop(1);
+          throw std::runtime_error("alltrade table does not have datetime table member");
+        }
+        s.pop(1);
+        return rslt;
+      }
+
+      static inline void apply_unsafe(::lua::state s, int idx, std::function<void(const lua::state&, int)> f) {
+        throw std::runtime_error("apply_unsafe is not implemented for alltrade datetime");
+      }
+
+      static inline void set(::lua::state s, int idx, date_time value) {
+        throw std::runtime_error("set is not implemented for alltrade datetime");
+      }
+      
+    private:
+      template <typename T>
+      static inline const T get_field(::lua::state s, const char* name) {
+        s.push<const char*>(name);
+        s.rawget(-2);
+        auto rslt = ::lua::entity<::lua::type_policy<T>>(s, -1).get();
+        s.pop(1);
+        return rslt;
+      }
+      
+    };
+
+    ::lua::entity<datetime_type_policy> datetime{s_, idx_};
+    
     LUACPP_TABLE_FIELD(period, unsigned int) /* Период торговой сессии. Возможные значения: 
                                                 «0» – Открытие; 
                                                 «1» – Нормальный; 
@@ -161,6 +97,6 @@ namespace qlua {
     LUACPP_STATIC_TABLE_END()
   }
 }
-LUACPP_STATIC_TABLE_TYPE_POLICY(::qlua::table::all_trades_no_datetime)
+LUACPP_STATIC_TABLE_TYPE_POLICY(::qlua::table::all_trades)
 
 
