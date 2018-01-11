@@ -126,37 +126,6 @@ namespace qlua {
   }
 }
 
-// all_trades "Обезличенные сделки"
-// Object names in qlua.chm: alltrade
-namespace qlua {
-  namespace table {
-    LUACPP_STATIC_TABLE_BEGIN(all_trades)
-    LUACPP_TABLE_FIELD(trade_num, unsigned int) // Номер сделки в торговой системе 
-    LUACPP_TABLE_FIELD(flags, unsigned int) // Набор битовых флагов  
-    LUACPP_TABLE_FIELD(price, double) // Цена  
-    LUACPP_TABLE_FIELD(qty, unsigned int) // Количество бумаг в последней сделке в лотах  
-    LUACPP_TABLE_FIELD(value, double) // Объем в денежных средствах  
-    LUACPP_TABLE_FIELD(accruedint, double) // Накопленный купонный доход  
-    LUACPP_TABLE_FIELD(yield, double) // Доходность  
-    LUACPP_TABLE_FIELD(settlecode, std::string) // Код расчетов  
-    LUACPP_TABLE_FIELD(reporate, double) // Ставка РЕПО (%)  
-    LUACPP_TABLE_FIELD(repovalue, double) // Сумма РЕПО  
-    LUACPP_TABLE_FIELD(repo2value, double) // Объем выкупа РЕПО  
-    LUACPP_TABLE_FIELD(repoterm, double) // Срок РЕПО в днях  
-    LUACPP_TABLE_FIELD(sec_code, std::string) // Код бумаги заявки  
-    LUACPP_TABLE_FIELD(class_code, std::string) // Код класса  
-    LUACPP_TABLE_FIELD(datetime, ::qlua::table::datetime) // Дата и время  
-    LUACPP_TABLE_FIELD(period, unsigned int) /* Период торговой сессии. Возможные значения: 
-                                                «0» – Открытие; 
-                                                «1» – Нормальный; 
-                                                «2» – Закрытие */
-    LUACPP_TABLE_FIELD(open_interest, double) // Открытый интерес 
-    LUACPP_TABLE_FIELD(exchange_code, std::string) // Код биржи в торговой системе 
-    LUACPP_STATIC_TABLE_END()
-  }
-}
-LUACPP_STATIC_TABLE_TYPE_POLICY(::qlua::table::all_trades)
-
 // account_positions "Денежные позиции"
 // Object names in qlua.chm: acc_pos
 namespace qlua {
@@ -922,7 +891,6 @@ namespace qlua {
       QLUACPP_DETAIL_TABLE_NAME(securities);
       QLUACPP_DETAIL_TABLE_NAME(trade_accounts);
       QLUACPP_DETAIL_TABLE_NAME(client_codes);
-      QLUACPP_DETAIL_TABLE_NAME(all_trades);
       QLUACPP_DETAIL_TABLE_NAME(account_positions);
       QLUACPP_DETAIL_TABLE_NAME(orders);
       QLUACPP_DETAIL_TABLE_NAME(futures_client_holding);
