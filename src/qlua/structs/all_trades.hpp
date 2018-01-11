@@ -151,7 +151,7 @@ namespace qlua {
     LUACPP_TABLE_FIELD(repoterm, double) // Срок РЕПО в днях  
     LUACPP_TABLE_FIELD(sec_code, std::string) // Код бумаги заявки  
     LUACPP_TABLE_FIELD(class_code, std::string) // Код класса  
-    LUACPP_TABLE_FIELD(datetime, ::qlua::table::datetime) // Дата и время; НЕДОСТУПНО, ИСПОЛЬЗОВАТЬ ::qlua::table::all_trades  
+    //    LUACPP_TABLE_FIELD(datetime, ::qlua::table::datetime) // Дата и время; НЕДОСТУПНО, ИСПОЛЬЗОВАТЬ ::qlua::table::all_trades  
     LUACPP_TABLE_FIELD(period, unsigned int) /* Период торговой сессии. Возможные значения: 
                                                 «0» – Открытие; 
                                                 «1» – Нормальный; 
