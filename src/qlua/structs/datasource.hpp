@@ -109,8 +109,10 @@ namespace qlua {
         if (l_.isfunction(-1)) {
           l_.pushvalue(-2); // Push 'this'
           l_.pushnumber(candle_idx);
-          l_.pcall(2, 1, 0);
-          ++i;
+          const int nargs = 2;
+          const int nres = 1;
+          l_.pcall(nargs, nres, 0);
+          i = i - 1 + nres; // 1 for function name popped by pcall
           auto t = l_.at<table::chart_time>(-1)();
           time rslt =  {t.year(), t.month(), t.day(), t.week_day(), t.hour(), t.min(), t.sec(), t.ms(), t.count()};
           l_.pop(i);
