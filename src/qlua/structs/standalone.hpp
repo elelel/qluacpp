@@ -891,6 +891,7 @@ namespace qlua {
       QLUACPP_DETAIL_TABLE_NAME(securities);
       QLUACPP_DETAIL_TABLE_NAME(trade_accounts);
       QLUACPP_DETAIL_TABLE_NAME(client_codes);
+      QLUACPP_DETAIL_TABLE_NAME(all_trades);
       QLUACPP_DETAIL_TABLE_NAME(account_positions);
       QLUACPP_DETAIL_TABLE_NAME(orders);
       QLUACPP_DETAIL_TABLE_NAME(futures_client_holding);
