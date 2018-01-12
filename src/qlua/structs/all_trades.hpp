@@ -99,4 +99,14 @@ namespace qlua {
 }
 LUACPP_STATIC_TABLE_TYPE_POLICY(::qlua::table::all_trades)
 
+namespace qlua {
+  namespace table {
+    namespace detail {
+      template <>
+      struct name_for_type<::qlua::table::all_trades> {
+        static const char* value() { return "all_trades"; }
+      };
+    }
+  }
+}
 
