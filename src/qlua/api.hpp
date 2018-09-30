@@ -5,11 +5,11 @@
 #include <luacpp/luacpp>
 
 #include "api/macros.h"
+#include "structs/datetime.hpp"
 #include "structs/standalone.hpp"
 #include "structs/function_results.hpp"
 #include "structs/datasource.hpp"
 #include "structs/level2_quotes.hpp"
-#include "structs/all_trades.hpp"
 #include "callbacks.hpp"
 
 // TODO: type policies in numeric_tuples.hpp

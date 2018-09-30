@@ -8,36 +8,9 @@
 
 #include <luacpp/luacpp>
 
+#include "datetime.hpp"
+
 // Regex:   *\(.*?\) +\(.*?\) +\(.*\)$LUACPP_TABLE_FIELD(\1, \2) // \3
-
-namespace qlua {
-  namespace table {
-    LUACPP_STATIC_TABLE_BEGIN(date_)
-    LUACPP_TABLE_FIELD(date, std::string)
-    LUACPP_TABLE_FIELD(year, unsigned int)
-    LUACPP_TABLE_FIELD(month, unsigned int)
-    LUACPP_TABLE_FIELD(day, unsigned int)
-    LUACPP_STATIC_TABLE_END()
-  }
-}
-LUACPP_STATIC_TABLE_TYPE_POLICY(::qlua::table::date_)
-
-namespace qlua {
-  namespace table {
-    LUACPP_STATIC_TABLE_BEGIN(datetime)
-    LUACPP_TABLE_FIELD(mcs, int)
-    LUACPP_TABLE_FIELD(ms, int)
-    LUACPP_TABLE_FIELD(sec, int)
-    LUACPP_TABLE_FIELD(min, int)
-    LUACPP_TABLE_FIELD(hour, int)
-    LUACPP_TABLE_FIELD(day, int)
-    LUACPP_TABLE_FIELD(week_day, int)
-    LUACPP_TABLE_FIELD(month, int)
-    LUACPP_TABLE_FIELD(year, int)
-    LUACPP_STATIC_TABLE_END()
-  }
-}
-LUACPP_STATIC_TABLE_TYPE_POLICY(::qlua::table::datetime)
 
 // firms "Фирмы"
 // Object names in qlua.chm: firm
@@ -286,6 +259,41 @@ namespace qlua {
   }
 }
 LUACPP_STATIC_TABLE_TYPE_POLICY(::qlua::table::futures_client_limits)
+
+// all_trades "Обезличенные сделки"
+// Object names in qlua.chm: alltrade
+namespace qlua {
+  namespace table {
+    LUACPP_STATIC_TABLE_BEGIN(all_trades)
+
+    LUACPP_TABLE_FIELD(trade_num, unsigned int) // Номер сделки в торговой системе 
+    LUACPP_TABLE_FIELD(flags, unsigned int) // Набор битовых флагов  
+    LUACPP_TABLE_FIELD(price, double) // Цена  
+    LUACPP_TABLE_FIELD(qty, unsigned int) // Количество бумаг в последней сделке в лотах  
+    LUACPP_TABLE_FIELD(value, double) // Объем в денежных средствах  
+    LUACPP_TABLE_FIELD(accruedint, double) // Накопленный купонный доход  
+    LUACPP_TABLE_FIELD(yield, double) // Доходность  
+    LUACPP_TABLE_FIELD(settlecode, std::string) // Код расчетов  
+    LUACPP_TABLE_FIELD(reporate, double) // Ставка РЕПО (%)  
+    LUACPP_TABLE_FIELD(repovalue, double) // Сумма РЕПО  
+    LUACPP_TABLE_FIELD(repo2value, double) // Объем выкупа РЕПО  
+    LUACPP_TABLE_FIELD(repoterm, double) // Срок РЕПО в днях  
+    LUACPP_TABLE_FIELD(sec_code, std::string) // Код бумаги заявки  
+    LUACPP_TABLE_FIELD(class_code, std::string) // Код класса
+
+    ::lua::entity<detail::datetime_type_policy> datetime{s_, idx_};
+    
+    LUACPP_TABLE_FIELD(period, unsigned int) /* Период торговой сессии. Возможные значения: 
+                                                «0» – Открытие; 
+                                                «1» – Нормальный; 
+                                                «2» – Закрытие */
+    LUACPP_TABLE_FIELD(open_interest, double) // Открытый интерес 
+    LUACPP_TABLE_FIELD(exchange_code, std::string) // Код биржи в торговой системе 
+    LUACPP_STATIC_TABLE_END()
+  }
+}
+LUACPP_STATIC_TABLE_TYPE_POLICY(::qlua::table::all_trades)
+
 
 // futures_limit_delete "Таблица с параметрами удаляемого лимита по срочному рынку" (callback)
 // Object names in qlua.chm: lim_del
@@ -811,7 +819,6 @@ namespace qlua {
 }
 LUACPP_STATIC_TABLE_TYPE_POLICY(::qlua::table::rm_holdings)
 
-// TODO: Move * params to std::optional when C++17 is out
 // trans_reply "Таблица с описанием транзакций" (callback)
 // Object names in qlua.chm: trans_reply
 namespace qlua {
@@ -839,19 +846,30 @@ namespace qlua {
     LUACPP_TABLE_FIELD(uid, unsigned int) // Идентификатор 
     LUACPP_TABLE_FIELD(flags, unsigned int) // Флаги транзакции (временно не используется) 
     LUACPP_TABLE_FIELD(server_trans_id, unsigned int) // Идентификатор транзакции на сервере 
-    LUACPP_TABLE_FIELD(order_num, unsigned int) // Номер заявки *
-    LUACPP_TABLE_FIELD(price, double) // Цена *
-    LUACPP_TABLE_FIELD(quantity, unsigned int) // Количество *
-    LUACPP_TABLE_FIELD(balance, unsigned int) // Остаток *
-    LUACPP_TABLE_FIELD(firm_id, std::string) // Идентификатор фирмы *
-    LUACPP_TABLE_FIELD(account, std::string) // Торговый счет *
-    LUACPP_TABLE_FIELD(client_code, std::string) // Код клиента * 
-    LUACPP_TABLE_FIELD(brokerref, std::string) // Поручение *
-    LUACPP_TABLE_FIELD(class_code, std::string) // Код класса *
-    LUACPP_TABLE_FIELD(sec_code, std::string) // Код бумаги *
+    LUACPP_TABLE_FIELD(order_num, std::optional<unsigned int>) // Номер заявки *
+    LUACPP_TABLE_FIELD(price, std::optional<double>) // Цена *
+    LUACPP_TABLE_FIELD(quantity, std::optional<unsigned int>) // Количество *
+    LUACPP_TABLE_FIELD(balance, std::optional<unsigned int>) // Остаток *
+    LUACPP_TABLE_FIELD(firm_id, std::optional<std::string>) // Идентификатор фирмы *
+    LUACPP_TABLE_FIELD(account, std::optional<std::string>) // Торговый счет *
+    LUACPP_TABLE_FIELD(client_code, std::optional<std::string>) // Код клиента * 
+    LUACPP_TABLE_FIELD(brokerref, std::optional<std::string>) // Поручение *
+    LUACPP_TABLE_FIELD(class_code, std::optional<std::string>) // Код класса *
+    LUACPP_TABLE_FIELD(sec_code, std::optional<std::string>) // Код бумаги *
     LUACPP_TABLE_FIELD(exchange_code, std::optional<std::string>) /* Биржевой номер заявки *
                                                                    * - параметр может иметь значение nil
                                                                    */
+    LUACPP_TABLE_FIELD(error_code, int) // Числовой код ошибки. Значение равно «0», если транзакция выполнена успешно 
+    LUACPP_TABLE_FIELD(error_source, unisgned int) /* Источник сообщения. Возможные значения: 
+                                                      «1» – Торговая система; 
+                                                      «2» – Сервер QUIK; 
+                                                      «3» – Библиотека расчёта лимитов; 
+                                                      «4» – Шлюз торговой системы */
+    
+    LUACPP_TABLE_FIELD(first_ordernum, double) // Номер первой заявки, которая выставлялась при автоматической замене кода клиента. Используется, если на сервере QUIK настроена замена кода клиента для кросс-сделки
+
+    ::lua::entity<detail::datetime_type_policy> gate_reply_time{s_, idx_}; // Дата и время получения шлюзом ответа на транзакцию
+
     LUACPP_STATIC_TABLE_END()
   }
 }
@@ -886,6 +904,7 @@ namespace qlua {
       template <typename Table>
       struct name_for_type;
 
+
       QLUACPP_DETAIL_TABLE_NAME(firms);
       QLUACPP_DETAIL_TABLE_NAME(classes);
       QLUACPP_DETAIL_TABLE_NAME(securities);
@@ -895,6 +914,7 @@ namespace qlua {
       QLUACPP_DETAIL_TABLE_NAME(orders);
       QLUACPP_DETAIL_TABLE_NAME(futures_client_holding);
       QLUACPP_DETAIL_TABLE_NAME(futures_client_limits);
+      QLUACPP_DETAIL_TABLE_NAME(all_trades);
       QLUACPP_DETAIL_TABLE_NAME(money_limits);
       QLUACPP_DETAIL_TABLE_NAME(depo_limits);
       QLUACPP_DETAIL_TABLE_NAME(trades);
