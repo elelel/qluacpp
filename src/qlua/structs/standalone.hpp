@@ -860,7 +860,7 @@ namespace qlua {
                                                                    * - параметр может иметь значение nil
                                                                    */
     LUACPP_TABLE_FIELD(error_code, int) // Числовой код ошибки. Значение равно «0», если транзакция выполнена успешно 
-    LUACPP_TABLE_FIELD(error_source, unisgned int) /* Источник сообщения. Возможные значения: 
+    LUACPP_TABLE_FIELD(error_source, unsigned int) /* Источник сообщения. Возможные значения: 
                                                       «1» – Торговая система; 
                                                       «2» – Сервер QUIK; 
                                                       «3» – Библиотека расчёта лимитов; 

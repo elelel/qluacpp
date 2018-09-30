@@ -39,23 +39,25 @@ LUACPP_STATIC_TABLE_TYPE_POLICY(::qlua::table::datetime)
 
 // datetime "Формат даты и времени, используемый таблицах"
 namespace qlua {
+  // Plain C structure to hold date_time
+  struct c_date_time {
+    int mcs;
+    int ms;
+    int sec;
+    int min;
+    int hour;
+    int day;
+    int week_day;
+    int month;
+    int year;
+  };
+  
   namespace table {
     namespace detail {
-      struct date_time {
-        int mcs;
-        int ms;
-        int sec;
-        int min;
-        int hour;
-        int day;
-        int week_day;
-        int month;
-        int year;
-      };
 
       struct datetime_type_policy {
-        using write_type = const date_time&;
-        using read_type = date_time;
+        using write_type = const c_date_time&;
+        using read_type = c_date_time;
 
         static inline bool type_matches(::lua::state s, int idx) {
           return s.istable(idx); // Check only for all_trades table 
@@ -91,7 +93,7 @@ namespace qlua {
           throw std::runtime_error("apply_unsafe is not implemented for alltrade datetime");
         }
 
-        static inline void set(::lua::state s, int idx, date_time value) {
+        static inline void set(::lua::state s, int idx, c_date_time value) {
           throw std::runtime_error("set is not implemented for alltrade datetime");
         }
       
