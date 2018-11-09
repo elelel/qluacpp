@@ -375,7 +375,7 @@ namespace qlua {
     LUACPP_TABLE_FIELD(locked_buy, double) // Заблокировано на покупку количества лотов 
     LUACPP_TABLE_FIELD(locked_buy_value, double) // Стоимость ценных бумаг, заблокированных под покупку 
     LUACPP_TABLE_FIELD(locked_sell_value, double) // Стоимость ценных бумаг, заблокированных под продажу  
-    LUACPP_TABLE_FIELD(awg_position_price, double) // Цена приобретения  
+    LUACPP_TABLE_FIELD(wa_position_price, double) // Цена приобретения  
     LUACPP_TABLE_FIELD(limit_kind, int) /* Вид лимита. Возможные значения: 
                                            числа, начиная с «0», соответствующие видам лимитов из таблицы «Лимиты по бумагам»: «0» – T0, «1» – T1, «2» – T2 и т.д.; 
                                            числа – технологические лимиты (используются для внутренней работы системы QUIK)*/
