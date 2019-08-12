@@ -32,7 +32,7 @@ namespace qlua {
     LUACPP_STATIC_TABLE_BEGIN(classes)
     LUACPP_TABLE_FIELD(firmid, std::string) // Идентификатор фирмы 
     LUACPP_TABLE_FIELD(name, std::string) // Название класса 
-    LUACPP_TABLE_FIELD(class_code, std::string) // Код класса 
+    LUACPP_TABLE_FIELD(code, std::string) // Код класса 
     LUACPP_TABLE_FIELD(npars, unsigned int) // Количество параметров в классе 
     LUACPP_TABLE_FIELD(nsecs, unsigned int) // Количество бумаг в классе
     LUACPP_STATIC_TABLE_END()
