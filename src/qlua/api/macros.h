@@ -263,4 +263,3 @@
     l_.call_and_apply(f, 1, #NAME, ARG1, ARG2, ARG3, ARG4, ARG5);       \
   }                                                                     \
 
-
