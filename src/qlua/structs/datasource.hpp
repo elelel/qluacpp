@@ -191,7 +191,7 @@ namespace qlua {
     inline T candle_method_call(const char* name, const unsigned int candle_idx) const {
       if (ref_key_ == LUA_NOREF)
         throw std::runtime_error("Can't call datasource method: no reference to the object");
-      l_.getglobal(data_source::desc_table_name());
+      l_.getglobal(desc_table_name());
       auto i = 1; // Stack counter for items not cleaned by pcall; [desc_table]
       if (l_.istable(-1)) {
         l_.pushnumber(ref_key_);
@@ -216,7 +216,7 @@ namespace qlua {
         }
       } else {
         l_.pop(i); 
-        throw std::runtime_error("Call to datasource method failed: " + std::string(data_source::desc_table_name()) + " is not a table in lua globals");
+        throw std::runtime_error("Call to datasource method failed: " + std::string(desc_table_name()) + " is not a table in lua globals");
       }
     }
 
@@ -224,7 +224,7 @@ namespace qlua {
     inline T ds_method_call(const char* name) const {
       if (ref_key_ == LUA_NOREF)
         throw std::runtime_error("Can't call datasource method: no reference to the object");
-      l_.getglobal(data_source::desc_table_name());
+      l_.getglobal(desc_table_name());
       auto i = 1; // Stack counter for items not cleaned by pcall; [desc_table]
       if (l_.istable(-1)) {
         l_.pushnumber(ref_key_);
@@ -248,7 +248,7 @@ namespace qlua {
         }
       } else {
         l_.pop(i); 
-        throw std::runtime_error("Call to datasource method failed: " + std::string(data_source::desc_table_name()) + " is not a table in lua globals");
+        throw std::runtime_error("Call to datasource method failed: " + std::string(desc_table_name()) + " is not a table in lua globals");
       }
     }
 
