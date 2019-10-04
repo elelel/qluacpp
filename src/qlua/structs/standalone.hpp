@@ -55,7 +55,40 @@ namespace qlua {
     LUACPP_TABLE_FIELD(mat_date, unsigned int) // Дата погашения  
     LUACPP_TABLE_FIELD(lot_size, double) // Размер лота  
     LUACPP_TABLE_FIELD(isin_code, std::string) // ISIN  
-    LUACPP_TABLE_FIELD(min_price_step, double) // Минимальный шаг цены  
+    LUACPP_TABLE_FIELD(min_price_step, double) // Минимальный шаг цены
+    LUACPP_TABLE_FIELD(bsid, std::string) // Bloomberg ID  
+    LUACPP_TABLE_FIELD(cusip_code, std::string) // CUSIP  
+    LUACPP_TABLE_FIELD(stock_code, std::string) // StockCode  
+    LUACPP_TABLE_FIELD(couponvalue, double) // Размер купона  
+    LUACPP_TABLE_FIELD(sell_leg_classcode, std::string) // Код класса инструмента ноги на продажу  
+    LUACPP_TABLE_FIELD(sell_leg_seccode, std::string) // Код инструмента ноги на продажу  
+    LUACPP_TABLE_FIELD(first_currcode, std::string) // Код котируемой валюты в паре  
+    LUACPP_TABLE_FIELD(second_currcode, std::string) // Код базовой валюты в паре  
+    LUACPP_TABLE_FIELD(buy_leg_classcode, std::string) // Код класса инструмента ноги на покупку  
+    LUACPP_TABLE_FIELD(buy_leg_seccode, std::string) // Код инструмента ноги на покупку  
+    LUACPP_TABLE_FIELD(base_active_classcode, std::string) // Код класса базового актива  
+    LUACPP_TABLE_FIELD(base_active_seccode, std::string) // Базовый актив  
+    LUACPP_TABLE_FIELD(buy_mat_date, int) // Дата расчетов сделки на покупку  
+    LUACPP_TABLE_FIELD(sell_mat_date, int) // Дата расчетов сделки на продажу  
+    LUACPP_TABLE_FIELD(option_strike, double) // Страйк опциона  
+    LUACPP_TABLE_FIELD(qty_multiplier, unsigned int) // Кратность при вводе количества  
+    LUACPP_TABLE_FIELD(step_price_currency, std::string) // Валюта шага цены  
+    LUACPP_TABLE_FIELD(sedol_code, std::string) // SEDOL  
+    LUACPP_TABLE_FIELD(cfi_code, std::string) // CFI  
+    LUACPP_TABLE_FIELD(ric_code, std::string) // RIC  
+    LUACPP_TABLE_FIELD(buybackdate, int) // Дата оферты  
+    LUACPP_TABLE_FIELD(buybackprice, int) // Цена оферты  
+    LUACPP_TABLE_FIELD(list_level, int) // Уровень листинга  
+    LUACPP_TABLE_FIELD(qty_scale, double) // Точность количества  
+    LUACPP_TABLE_FIELD(yieldatprevwaprice, double) // Доходность по предыдущей оценке  
+    LUACPP_TABLE_FIELD(regnumber, std::string) // Регистрационный номер  
+    LUACPP_TABLE_FIELD(trade_currency, std::string) // Валюта торгов  
+    LUACPP_TABLE_FIELD(second_curr_qty_scale, double) // Точность количества котируемой валюты  
+    LUACPP_TABLE_FIELD(first_curr_qty_scale, double) // Точность количества базовой валюты  
+    LUACPP_TABLE_FIELD(accruedint, double) // Накопленный купонный доход 
+    LUACPP_TABLE_FIELD(stock_name, std::string) // Код деривативного контракта в формате QUIK  
+    LUACPP_TABLE_FIELD(nextcoupon, int) // Дата выплаты купона  
+    LUACPP_TABLE_FIELD(couponperiod, int) // Длительность купона  
     LUACPP_STATIC_TABLE_END()
   }
 }
@@ -86,6 +119,7 @@ namespace qlua {
                                                  иначе – для торговых разделов */
     LUACPP_TABLE_FIELD(depaccid, std::string) // Номер счета депо в депозитарии 
     LUACPP_TABLE_FIELD(bank_acc_id, std::string) // Код дополнительной позиции по денежным средствам
+    LUACPP_TABLE_FIELD(exec_market, std::string) // Идентификатор биржевой площадки 
     LUACPP_STATIC_TABLE_END()
   }
 }
@@ -176,7 +210,54 @@ namespace qlua {
     LUACPP_TABLE_FIELD(acnt_type, unsigned int) // Поле для получения параметров по западным площадкам. Если имеет значение «0», значит значение не задано  
     LUACPP_TABLE_FIELD(capacity, double) // Поле для получения параметров по западным площадкам. Если имеет значение «0», значит значение не задано  
     LUACPP_TABLE_FIELD(passive_only_order, unsigned int) // Поле для получения параметров по западным площадкам. Если имеет значение «0», значит значение не задано  
-    LUACPP_TABLE_FIELD(visible, unsigned int) // Видимое количество. Параметр айсберг-заявок, для обычных заявок выводится значение: «0» 
+    LUACPP_TABLE_FIELD(visible, unsigned int) // Видимое количество. Параметр айсберг-заявок, для обычных заявок выводится значение: «0»
+
+    LUACPP_TABLE_FIELD(awg_price, double) // Средняя цена приобретения. Актуально, когда заявка выполнилась частями 
+    LUACPP_TABLE_FIELD(expiry_time, int) // Время окончания срока действия заявки в формате <ЧЧММСС DESIGNTIMESP=19552>. Для GTT-заявок, используется вместе со сроком истечения заявки (Expiry)  
+    LUACPP_TABLE_FIELD(revision_number, unsigned int) // Номер ревизии заявки. Используется, если заявка была заменена с сохранением номера 
+    LUACPP_TABLE_FIELD(price_currency, std::string) // Валюта цены заявки 
+    LUACPP_TABLE_FIELD(ext_order_status, unsigned int) /* Расширенный статус заявки. Возможные значения: 
+                                                          «0» (по умолчанию) – не определено; 
+                                                          «1» – заявка активна; 
+                                                          «2» – заявка частично исполнена; 
+                                                          «3» – заявка исполнена; 
+                                                          «4» – заявка отменена; 
+                                                          «5» – заявка заменена; 
+                                                          «6» – заявка в состоянии отмены; 
+                                                          «7» – заявка отвергнута; 
+                                                          «8» – приостановлено исполнение заявки; 
+                                                          «9» – заявка в состоянии регистрации; 
+                                                          «10» – заявка снята по времени действия; 
+                                                          «11» – заявка в состоянии замены 
+                                                       */
+ 
+    LUACPP_TABLE_FIELD(accepted_uid, unsigned int) // UID пользователя-менеджера, подтвердившего заявку при работе в режиме с подтверждениями 
+    LUACPP_TABLE_FIELD(filled_value, double) // Исполненный объем заявки в валюте цены для частично или полностью исполненных заявок 
+    LUACPP_TABLE_FIELD(extref, std::string) // Внешняя ссылка, используется для обратной связи с внешними системами  
+    LUACPP_TABLE_FIELD(settle_currency, std::string) // Валюта расчетов по заявке 
+    LUACPP_TABLE_FIELD(on_behalf_of_uid, unsigned int) // UID пользователя, от имени которого выставлена заявка 
+    LUACPP_TABLE_FIELD(client_qualifier, unsigned int) /* Квалификатор клиента, от имени которого выставлена заявка. Возможные значения: 
+                                                    «0» – не определено; 
+                                                    «1» – Natural Person; 
+                                                    «3» – Legal Entity
+                                                 */
+ 
+    LUACPP_TABLE_FIELD(client_short_code, unsigned int) // Краткий идентификатор клиента, от имени которого выставлена заявка 
+    LUACPP_TABLE_FIELD(investment_decision_maker_qualifier, unsigned int) /* Квалификатор принявшего решение о выставлении заявки. Возможные значения: 
+                                                                       «0» – не определено; 
+                                                                       «1» – Natural Person; 
+                                                                       «2» – Algorithm
+                                                                    */
+ 
+    LUACPP_TABLE_FIELD(investment_decision_maker_short_code, unsigned int) // Краткий идентификатор принявшего решение о выставлении заявки 
+    LUACPP_TABLE_FIELD(executing_trader_qualifier, unsigned int) /* Квалификатор трейдера, исполнившего заявку. Возможные значения: 
+                                                              «0» – не определено; 
+                                                              «1» – Natural Person; 
+                                                              «2» – Algorithm
+                                                           */
+ 
+    LUACPP_TABLE_FIELD(executing_trader_short_code, unsigned int) // Краткий идентификатор трейдера, исполнившего заявку 
+
     LUACPP_STATIC_TABLE_END()
   }
 }
@@ -279,16 +360,17 @@ namespace qlua {
     LUACPP_TABLE_FIELD(repo2value, double) // Объем выкупа РЕПО  
     LUACPP_TABLE_FIELD(repoterm, double) // Срок РЕПО в днях  
     LUACPP_TABLE_FIELD(sec_code, std::string) // Код бумаги заявки  
-    LUACPP_TABLE_FIELD(class_code, std::string) // Код класса
-
+    LUACPP_TABLE_FIELD(class_code, std::string) // Код класса  
     ::lua::entity<detail::datetime_type_policy> datetime{s_, idx_};
+    LUACPP_TABLE_FIELD(period, unsigned int) /* Период торговой сессии. Возможные значения:
     
-    LUACPP_TABLE_FIELD(period, unsigned int) /* Период торговой сессии. Возможные значения: 
-                                                «0» – Открытие; 
-                                                «1» – Нормальный; 
-                                                «2» – Закрытие */
+    «0» – Открытие; 
+    «1» – Нормальный; 
+    «2» – Закрытие 
+                                        */
     LUACPP_TABLE_FIELD(open_interest, double) // Открытый интерес 
     LUACPP_TABLE_FIELD(exchange_code, std::string) // Код биржи в торговой системе 
+    LUACPP_TABLE_FIELD(exec_market, std::string) // Площадка исполнения 
     LUACPP_STATIC_TABLE_END()
   }
 }
@@ -315,27 +397,35 @@ namespace qlua {
 }
 LUACPP_STATIC_TABLE_TYPE_POLICY(::qlua::table::futures_limit_delete)
     
-// money_limits "Лимиты по денежным средствам"
-// Object names in qlua.chm: mlimit "Таблица с текущими значениями денежного лимита"
+// money_limits "Позиции по деньгам"
+//   Old:
+//     "Лимиты по денежным средствам"
+// Object names in qlua.chm: mlimit
+//     "Таблица «Позиции по деньгам»"
+//   Old:
+//     "Таблица с текущими значениями денежного лимита"
 namespace qlua {
   namespace table {
     LUACPP_STATIC_TABLE_BEGIN(money_limits)
     LUACPP_TABLE_FIELD(currcode, std::string) // Код валюты  
-    LUACPP_TABLE_FIELD(tag, std::string) // Тег расчетов  
+    LUACPP_TABLE_FIELD(tag, std::string) // Код позиции  
     LUACPP_TABLE_FIELD(firmid, std::string) // Идентификатор фирмы  
     LUACPP_TABLE_FIELD(client_code, std::string) // Код клиента  
-    LUACPP_TABLE_FIELD(openbal, double) // Входящий остаток по деньгам  
-    LUACPP_TABLE_FIELD(openlimit, double) // Входящий лимит по деньгам  
-    LUACPP_TABLE_FIELD(currentbal, double) // Текущий остаток по деньгам  
-    LUACPP_TABLE_FIELD(currentlimit, double) // Текущий лимит по деньгам  
-    LUACPP_TABLE_FIELD(locked, double) // Заблокированное количество  
-    LUACPP_TABLE_FIELD(locked_value_coef, double) // Стоимость активов в заявках на покупку немаржинальных бумаг 
-    LUACPP_TABLE_FIELD(locked_margin_value, double) // Стоимость активов в заявках на покупку маржинальных бумаг 
+    LUACPP_TABLE_FIELD(openbal, double) // Входящий остаток  
+    LUACPP_TABLE_FIELD(openlimit, double) // Входящий лимит  
+    LUACPP_TABLE_FIELD(currentbal, double) // Текущий остаток   
+    LUACPP_TABLE_FIELD(currentlimit, double) // Текущий лимит  
+    LUACPP_TABLE_FIELD(locked, double) // Заблокировано. Сумма средств, заблокированных под исполнение заявок клиента  
+    LUACPP_TABLE_FIELD(locked_value_coef, double) // Стоимость активов в заявках на покупку немаржинальных инструментов 
+    LUACPP_TABLE_FIELD(locked_margin_value, double) // Стоимость активов в заявках на покупку маржинальных инструментов 
     LUACPP_TABLE_FIELD(leverage, double) // Плечо 
-    LUACPP_TABLE_FIELD(limit_kind, double) /* Вид лимита. Возможные значения: 
-                                              положительные целые числа, начиная с «0», соответствующие видам лимитов из таблицы «Лимиты по денежным средствам»: «0» – T0, «1» – T1, «2» – T2 и т.д.; 
-                                              отрицательные целые числа – технологические лимиты (используются для внутренней работы системы QUIK) 
-                                           */
+    LUACPP_TABLE_FIELD(limit_kind, unsigned int) /* Срок расчётов. Возможные значения: 
+                                              положительные целые числа, начиная с «0», соответствующие срокам расчётов из таблицы «Позиции по деньгам»: «0» – T0, «1» – T1, «2» – T2 и т.д.; 
+                                              отрицательные целые числа – технологические лимиты (используются для внутренней работы системы QUIK) */
+ 
+    LUACPP_TABLE_FIELD(wa_position_price, double) // Средневзвешенная цена приобретения позиции 
+    LUACPP_TABLE_FIELD(orders_collateral, double) // Гарантийное обеспечение заявок  
+    LUACPP_TABLE_FIELD(positions_collateral, double) // Гарантийное обеспечение позиций  
     LUACPP_STATIC_TABLE_END()
   }
 }
@@ -480,34 +570,130 @@ namespace qlua {
     LUACPP_TABLE_FIELD(clearing_firmid, std::string) // Идентификатор фирмы - участника клиринга 
     LUACPP_TABLE_FIELD(system_ref, std::string) // Дополнительная информация по сделке, передаваемая торговой системой 
     LUACPP_TABLE_FIELD(uid, unsigned int) // Идентификатор пользователя на сервере QUIK
+
+    LUACPP_TABLE_FIELD(lseccode, std::string) // Приоритетное обеспечение 
+    LUACPP_TABLE_FIELD(order_revision_number, unsigned int) // Номер ревизии заявки, по которой была совершена сделка 
+    LUACPP_TABLE_FIELD(order_qty, unsigned int) // Количество в заявке на момент совершения сделки, в лотах 
+    LUACPP_TABLE_FIELD(order_price, double) // Цена в заявке на момент совершения сделки 
+    LUACPP_TABLE_FIELD(order_exchange_code, std::string) // Биржевой номер заявки 
+    LUACPP_TABLE_FIELD(exec_market, std::string) // Площадка исполнения 
+    LUACPP_TABLE_FIELD(liquidity_indicator, unsigned int) /* Индикатор ликвидности. Возможные значения: 
+                                                             «0» – не определено; 
+                                                             «1» – по заявке мейкера; 
+                                                             «2» – по заявке тейкера; 
+                                                             «3» – вывод ликвидности; 
+                                                             «4» – по заявке в период аукциона 
+                                                          */
+ 
+    LUACPP_TABLE_FIELD(extref, std::string) // Внешняя ссылка, используется для обратной связи с внешними системами 
+    LUACPP_TABLE_FIELD(ext_trade_flags, unsigned int) // Расширенные флаги, полученные от шлюза напрямую, без вмешательства сервера QUIK. Поле не заполняется 
+    LUACPP_TABLE_FIELD(on_behalf_of_uid, unsigned int) // UID пользователя, от имени которого совершена сделка 
+    LUACPP_TABLE_FIELD(client_qualifier, unsigned int) /* Квалификатор клиента, от имени которого совершена сделка. Возможные значения: 
+                                                          «0» – не определено; 
+                                                          «1» – Natural Person; 
+                                                          «3» – Legal Entity 
+                                                       */
+ 
+    LUACPP_TABLE_FIELD(client_short_code, unsigned int) // Краткий идентификатор клиента, от имени которого совершена сделка 
+    LUACPP_TABLE_FIELD(investment_decision_maker_qualifier, unsigned int) /* Квалификатор принявшего решение о совершении сделки. Возможные значения: 
+                                                                             «0» – не определено; 
+                                                                             «1» – Natural Person; 
+                                                                             «3» – Algorithm 
+                                                                          */
+ 
+    LUACPP_TABLE_FIELD(investment_decision_maker_short_code, unsigned int) // Краткий идентификатор принявшего решение о совершении сделки 
+    LUACPP_TABLE_FIELD(executing_trader_qualifier, unsigned int) /* Квалификатор трейдера, исполнившего заявку, по которой совершена сделка.Возможные значения: 
+                                                                    «0» – не определено; 
+                                                                    «1» – Natural Person; 
+                                                                    «3» – Algorithm 
+                                                                 */
+ 
+    LUACPP_TABLE_FIELD(executing_trader_short_code, unsigned int) // Краткий идентификатор трейдера, исполнившего заявку, по которой совершена сделка 
+    LUACPP_TABLE_FIELD(waiver_flag, unsigned int) /* Признак того, что транзакция совершена по правилам пре-трейда. Возможные значения битовых флагов: 
+                                                     бит 0 (0x1) – RFPT; 
+                                                     бит 1 (0x2) – NLIQ; 
+                                                     бит 2 (0x4) – OILQ; 
+                                                     бит 3 (0x8) – PRC; 
+                                                     бит 4 (0x10)– SIZE; 
+                                                     бит 5 (0x20) – ILQD 
+                                                  */
+ 
+    LUACPP_TABLE_FIELD(mleg_base_sid, unsigned int) // Идентификатор базового инструмента на сервере для multileg-инструментов  
+    LUACPP_TABLE_FIELD(side_qualifier, unsigned int) /* Квалификатор операции. Возможные значения: 
+                                                        «0» – не определено; 
+                                                        «1» – Buy; 
+                                                        «2» – Sell; 
+                                                        «3» – Sell short; 
+                                                        «4» – Sell short exempt; 
+                                                        «5» – Sell undiclosed 
+                                                     */
+ 
+    LUACPP_TABLE_FIELD(otc_post_trade_indicator, unsigned int) /* OTC post-trade индикатор. Возможные значения битовых флагов: 
+                                                                  бит 0 (0x1) – Benchmark; 
+                                                                  бит 1 (0x2) – Agency cross; 
+                                                                  бит 2 (0x4) – Large in scale; 
+                                                                  бит 3 (0x8) – Illiquid instrument; 
+                                                                  бит 4 (0x10) – Above specified size; 
+                                                                  бит 5 (0x20) – Cancellations; 
+                                                                  бит 6 (0x40) – Amendments; 
+                                                                  бит 7 (0x80) – Special dividend; 
+                                                                  бит 8 (0x100) – Price improvement; 
+                                                                  бит 9 (0x200) – Duplicative; 
+                                                                  бит 10 (0x400) – Not contributing to the price discovery process; 
+                                                                  бит 11 (0x800) – Package; 
+                                                                  бит 12 (0x1000) – Exchange for Physical 
+                                                               */
+ 
+    LUACPP_TABLE_FIELD(capacity, unsigned int) /* Роль в исполнении заявки. Возможные значения: 
+                                                  «0» – не определено; 
+                                                  «1» – Agent; 
+                                                  «2» – Principal; 
+                                                  «3» – Riskless principal; 
+                                                  «4» – CFG give up; 
+                                                  «5» – Cross as agent; 
+                                                  «6» – Matched principal; 
+                                                  «7» – Proprietary; 
+                                                  «8» – Individual; 
+                                                  «9» – Agent for other member; 
+                                                  «10» – Mixed; 
+                                                  «11» – Market maker
+                                               */
+ 
+    LUACPP_TABLE_FIELD(cross_rate, double) // Кросс-курс валюты цены сделки к валюте расчетов по сделке 
+
     LUACPP_STATIC_TABLE_END()
   }
 }
 LUACPP_STATIC_TABLE_TYPE_POLICY(::qlua::table::trades)
 
 // stop_orders "Стоп-заявки"
-// Object name in qlua.chm: stop_order "Таблица с параметрами стоп-заявки" 
+// Object name in qlua.chm: stop_order "Таблица с параметрами стоп-заявки"
+//
+// ordertime - ::qlua::table::datetime?
 namespace qlua {
   namespace table {
     LUACPP_STATIC_TABLE_BEGIN(stop_orders)
-    LUACPP_TABLE_FIELD(order_num, unsigned int) // Регистрационный номер стоп-заявки на сервере QUIK  
-    LUACPP_TABLE_FIELD(ordertime, ::qlua::table::datetime) // Время выставления  
-    LUACPP_TABLE_FIELD(flags, unsigned int) // Набор битовых флагов  
-    LUACPP_TABLE_FIELD(brokerref, std::string) // Комментарий, обычно: <код клиента>/<номер поручения> 
-    LUACPP_TABLE_FIELD(firmid, std::string) // Идентификатор дилера  
-    LUACPP_TABLE_FIELD(account, std::string) // Торговый счет  
-    LUACPP_TABLE_FIELD(condition, unsigned int) /* Направленность стоп-цены. Возможные значения: 
-                                                   «4» – «<=», 
-                                                   «5» – «>=» */
-    LUACPP_TABLE_FIELD(condition_price, double) // Стоп-цена  
-    LUACPP_TABLE_FIELD(price, double) // Цена  
-    LUACPP_TABLE_FIELD(qty, unsigned int) // Количество в лотах  
-    LUACPP_TABLE_FIELD(linkedorder, unsigned int) // Номер заявки в торговой системе, зарегистрированной по наступлению условия стоп-цены  
-    LUACPP_TABLE_FIELD(expiry, int) // Дата окончания срока действия заявки 
-    LUACPP_TABLE_FIELD(trans_id, unsigned int) // Идентификатор транзакции  
-    LUACPP_TABLE_FIELD(client_code, std::string) // Код клиента  
-    LUACPP_TABLE_FIELD(co_order_num, unsigned int) // Связанная заявка  
-    LUACPP_TABLE_FIELD(co_order_price, double) // Цена связанной заявки  
+
+LUACPP_TABLE_FIELD(order_num, unsigned int) // Регистрационный номер стоп-заявки на сервере QUIK  
+LUACPP_TABLE_FIELD(ordertime, unsigned int) // Время выставления  
+LUACPP_TABLE_FIELD(flags, unsigned int) // Набор битовых флагов  
+LUACPP_TABLE_FIELD(brokerref, std::string) // Комментарий, обычно: <код клиента>/<номер поручения> 
+LUACPP_TABLE_FIELD(firmid, std::string) // Идентификатор дилера  
+LUACPP_TABLE_FIELD(account, std::string) // Торговый счет  
+LUACPP_TABLE_FIELD(condition, unsigned int) /* Направленность стоп-цены. Возможные значения: 
+                                               «4» – «<=», 
+                                               «5» – «>=» 
+                                            */
+ 
+LUACPP_TABLE_FIELD(condition_price, double) // Стоп-цена  
+LUACPP_TABLE_FIELD(price, double) // Цена  
+LUACPP_TABLE_FIELD(qty, unsigned int) // Количество в лотах  
+LUACPP_TABLE_FIELD(linkedorder, unsigned int) // Номер заявки в торговой системе, зарегистрированной по наступлению условия стоп-цены  
+LUACPP_TABLE_FIELD(expiry, int) // Дата окончания срока действия заявки 
+LUACPP_TABLE_FIELD(trans_id, unsigned int) // Идентификатор транзакции  
+LUACPP_TABLE_FIELD(client_code, std::string) // Код клиента  
+LUACPP_TABLE_FIELD(co_order_num, unsigned int) // Связанная заявка  
+LUACPP_TABLE_FIELD(co_order_price, double) // Цена связанной заявки  
     LUACPP_TABLE_FIELD(stop_order_type, unsigned int) /* Вид стоп заявки. Возможные значения: 
                                                          «1» – стоп-лимит; 
                                                          «2» – условие по другому инструменту; 
@@ -515,7 +701,9 @@ namespace qlua {
                                                          «6» – тейк-профит; 
                                                          «7» – стоп-лимит по исполнению активной заявки; 
                                                          «8» – тейк-профит по исполнению активной заявки; 
-                                                         «9» - тейк-профит и стоп-лимит */
+                                                         «9» - тейк-профит и стоп-лимит 
+                                                      */
+ 
     LUACPP_TABLE_FIELD(orderdate, int) // Дата выставления  
     LUACPP_TABLE_FIELD(alltrade_num, unsigned int) // Сделка условия  
     LUACPP_TABLE_FIELD(stopflags, unsigned int) // Набор битовых флагов  
@@ -528,14 +716,14 @@ namespace qlua {
     LUACPP_TABLE_FIELD(condition_price2, double) // Стоп-лимит цена (для заявок типа «Тэйк-профит и стоп-лимит»)  
     LUACPP_TABLE_FIELD(active_from_time, int) // Время начала периода действия заявки типа «Тэйк-профит и стоп-лимит»  
     LUACPP_TABLE_FIELD(active_to_time, int) // Время окончания периода действия заявки типа «Тэйк-профит и стоп-лимит»  
-    LUACPP_TABLE_FIELD(sec_code, std::string) // Код бумаги заявки  
+    LUACPP_TABLE_FIELD(sec_code, std::string) // Код инструмента заявки  
     LUACPP_TABLE_FIELD(class_code, std::string) // Код класса заявки  
-    LUACPP_TABLE_FIELD(condition_sec_code, std::string) // Код бумаги стоп-цены  
+    LUACPP_TABLE_FIELD(condition_sec_code, std::string) // Код инструмента стоп-цены  
     LUACPP_TABLE_FIELD(condition_class_code, std::string) // Код класса стоп-цены  
     LUACPP_TABLE_FIELD(canceled_uid, unsigned int) // Идентификатор пользователя, снявшего стоп-заявку 
     LUACPP_TABLE_FIELD(order_date_time, ::qlua::table::datetime) // Время выставления стоп-заявки 
     LUACPP_TABLE_FIELD(withdraw_datetime, ::qlua::table::datetime) // Время снятия стоп-заявки 
-
+    LUACPP_TABLE_FIELD(activation_date_time, ::qlua::table::datetime) // Дата и время активации стоп-заявки 
     LUACPP_STATIC_TABLE_END()
   }
 }
@@ -546,6 +734,7 @@ LUACPP_STATIC_TABLE_TYPE_POLICY(::qlua::table::stop_orders)
 namespace qlua {
   namespace table {
     LUACPP_STATIC_TABLE_BEGIN(neg_deals)
+
     LUACPP_TABLE_FIELD(neg_deal_num, unsigned int) // Номер  
     LUACPP_TABLE_FIELD(neg_deal_time, int) // Время выставления заявки  
     LUACPP_TABLE_FIELD(flags, unsigned int) // Набор битовых флагов  
@@ -568,15 +757,17 @@ namespace qlua {
     LUACPP_TABLE_FIELD(trans_id, unsigned int) // ID транзакции  
     LUACPP_TABLE_FIELD(client_code, std::string) // Код клиента  
     LUACPP_TABLE_FIELD(repoentry, unsigned int) /* Тип ввода заявки РЕПО. Возможные значения: 
-                                             «0» – «Не определен»; 
-                                             «1» – «Цена1+Ставка»; 
-                                             «2» – «Ставка+ Цена2»; 
-                                             «3» – «Цена1+Цена2»; 
-                                             «4» – «Сумма РЕПО + Количество»; 
-                                             «5» – «Сумма РЕПО + Дисконт»; 
-                                             «6» – «Количество + Дисконт»; 
-                                             «7» – «Сумма РЕПО»; 
-                                             «8» – «Количество» */
+                                                   «0» – «Не определен»; 
+                                                   «1» – «Цена1+Ставка»; 
+                                                   «2» – «Ставка+ Цена2»; 
+                                                   «3» – «Цена1+Цена2»; 
+                                                   «4» – «Сумма РЕПО + Количество»; 
+                                                   «5» – «Сумма РЕПО + Дисконт»; 
+                                                   «6» – «Количество + Дисконт»; 
+                                                   «7» – «Сумма РЕПО»; 
+                                                   «8» – «Количество» 
+                                                */
+
     LUACPP_TABLE_FIELD(repovalue, double) // Сумма РЕПО  
     LUACPP_TABLE_FIELD(repo2value, double) // Объем выкупа РЕПО  
     LUACPP_TABLE_FIELD(repoterm, double) // Срок РЕПО  
@@ -595,7 +786,7 @@ namespace qlua {
     LUACPP_TABLE_FIELD(neg_deal_activation_time, int) // Время активации заявки  
     LUACPP_TABLE_FIELD(quoteno, unsigned int) // Встречная безадресная заявка  
     LUACPP_TABLE_FIELD(settle_currency, std::string) // Валюта расчетов  
-    LUACPP_TABLE_FIELD(sec_code, std::string) // Код бумаги  
+    LUACPP_TABLE_FIELD(sec_code, std::string) // Код инструмента  
     LUACPP_TABLE_FIELD(class_code, std::string) // Код класса  
     LUACPP_TABLE_FIELD(bank_acc_id, std::string) // Идентификатор расчетного счета/кода в клиринговой организации  
     LUACPP_TABLE_FIELD(withdraw_date, int) // Дата снятия адресной заявки в формате «ГГГГММДД»  
@@ -603,6 +794,32 @@ namespace qlua {
     LUACPP_TABLE_FIELD(activation_date_time, ::qlua::table::datetime) // Дата и время активации заявки 
     LUACPP_TABLE_FIELD(withdraw_date_time, ::qlua::table::datetime) // Дата и время снятия заявки 
     LUACPP_TABLE_FIELD(date_time, ::qlua::table::datetime) // Дата и время заявки
+    LUACPP_TABLE_FIELD(lseccode, std::string) // Приоритетное обеспечение 
+    LUACPP_TABLE_FIELD(canceled_uid, unsigned int) // UID снявшего заявку 
+    LUACPP_TABLE_FIELD(system_ref, std::string) // Системная ссылка 
+    LUACPP_TABLE_FIELD(price_currency, std::string) // Валюта, в которой указана цена заявки 
+    LUACPP_TABLE_FIELD(order_exchange_code, std::string) // Биржевой номер заявки 
+    LUACPP_TABLE_FIELD(extref, std::string) // Внешняя ссылка, используется для обратной связи с внешними системами 
+    LUACPP_TABLE_FIELD(period, unsigned int) // Период торговой сессии, в которую была подана заявка 
+    LUACPP_TABLE_FIELD(client_qualifier, unsigned int) /* Квалификатор клиента, от имени которого выставлена заявка. Возможные значения: 
+                                                          «0» – не определено; 
+                                                          «1» – Natural Person; 
+                                                          «3» – Legal Entity 
+                                                       */
+ 
+    LUACPP_TABLE_FIELD(client_short_code, unsigned int) // Краткий идентификатор клиента, от имени которого выставлена заявка 
+    LUACPP_TABLE_FIELD(investment_decision_maker_qualifier, unsigned int) /* Квалификатор принявшего решение о выставлении заявки. Возможные значения: 
+                                                                             «0» – не определено; 
+                                                                             «1» – Natural Person; 
+                                                                             «3» – Algorithm 
+                                                                          */
+    LUACPP_TABLE_FIELD(investment_decision_maker_short_code, unsigned int) // Краткий идентификатор принявшего решение о выставлении заявки 
+    LUACPP_TABLE_FIELD(executing_trader_qualifier, unsigned int) /* Квалификатор трейдера, исполнившего заявку. Возможные значения: 
+                                                                    «0» – не определено; 
+                                                                    «1» – Natural Person; 
+                                                                    «3» – Algorithm 
+                                                                 */
+    LUACPP_TABLE_FIELD(executing_trader_short_code, unsigned int) // Краткий идентификатор трейдера, исполнившего заявку 
     LUACPP_STATIC_TABLE_END()
   }
 }
@@ -648,33 +865,37 @@ namespace qlua {
     LUACPP_TABLE_FIELD(block_securities, unsigned int) // Блокировать обеспечение («Да»/«Нет»)  
     LUACPP_TABLE_FIELD(urgency_flag, unsigned int) // Исполнить («Да»/«Нет»)  
     LUACPP_TABLE_FIELD(type, unsigned int) /* Тип. Возможные значения: 
-                                        «0» – «Внесистемная сделка», 
-                                        «1» – «Первая часть сделки РЕПО», 
-                                        «2» – «Вторая часть сделки РЕПО», 
-                                        «3» – «Компенсационный взнос», 
-                                        «4» – «Дефолтер: отложенные обязательства и требования», 
-                                        «5» – «Пострадавший: отложенные обязательства и требования». 
-                                     */
+                                              «0» – «Внесистемная сделка», 
+                                              «1» – «Первая часть сделки РЕПО», 
+                                              «2» – «Вторая часть сделки РЕПО», 
+                                              «3» – «Компенсационный взнос», 
+                                              «4» – «Дефолтер: отложенные обязательства и требования», 
+                                              «5» – «Пострадавший: отложенные обязательства и требования». 
+                                           */
+ 
     LUACPP_TABLE_FIELD(operation_type, unsigned int) /* Направленность. Возможные значения: 
-                                                  «1» – «Зачислить», 
-                                                  «2» – «Списать». */
+                                                        «1» – «Зачислить», 
+                                                        «2» – «Списать». 
+                                                     */
  
     LUACPP_TABLE_FIELD(expected_discount, double) // Дисконт после взноса (%)  
-    LUACPP_TABLE_FIELD(expected_quantity, double) // Количество после взноса  
+    LUACPP_TABLE_FIELD(expected_quantity, unsigned int) // Количество после взноса  
     LUACPP_TABLE_FIELD(expected_repovalue, double) // Сумма РЕПО после взноса  
     LUACPP_TABLE_FIELD(expected_repo2value, double) // Стоимость выкупа после взноса  
     LUACPP_TABLE_FIELD(expected_return_value, double) // Сумма возврата после взноса  
     LUACPP_TABLE_FIELD(order_num, unsigned int) // Номер заявки  
     LUACPP_TABLE_FIELD(report_trade_date, int) // Дата заключения  
     LUACPP_TABLE_FIELD(settled, unsigned int) /* Состояние расчетов по сделке. Возможные значения: 
-                                           «1» – «Processed», 
-                                           «2» – «Not processed», 
-                                           «3» – «Is processing». 
-                                        */
+                                                 «1» – «Processed», 
+                                                 «2» – «Not processed», 
+                                                 «3» – «Is processing». 
+                                              */
+ 
     LUACPP_TABLE_FIELD(clearing_type, unsigned int) /* Тип клиринга. Возможные значения: 
-                                                 «1» – «Not set», 
-                                                 «2» – «Simple», 
-                                                 «3» – «Multilateral». */
+                                                       «1» – «Not set», 
+                                                       «2» – «Simple», 
+                                                       «3» – «Multilateral». 
+                                                    */
  
     LUACPP_TABLE_FIELD(report_comission, double) // Комиссия за отчет  
     LUACPP_TABLE_FIELD(coupon_payment, double) // Купонная выплата  
@@ -682,18 +903,20 @@ namespace qlua {
     LUACPP_TABLE_FIELD(principal_payment_date, int) // Дата выплаты по основному долгу  
     LUACPP_TABLE_FIELD(nextdaysettle, int) // Дата следующего дня расчетов  
     LUACPP_TABLE_FIELD(settle_currency, std::string) // Валюта расчетов  
-    LUACPP_TABLE_FIELD(sec_code, std::string) // Код бумаги  
+    LUACPP_TABLE_FIELD(sec_code, std::string) // Код инструмента  
     LUACPP_TABLE_FIELD(class_code, std::string) // Код класса  
     LUACPP_TABLE_FIELD(compval, double) // Сумма отступного в валюте сделки 
     LUACPP_TABLE_FIELD(parenttradeno, unsigned int) // Идентификационный номер витринной сделки 
     LUACPP_TABLE_FIELD(bankid, std::string) // Расчетная организация 
     LUACPP_TABLE_FIELD(bankaccid, std::string) // Код позиции 
-    LUACPP_TABLE_FIELD(precisebalance, unsigned int) // Количество бумаг к исполнению (в лотах) 
+    LUACPP_TABLE_FIELD(precisebalance, unsigned int) // Количество инструментов к исполнению (в лотах) 
     LUACPP_TABLE_FIELD(confirmtime, int) // Время подтверждения в формате «ЧЧММСС» 
     LUACPP_TABLE_FIELD(ex_flags, unsigned int) /* Расширенные флаги сделки для исполнения. Возможные значения: 
-                                            «1» – «Подтверждена контрагентом»; 
-                                            «2» – «Подтверждена»  */
+                                                  «1» – «Подтверждена контрагентом»; 
+                                                  «2» – «Подтверждена» 
+                                               */
     LUACPP_TABLE_FIELD(confirmreport, unsigned int) // Номер поручения 
+    LUACPP_TABLE_FIELD(extref, std::string) // Внешняя ссылка, используется для обратной связи с внешними системами 
     LUACPP_STATIC_TABLE_END()
   }
 }

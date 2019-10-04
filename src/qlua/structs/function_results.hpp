@@ -135,7 +135,7 @@ namespace qlua {
     LUACPP_TABLE_FIELD(val_long_asset, std::string) // Оценка стоимости длинных позиций по немаржинальным бумагам, принимаемым в обеспечение Лонги О 
     LUACPP_TABLE_FIELD(assets, std::string) // Оценка собственных средств клиента по текущим позициям и ценам Тек. активы 
     LUACPP_TABLE_FIELD(cur_leverage, std::string) // Текущее плечо Тек.плечо 
-      LUACPP_TABLE_FIELD(margin, std::string) // Уровень маржи, в процентах Ур. маржи 
+    LUACPP_TABLE_FIELD(margin, std::string) // Уровень маржи, в процентах Ур. маржи 
       LUACPP_TABLE_FIELD(lim_all, std::string) // Текущая оценка максимальной величины заемных средств Тек. лимит 
       LUACPP_TABLE_FIELD(av_lim_all, std::string) // Оценка величины заемных средств, доступных для дальнейшего открытия позиций ДостТекЛимит 
       LUACPP_TABLE_FIELD(locked_buy, std::string) // Оценка стоимости активов в заявках на покупку Блок. покупка 
@@ -192,7 +192,9 @@ namespace qlua {
                                                           «2» – опционы; 
                                                           «3» – фьючерсы и опционы
                                                           ТипПозНаСрчРынке */
-    LUACPP_TABLE_FIELD(fut_accured_int, std::string) // Накопленный доход с учётом премии по опционам и биржевым сборам НакопДоход 
+    LUACPP_TABLE_FIELD(fut_accured_int, std::string) // Накопленный доход с учётом премии по опционам и биржевым сборам НакопДоход
+    LUACPP_TABLE_FIELD(rcv1, std::string) // Норматив покрытия риска 1. Рассчитывается как разница параметров «Стоимость портфеля» и «Начальная маржа». Для клиентов типа «МД» и «МД+» НПР1 
+    LUACPP_TABLE_FIELD(rcv2, std::string) // Норматив покрытия риска 2. Рассчитывается как разница параметров «Стоимость портфеля» и «Минимальная маржа». Для клиентов типа «МД» и «МД+» НПР2 
     LUACPP_STATIC_TABLE_END()
   }
 }
