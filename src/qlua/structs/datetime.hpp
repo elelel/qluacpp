@@ -55,18 +55,19 @@ namespace qlua {
   namespace table {
     namespace detail {
 
+      template <const char* FieldName>
       struct datetime_type_policy {
         using write_type = const c_date_time&;
         using read_type = c_date_time;
 
         static inline bool type_matches(::lua::state s, int idx) {
-          return s.istable(idx); // Check only for all_trades table 
+          return s.istable(idx); // Check that we're at a table
         }
 
         static inline read_type get_unsafe(::lua::state s, int idx) {
           read_type rslt{0};
           int table_idx = idx;
-          s.push<const char*>("datetime");
+          s.push<const char*>(FieldName);
           if (idx <= 0)
             s.gettable(idx - 1);
           else
@@ -83,18 +84,18 @@ namespace qlua {
             rslt.year = get_field<int>(s, "year"); 
           } else {
             s.pop(1);
-            throw std::runtime_error("alltrade table does not have datetime table member");
+            throw std::runtime_error("table does not have "+std::string(FieldName)+" table member");
           }
           s.pop(1);
           return rslt;
         }
 
         static inline void apply_unsafe(::lua::state s, int idx, std::function<void(const lua::state&, int)> f) {
-          throw std::runtime_error("apply_unsafe is not implemented for alltrade datetime");
+          throw std::runtime_error("apply_unsafe is not implemented for datetime");
         }
 
         static inline void set(::lua::state s, int idx, c_date_time value) {
-          throw std::runtime_error("set is not implemented for alltrade datetime");
+          throw std::runtime_error("set is not implemented for datetime");
         }
       
       private:

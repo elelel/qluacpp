@@ -361,7 +361,8 @@ namespace qlua {
     LUACPP_TABLE_FIELD(repoterm, double) // Срок РЕПО в днях  
     LUACPP_TABLE_FIELD(sec_code, std::string) // Код бумаги заявки  
     LUACPP_TABLE_FIELD(class_code, std::string) // Код класса  
-    ::lua::entity<detail::datetime_type_policy> datetime{s_, idx_};
+    static constexpr const char _datetime_field_name[] = "datetime";
+    ::lua::entity<detail::datetime_type_policy<_datetime_field_name>> datetime{s_, idx_};
     LUACPP_TABLE_FIELD(period, unsigned int) /* Период торговой сессии. Возможные значения:
     
     «0» – Открытие; 
@@ -1091,7 +1092,8 @@ namespace qlua {
     
     LUACPP_TABLE_FIELD(first_ordernum, double) // Номер первой заявки, которая выставлялась при автоматической замене кода клиента. Используется, если на сервере QUIK настроена замена кода клиента для кросс-сделки
 
-    ::lua::entity<detail::datetime_type_policy> gate_reply_time{s_, idx_}; // Дата и время получения шлюзом ответа на транзакцию
+    static constexpr const char _gate_reply_time_field_name[] = "gate_reply_time";
+    ::lua::entity<detail::datetime_type_policy<_gate_reply_time_field_name>> gate_reply_time{s_, idx_}; // Дата и время получения шлюзом ответа на транзакцию
 
     LUACPP_STATIC_TABLE_END()
   }
