@@ -20,7 +20,7 @@ namespace qlua {
     
     struct level2_quotes {
       level2_quotes(const lua::state& l, const size_t idx) :
-        l_(l), idx_(idx) {
+        l_(l), idx_(int(idx)) {
         if (!l_.istable(idx_)) {
           throw std::runtime_error("level2_quotes: can't create, not a table");
         }
@@ -52,7 +52,7 @@ namespace qlua {
       
     private:
       const lua::state& l_;
-      const size_t idx_;
+      const int idx_;
 
       const std::vector<level2_quotes_record> get_table(const char* name) const {
         std::vector<level2_quotes_record> rslt;
