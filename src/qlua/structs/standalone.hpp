@@ -1066,8 +1066,9 @@ namespace qlua {
                                           «15» – транзакция принята после нарушения дополнительных ограничений; 
                                           «16» – транзакция отменена пользователем в ходе проверки дополнительных ограничений */
  
-    LUACPP_TABLE_FIELD(result_msg, std::string) // Сообщение 
-    LUACPP_TABLE_FIELD(date_time, ::qlua::table::datetime) // Дата и время 
+    LUACPP_TABLE_FIELD(result_msg, std::string) // Сообщение
+    static constexpr const char _date_time_field_name[] = "date_time";
+    ::lua::entity<detail::datetime_type_policy<_date_time_field_name>> date_time{s_, idx_}; // Дата и время 
     LUACPP_TABLE_FIELD(uid, unsigned int) // Идентификатор 
     LUACPP_TABLE_FIELD(flags, unsigned int) // Флаги транзакции (временно не используется) 
     LUACPP_TABLE_FIELD(server_trans_id, unsigned int) // Идентификатор транзакции на сервере 
