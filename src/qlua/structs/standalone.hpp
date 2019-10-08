@@ -119,7 +119,8 @@ namespace qlua {
                                                  иначе – для торговых разделов */
     LUACPP_TABLE_FIELD(depaccid, std::string) // Номер счета депо в депозитарии 
     LUACPP_TABLE_FIELD(bank_acc_id, std::string) // Код дополнительной позиции по денежным средствам
-    LUACPP_TABLE_FIELD(exec_market, std::string) // Идентификатор биржевой площадки 
+    // Quik 8.1: Exists in qlua.chm help file, doesn't really exist in terminal
+    //LUACPP_TABLE_FIELD(exec_market, std::string) // Идентификатор биржевой площадки 
     LUACPP_STATIC_TABLE_END()
   }
 }
