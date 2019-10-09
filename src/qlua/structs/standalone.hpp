@@ -421,7 +421,7 @@ namespace qlua {
     LUACPP_TABLE_FIELD(locked_value_coef, double) // Стоимость активов в заявках на покупку немаржинальных инструментов 
     LUACPP_TABLE_FIELD(locked_margin_value, double) // Стоимость активов в заявках на покупку маржинальных инструментов 
     LUACPP_TABLE_FIELD(leverage, double) // Плечо 
-    LUACPP_TABLE_FIELD(limit_kind, unsigned int) /* Срок расчётов. Возможные значения: 
+    LUACPP_TABLE_FIELD(limit_kind, int) /* Срок расчётов. Возможные значения: 
                                               положительные целые числа, начиная с «0», соответствующие срокам расчётов из таблицы «Позиции по деньгам»: «0» – T0, «1» – T1, «2» – T2 и т.д.; 
                                               отрицательные целые числа – технологические лимиты (используются для внутренней работы системы QUIK) */
  
@@ -442,7 +442,7 @@ namespace qlua {
     LUACPP_TABLE_FIELD(tag, std::string) // Тег расчетов  
     LUACPP_TABLE_FIELD(client_code, std::string) // Код клиента  
     LUACPP_TABLE_FIELD(firmid, std::string) // Идентификатор фирмы  
-    LUACPP_TABLE_FIELD(limit_kind, unsigned int) /* Вид лимита. Возможные значения: 
+    LUACPP_TABLE_FIELD(limit_kind, int) /* Вид лимита. Возможные значения: 
                                               положительные целые числа, начиная с «0», соответствующие видам лимитов из таблицы «Лимиты по денежным средствам»: «0» – T0, «1» – T1, «2» – T2 и т.д.; 
                                               отрицательные целые числа – технологические лимиты (используются для внутренней работы системы QUIK)  */
     LUACPP_STATIC_TABLE_END()
