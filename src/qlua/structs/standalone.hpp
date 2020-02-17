@@ -167,7 +167,7 @@ LUACPP_STATIC_TABLE_TYPE_POLICY(::qlua::table::account_positions)
 namespace qlua {
   namespace table {
     LUACPP_STATIC_TABLE_BEGIN(orders)
-    LUACPP_TABLE_FIELD(order_num, unsigned int) // Номер заявки в торговой системе  
+    LUACPP_TABLE_FIELD(order_num, std::string) // Номер заявки в торговой системе  
     LUACPP_TABLE_FIELD(flags, unsigned int) // Набор битовых флагов 
     LUACPP_TABLE_FIELD(brokerref, std::string) // Комментарий, обычно: <код клиента>/<номер поручения>  
     LUACPP_TABLE_FIELD(userid, std::string) // Идентификатор трейдера  
@@ -499,7 +499,7 @@ namespace qlua {
   namespace table {
     LUACPP_STATIC_TABLE_BEGIN(trades)
     LUACPP_TABLE_FIELD(trade_num, std::string) // Номер сделки в торговой системе 
-    LUACPP_TABLE_FIELD(order_num, unsigned int) // Номер заявки в торговой системе  
+    LUACPP_TABLE_FIELD(order_num, std::string) // Номер заявки в торговой системе  
     LUACPP_TABLE_FIELD(brokerref, std::string) // Комментарий, обычно: <код клиента>/<номер поручения>  
     LUACPP_TABLE_FIELD(userid, std::string) // Идентификатор трейдера  
     LUACPP_TABLE_FIELD(firmid, std::string) // Идентификатор дилера  
@@ -676,7 +676,7 @@ namespace qlua {
   namespace table {
     LUACPP_STATIC_TABLE_BEGIN(stop_orders)
 
-LUACPP_TABLE_FIELD(order_num, unsigned int) // Регистрационный номер стоп-заявки на сервере QUIK  
+    LUACPP_TABLE_FIELD(order_num, std::string) // Регистрационный номер стоп-заявки на сервере QUIK  
 LUACPP_TABLE_FIELD(ordertime, unsigned int) // Время выставления  
 LUACPP_TABLE_FIELD(flags, unsigned int) // Набор битовых флагов  
 LUACPP_TABLE_FIELD(brokerref, std::string) // Комментарий, обычно: <код клиента>/<номер поручения> 
@@ -694,7 +694,7 @@ LUACPP_TABLE_FIELD(linkedorder, unsigned int) // Номер заявки в то
 LUACPP_TABLE_FIELD(expiry, int) // Дата окончания срока действия заявки 
 LUACPP_TABLE_FIELD(trans_id, unsigned int) // Идентификатор транзакции  
 LUACPP_TABLE_FIELD(client_code, std::string) // Код клиента  
-LUACPP_TABLE_FIELD(co_order_num, unsigned int) // Связанная заявка  
+    LUACPP_TABLE_FIELD(co_order_num, std::string) // Связанная заявка  
 LUACPP_TABLE_FIELD(co_order_price, double) // Цена связанной заявки  
     LUACPP_TABLE_FIELD(stop_order_type, unsigned int) /* Вид стоп заявки. Возможные значения: 
                                                          «1» – стоп-лимит; 
@@ -885,7 +885,7 @@ namespace qlua {
     LUACPP_TABLE_FIELD(expected_repovalue, double) // Сумма РЕПО после взноса  
     LUACPP_TABLE_FIELD(expected_repo2value, double) // Стоимость выкупа после взноса  
     LUACPP_TABLE_FIELD(expected_return_value, double) // Сумма возврата после взноса  
-    LUACPP_TABLE_FIELD(order_num, unsigned int) // Номер заявки  
+    LUACPP_TABLE_FIELD(order_num, std::string) // Номер заявки  
     LUACPP_TABLE_FIELD(report_trade_date, int) // Дата заключения  
     LUACPP_TABLE_FIELD(settled, unsigned int) /* Состояние расчетов по сделке. Возможные значения: 
                                                  «1» – «Processed», 
@@ -1072,7 +1072,7 @@ namespace qlua {
     LUACPP_TABLE_FIELD(uid, unsigned int) // Идентификатор 
     LUACPP_TABLE_FIELD(flags, unsigned int) // Флаги транзакции (временно не используется) 
     LUACPP_TABLE_FIELD(server_trans_id, unsigned int) // Идентификатор транзакции на сервере 
-    LUACPP_TABLE_FIELD(order_num, std::optional<unsigned int>) // Номер заявки *
+    LUACPP_TABLE_FIELD(order_num, std::optional<std::string>) // Номер заявки *
     LUACPP_TABLE_FIELD(price, std::optional<double>) // Цена *
     LUACPP_TABLE_FIELD(quantity, std::optional<unsigned int>) // Количество *
     LUACPP_TABLE_FIELD(balance, std::optional<unsigned int>) // Остаток *
