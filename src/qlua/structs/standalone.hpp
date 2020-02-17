@@ -348,7 +348,7 @@ namespace qlua {
   namespace table {
     LUACPP_STATIC_TABLE_BEGIN(all_trades)
 
-    LUACPP_TABLE_FIELD(trade_num, unsigned int) // Номер сделки в торговой системе 
+    LUACPP_TABLE_FIELD(trade_num, std::string) // Номер сделки в торговой системе 
     LUACPP_TABLE_FIELD(flags, unsigned int) // Набор битовых флагов  
     LUACPP_TABLE_FIELD(price, double) // Цена  
     LUACPP_TABLE_FIELD(qty, unsigned int) // Количество бумаг в последней сделке в лотах  
@@ -498,7 +498,7 @@ LUACPP_STATIC_TABLE_TYPE_POLICY(::qlua::table::depo_limit_delete)
 namespace qlua {
   namespace table {
     LUACPP_STATIC_TABLE_BEGIN(trades)
-    LUACPP_TABLE_FIELD(trade_num, unsigned int) // Номер сделки в торговой системе 
+    LUACPP_TABLE_FIELD(trade_num, std::string) // Номер сделки в торговой системе 
     LUACPP_TABLE_FIELD(order_num, unsigned int) // Номер заявки в торговой системе  
     LUACPP_TABLE_FIELD(brokerref, std::string) // Комментарий, обычно: <код клиента>/<номер поручения>  
     LUACPP_TABLE_FIELD(userid, std::string) // Идентификатор трейдера  
@@ -707,7 +707,7 @@ LUACPP_TABLE_FIELD(co_order_price, double) // Цена связанной зая
                                                       */
  
     LUACPP_TABLE_FIELD(orderdate, int) // Дата выставления  
-    LUACPP_TABLE_FIELD(alltrade_num, unsigned int) // Сделка условия  
+    LUACPP_TABLE_FIELD(alltrade_num, std::string) // Сделка условия  
     LUACPP_TABLE_FIELD(stopflags, unsigned int) // Набор битовых флагов  
     LUACPP_TABLE_FIELD(offset, double) // Отступ от min/max  
     LUACPP_TABLE_FIELD(spread, double) // Защитный спред  
@@ -832,7 +832,7 @@ LUACPP_STATIC_TABLE_TYPE_POLICY(::qlua::table::neg_deals)
 namespace qlua {
   namespace table {
     LUACPP_STATIC_TABLE_BEGIN(neg_trades)
-    LUACPP_TABLE_FIELD(trade_num, unsigned int) // Номер сделки  
+    LUACPP_TABLE_FIELD(trade_num, std::string) // Номер сделки  
     LUACPP_TABLE_FIELD(trade_date, int) // Дата торгов  
     LUACPP_TABLE_FIELD(settle_date, int) // Дата расчетов  
     LUACPP_TABLE_FIELD(flags, unsigned int) // Набор битовых флагов  
