@@ -190,9 +190,9 @@ namespace qlua {
     LUACPP_TABLE_FIELD(linkedorder, unsigned int) // Номер заявки в торговой системе  
     LUACPP_TABLE_FIELD(expiry, int) // Дата окончания срока действия заявки  
     LUACPP_TABLE_FIELD(sec_code, std::string) // Код бумаги заявки  
-    LUACPP_TABLE_FIELD(class_code, std::string) // Код класса заявки  
-    LUACPP_TABLE_FIELD(datetime, ::qlua::table::datetime) // Дата и время  
-    LUACPP_TABLE_FIELD(withdraw_datetime, ::qlua::table::datetime) // Дата и время снятия заявки  
+    LUACPP_TABLE_FIELD(class_code, std::string) // Код класса заявки
+    QLUACPP_DATETIME_TABLE_FIELD(datetime) // Дата и время 
+    QLUACPP_DATETIME_TABLE_FIELD(withdraw_datetime) // Дата и время снятия заявки  
     LUACPP_TABLE_FIELD(bank_acc_id, std::string) // Идентификатор расчетного счета/кода в клиринговой организации  
     LUACPP_TABLE_FIELD(value_entry_type, unsigned int) /* Способ указания объема заявки. Возможные значения:
 
@@ -361,9 +361,8 @@ namespace qlua {
     LUACPP_TABLE_FIELD(repo2value, double) // Объем выкупа РЕПО  
     LUACPP_TABLE_FIELD(repoterm, double) // Срок РЕПО в днях  
     LUACPP_TABLE_FIELD(sec_code, std::string) // Код бумаги заявки  
-    LUACPP_TABLE_FIELD(class_code, std::string) // Код класса  
-    static constexpr const char _datetime_field_name[] = "datetime";
-    ::lua::entity<detail::datetime_type_policy<_datetime_field_name>> datetime{s_, idx_};
+    LUACPP_TABLE_FIELD(class_code, std::string) // Код класса
+    QLUACPP_DATETIME_TABLE_FIELD(datetime) // Дата и время 
     LUACPP_TABLE_FIELD(period, unsigned int) /* Период торговой сессии. Возможные значения:
     
     «0» – Открытие; 
@@ -533,8 +532,8 @@ namespace qlua {
     LUACPP_TABLE_FIELD(exchange_code, std::string) // Код биржи в торговой системе  
     LUACPP_TABLE_FIELD(station_id, std::string) // Идентификатор рабочей станции  
     LUACPP_TABLE_FIELD(sec_code, std::string) // Код бумаги заявки  
-    LUACPP_TABLE_FIELD(class_code, std::string) // Код класса  
-    LUACPP_TABLE_FIELD(datetime, ::qlua::table::datetime) // Дата и время  
+    LUACPP_TABLE_FIELD(class_code, std::string) // Код класса
+    QLUACPP_DATETIME_TABLE_FIELD(datetime) // Дата и время  
     LUACPP_TABLE_FIELD(bank_acc_id, std::string) // Идентификатор расчетного счета/кода в клиринговой организации  
     LUACPP_TABLE_FIELD(broker_comission, double) // Комиссия брокера. Отображается с точностью до 2 двух знаков. Поле зарезервировано для будущего использования.  
     LUACPP_TABLE_FIELD(linked_trade, unsigned int) // Номер витринной сделки в Торговой Системе для сделок РЕПО с ЦК и SWAP  
@@ -567,8 +566,8 @@ namespace qlua {
                                                 «20» – Адресная сделка первой части РЕПО с корзиной; 
                                                 «21» – Адресная сделка второй части РЕПО с корзиной; 
                                                 «22» – Перенос позиций срочного рынка */
-    LUACPP_TABLE_FIELD(clearing_bank_accid, std::string) // Идентификатор счета в НКЦ (расчетный код) 
-    LUACPP_TABLE_FIELD(canceled_datetime, ::qlua::table::datetime) // Дата и время снятия сделки 
+    LUACPP_TABLE_FIELD(clearing_bank_accid, std::string) // Идентификатор счета в НКЦ (расчетный код)
+    QLUACPP_DATETIME_TABLE_FIELD(canceled_datetime) // Дата и время снятия сделки 
     LUACPP_TABLE_FIELD(clearing_firmid, std::string) // Идентификатор фирмы - участника клиринга 
     LUACPP_TABLE_FIELD(system_ref, std::string) // Дополнительная информация по сделке, передаваемая торговой системой 
     LUACPP_TABLE_FIELD(uid, unsigned int) // Идентификатор пользователя на сервере QUIK
@@ -671,13 +670,14 @@ LUACPP_STATIC_TABLE_TYPE_POLICY(::qlua::table::trades)
 // stop_orders "Стоп-заявки"
 // Object name in qlua.chm: stop_order "Таблица с параметрами стоп-заявки"
 //
-// ordertime - ::qlua::table::datetime?
+//   ordertime - по документации NUMBER!
 namespace qlua {
   namespace table {
     LUACPP_STATIC_TABLE_BEGIN(stop_orders)
 
-    LUACPP_TABLE_FIELD(order_num, std::string) // Регистрационный номер стоп-заявки на сервере QUIK  
-LUACPP_TABLE_FIELD(ordertime, unsigned int) // Время выставления  
+    LUACPP_TABLE_FIELD(order_num, std::string) // Регистрационный номер стоп-заявки на сервере QUIK
+    
+    QLUACPP_DATETIME_TABLE_FIELD(ordertime) // Время выставления  
 LUACPP_TABLE_FIELD(flags, unsigned int) // Набор битовых флагов  
 LUACPP_TABLE_FIELD(brokerref, std::string) // Комментарий, обычно: <код клиента>/<номер поручения> 
 LUACPP_TABLE_FIELD(firmid, std::string) // Идентификатор дилера  
@@ -723,9 +723,9 @@ LUACPP_TABLE_FIELD(co_order_price, double) // Цена связанной зая
     LUACPP_TABLE_FIELD(condition_sec_code, std::string) // Код инструмента стоп-цены  
     LUACPP_TABLE_FIELD(condition_class_code, std::string) // Код класса стоп-цены  
     LUACPP_TABLE_FIELD(canceled_uid, unsigned int) // Идентификатор пользователя, снявшего стоп-заявку 
-    LUACPP_TABLE_FIELD(order_date_time, ::qlua::table::datetime) // Время выставления стоп-заявки 
-    LUACPP_TABLE_FIELD(withdraw_datetime, ::qlua::table::datetime) // Время снятия стоп-заявки 
-    LUACPP_TABLE_FIELD(activation_date_time, ::qlua::table::datetime) // Дата и время активации стоп-заявки 
+    QLUACPP_DATETIME_TABLE_FIELD(order_date_time) // Время выставления стоп-заявки
+    QLUACPP_DATETIME_TABLE_FIELD(withdraw_datetime) // Время снятия стоп-заявки
+    QLUACPP_DATETIME_TABLE_FIELD(activation_date_time) // Дата и время активации стоп-заявки 
     LUACPP_STATIC_TABLE_END()
   }
 }
@@ -793,9 +793,9 @@ namespace qlua {
     LUACPP_TABLE_FIELD(bank_acc_id, std::string) // Идентификатор расчетного счета/кода в клиринговой организации  
     LUACPP_TABLE_FIELD(withdraw_date, int) // Дата снятия адресной заявки в формате «ГГГГММДД»  
     LUACPP_TABLE_FIELD(linkedorder, unsigned int) // Номер предыдущей заявки. Отображается с точностью «0»  
-    LUACPP_TABLE_FIELD(activation_date_time, ::qlua::table::datetime) // Дата и время активации заявки 
-    LUACPP_TABLE_FIELD(withdraw_date_time, ::qlua::table::datetime) // Дата и время снятия заявки 
-    LUACPP_TABLE_FIELD(date_time, ::qlua::table::datetime) // Дата и время заявки
+    QLUACPP_DATETIME_TABLE_FIELD(activation_date_time) // Дата и время активации заявки 
+    QLUACPP_DATETIME_TABLE_FIELD(withdraw_date_time) // Дата и время снятия заявки 
+    QLUACPP_DATETIME_TABLE_FIELD(date_time) // Дата и время заявки
     LUACPP_TABLE_FIELD(lseccode, std::string) // Приоритетное обеспечение 
     LUACPP_TABLE_FIELD(canceled_uid, unsigned int) // UID снявшего заявку 
     LUACPP_TABLE_FIELD(system_ref, std::string) // Системная ссылка 
@@ -945,7 +945,7 @@ namespace qlua {
     LUACPP_TABLE_FIELD(sec_code, std::string) // Код бумаги 
     LUACPP_TABLE_FIELD(class_code, std::string) // Код класса 
     LUACPP_TABLE_FIELD(report_time, int) // Время отчета 
-    LUACPP_TABLE_FIELD(report_date_time, ::qlua::table::datetime) // Дата и время отчета
+    QLUACPP_DATETIME_TABLE_FIELD(report_date_time) // Дата и время отчета
     LUACPP_STATIC_TABLE_END()
   }
 }
@@ -1067,8 +1067,7 @@ namespace qlua {
                                           «16» – транзакция отменена пользователем в ходе проверки дополнительных ограничений */
  
     LUACPP_TABLE_FIELD(result_msg, std::string) // Сообщение
-    static constexpr const char _date_time_field_name[] = "date_time";
-    ::lua::entity<detail::datetime_type_policy<_date_time_field_name>> date_time{s_, idx_}; // Дата и время 
+    QLUACPP_DATETIME_TABLE_FIELD(date_time) // Дата и время 
     LUACPP_TABLE_FIELD(uid, unsigned int) // Идентификатор 
     LUACPP_TABLE_FIELD(flags, unsigned int) // Флаги транзакции (временно не используется) 
     LUACPP_TABLE_FIELD(server_trans_id, unsigned int) // Идентификатор транзакции на сервере 
@@ -1093,10 +1092,7 @@ namespace qlua {
                                                       «4» – Шлюз торговой системы */
     
     LUACPP_TABLE_FIELD(first_ordernum, double) // Номер первой заявки, которая выставлялась при автоматической замене кода клиента. Используется, если на сервере QUIK настроена замена кода клиента для кросс-сделки
-
-    static constexpr const char _gate_reply_time_field_name[] = "gate_reply_time";
-    ::lua::entity<detail::datetime_type_policy<_gate_reply_time_field_name>> gate_reply_time{s_, idx_}; // Дата и время получения шлюзом ответа на транзакцию
-
+    QLUACPP_DATETIME_TABLE_FIELD(gate_reply_time) // Дата и время получения шлюзом ответа на транзакцию
     LUACPP_STATIC_TABLE_END()
   }
 }
@@ -1109,8 +1105,8 @@ namespace qlua {
     LUACPP_TABLE_FIELD(close, double) // Цена закрытия  
     LUACPP_TABLE_FIELD(high, double) // Максимальная цена сделки  
     LUACPP_TABLE_FIELD(low, double) // Минимальная цена сделки  
-    LUACPP_TABLE_FIELD(volume, double) // Объем последней сделки  
-    LUACPP_TABLE_FIELD(datetime, ::qlua::table::datetime) // Формат даты и времени  
+    LUACPP_TABLE_FIELD(volume, double) // Объем последней сделки
+    QLUACPP_DATETIME_TABLE_FIELD(datetime) // Формат даты и времени  
     LUACPP_TABLE_FIELD(doesExist, unsigned int) /* Признак расчета индикатора при наличии свечки. Возможные значения:
                                                    «0» – индикатор не рассчитан,
                                                    «1» – индикатор рассчитан */

@@ -2,6 +2,11 @@
 
 // date and datetime tables
 
+#define QLUACPP_DATETIME_TABLE_FIELD( NAME )    \
+  static constexpr const char _##NAME##_field_name[] = #NAME; \
+  ::lua::entity<detail::datetime_type_policy<_##NAME##_field_name>> NAME{s_, idx_}; \
+
+
 // --- Direct macro table generators ---
 
 // date
