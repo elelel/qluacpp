@@ -670,14 +670,12 @@ LUACPP_STATIC_TABLE_TYPE_POLICY(::qlua::table::trades)
 // stop_orders "Стоп-заявки"
 // Object name in qlua.chm: stop_order "Таблица с параметрами стоп-заявки"
 //
-//   ordertime - по документации NUMBER!
 namespace qlua {
   namespace table {
     LUACPP_STATIC_TABLE_BEGIN(stop_orders)
 
     LUACPP_TABLE_FIELD(order_num, std::string) // Регистрационный номер стоп-заявки на сервере QUIK
-    
-    QLUACPP_DATETIME_TABLE_FIELD(ordertime) // Время выставления  
+    LUACPP_TABLE_FIELD(ordertime, unsigned int) // Время выставления  
     LUACPP_TABLE_FIELD(flags, unsigned int) // Набор битовых флагов  
     LUACPP_TABLE_FIELD(brokerref, std::string) // Комментарий, обычно: <код клиента>/<номер поручения> 
     LUACPP_TABLE_FIELD(firmid, std::string) // Идентификатор дилера  
