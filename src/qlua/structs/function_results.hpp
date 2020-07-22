@@ -320,6 +320,28 @@ namespace qlua {
     LUACPP_TABLE_FIELD(result, unsigned int) /* Результат выполнения операции. Возможные значения: 
                                           «0» - ошибка; 
                                           «1» - параметр найден */
+
+    // Вызов param_value() с результатом STRING для тех случаев, когда в param_type Quik ошибочно возвращает DOUBLE/LONG
+
+    struct param_value_as_string_type_policy :
+    public ::lua::detail::table_field_policy_base<const char*, std::string> {
+      using base_type = ::lua::detail::table_field_policy_base<const char*, std::string>;
+
+      static inline read_type get_unsafe(::lua::state s, int idx)  {
+        return base_type::get_unsafe(s, idx, "param_value");
+      }
+
+      static inline void apply_unsafe(::lua::state s, int idx, std::function<void(const lua::state&, int)> f) {
+        base_type::apply_unsafe(s, idx, f, "param_value");
+      }
+
+      static inline void set(::lua::state s, int idx, const std::string& value)   {
+        base_type::set(s, idx, value, "param_value");
+      }
+    };
+    ::lua::entity<param_value_as_string_type_policy> param_value_as_string{s_, idx_};
+
+    
     LUACPP_STATIC_TABLE_END()
   }
 }
