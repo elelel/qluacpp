@@ -48,7 +48,7 @@ Lua (благодаря C-интерфейсу к API Lua, предоставл�
 
 ## Requirements / Требования
 
-- Lua 5.1 library
+- Lua 5.1 or Lua 5.3 library (depending on target Quik)
 - C++17-compliant compiler (C++17 compliant, tested with VS 2017 15.0)
 
 ## Usage example / Пример использования
